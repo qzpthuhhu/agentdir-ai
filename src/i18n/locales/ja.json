@@ -19,15 +19,24 @@
   },
   "categories": {
     "title": "カテゴリで探す",
-    "subtitle": "ユースケースに合ったエージェントを見つけよう",
-    "coding": "コーディング",
-    "writing": "ライティング",
-    "image": "画像とビジョン",
-    "data": "データと分析",
-    "chatbot": "チャットボット",
-    "automation": "自動化",
-    "language": "言語",
-    "security": "セキュリティ"
+    "subtitle": "用途に合ったエージェントを見つけよう"
+  },
+  "ecosystem": {
+    "title": "AIエージェントエコシステム",
+    "subtitle": "起源とエコシステムでエージェントを探索"
+  },
+  "browse": {
+    "browseBy": "閲覧方法",
+    "agentType": "エージェントタイプ",
+    "architecture": "アーキテクチャ",
+    "domain": "ドメイン",
+    "ecosystem": "エコシステム",
+    "language": "プログラミング言語",
+    "filters": "フィルター",
+    "clearAll": "すべてクリア",
+    "activeFilters": "アクティブフィルター",
+    "agentsFound": "件のエージェント",
+    "openSourceOnly": "オープンソースのみ"
   },
   "agents": {
     "title": "AIエージェントを探索",

@@ -11,7 +11,7 @@ import { X, SlidersHorizontal } from "lucide-react";
 import type { AgentType, Architecture, Domain, Ecosystem } from "@/types/agent";
 
 type BrowseMode = "type" | "architecture" | "domain";
-type SortOption = "relevant" | "stars" | "newest";
+type SortOption = "relevant" | "stars" | "newest" | "name";
 
 const LANGUAGES = ["Python", "TypeScript", "JavaScript", "Go", "Rust"];
 
@@ -80,6 +80,9 @@ const AgentsPage = () => {
     }
     if (sortBy === "newest") {
       return [...list].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
+    if (sortBy === "name") {
+      return [...list].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
     }
     return list;
   }, [search, selectedTypes, selectedArchitectures, selectedDomains, selectedEcosystems, selectedLanguages, openSourceOnly, agents, sortBy]);
@@ -208,6 +211,7 @@ const AgentsPage = () => {
                   <SelectItem value="relevant">Most Relevant</SelectItem>
                   <SelectItem value="stars" disabled={!hasOpenSourceInView}>GitHub Stars</SelectItem>
                   <SelectItem value="newest">Newest</SelectItem>
+                  <SelectItem value="name">Name (A–Z)</SelectItem>
                 </SelectContent>
               </Select>
             </div>

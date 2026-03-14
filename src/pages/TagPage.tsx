@@ -1,14 +1,16 @@
 import { useParams, Link } from "react-router-dom";
-import { agents, tags } from "@/lib/mock-data";
+import { useAgents, tags } from "@/hooks/use-agents";
 import AgentCard from "@/components/agent/AgentCard";
 import { ArrowLeft } from "lucide-react";
 import { useI18n } from "@/i18n/context";
+import { useMemo } from "react";
 
 const TagPage = () => {
   const { slug } = useParams();
   const { t } = useI18n();
   const tag = tags.find((tg) => tg.slug === slug);
-  const tagAgents = agents.filter((a) => a.tags.includes(slug || ""));
+  const { data: agents = [] } = useAgents();
+  const tagAgents = useMemo(() => agents.filter((a) => a.tags.includes(slug || "")), [agents, slug]);
 
   return (
     <div className="container py-12">

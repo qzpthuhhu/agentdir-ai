@@ -1,4 +1,4 @@
-import { agents, agentTypes, architectures, domains, ecosystems } from "@/lib/mock-data";
+import { useAgents, useAgentTypes, useArchitectures, useDomains, useEcosystems } from "@/hooks/use-agents";
 import AgentCard from "@/components/agent/AgentCard";
 import { useState, useMemo } from "react";
 import SearchBar from "@/components/search/SearchBar";
@@ -22,8 +22,14 @@ const AgentsPage = () => {
   const [selectedEcosystems, setSelectedEcosystems] = useState<Ecosystem[]>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [openSourceOnly, setOpenSourceOnly] = useState(false);
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters] = useState(true);
   const { t } = useI18n();
+
+  const { data: agents = [] } = useAgents();
+  const { data: agentTypes = [] } = useAgentTypes();
+  const { data: architectures = [] } = useArchitectures();
+  const { data: domains = [] } = useDomains();
+  const { data: ecosystems = [] } = useEcosystems();
 
   const toggleItem = (arr: string[], item: string, setter: (v: any) => void) => {
     setter(arr.includes(item) ? arr.filter((i: string) => i !== item) : [...arr, item]);
@@ -45,11 +51,11 @@ const AgentsPage = () => {
     const matchesType = selectedTypes.length === 0 || selectedTypes.includes(a.agentType);
     const matchesArch = selectedArchitectures.length === 0 || a.architectures.some(ar => selectedArchitectures.includes(ar));
     const matchesDomain = selectedDomains.length === 0 || a.domains.some(d => selectedDomains.includes(d));
-    const matchesEco = selectedEcosystems.length === 0 || selectedEcosystems.includes(a.ecosystem);
+    const matchesEco = selectedEcosystems.length === 0 || selectedEcosystems.includes(a.ecosystem as any);
     const matchesLang = selectedLanguages.length === 0 || (a.language && selectedLanguages.includes(a.language));
     const matchesOS = !openSourceOnly || a.isOpenSource;
     return matchesSearch && matchesType && matchesArch && matchesDomain && matchesEco && matchesLang && matchesOS;
-  }), [search, selectedTypes, selectedArchitectures, selectedDomains, selectedEcosystems, selectedLanguages, openSourceOnly]);
+  }), [search, selectedTypes, selectedArchitectures, selectedDomains, selectedEcosystems, selectedLanguages, openSourceOnly, agents]);
 
   const browseModes: { key: BrowseMode; label: string }[] = [
     { key: "type", label: t("browse.agentType") },
@@ -70,12 +76,10 @@ const AgentsPage = () => {
       <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">{t("agents.title")}</h1>
       <p className="text-muted-foreground mb-8">{t("agents.subtitle")}</p>
 
-      {/* Search */}
       <div className="max-w-2xl mb-6">
         <SearchBar value={search} onChange={setSearch} />
       </div>
 
-      {/* Browse by selector */}
       <div className="flex items-center gap-2 mb-4">
         <span className="text-sm text-muted-foreground font-medium">{t("browse.browseBy")}:</span>
         <div className="flex gap-1">
@@ -91,7 +95,6 @@ const AgentsPage = () => {
         </div>
       </div>
 
-      {/* Browse category pills */}
       <div className="flex flex-wrap gap-2 mb-6">
         {browseItems.map((item) => (
           <button
@@ -110,7 +113,6 @@ const AgentsPage = () => {
       </div>
 
       <div className="flex gap-8">
-        {/* Filter sidebar */}
         <aside className={`${showFilters ? "w-56 shrink-0" : "w-0 overflow-hidden"} transition-all hidden lg:block`}>
           <div className="sticky top-24 space-y-6">
             <div className="flex items-center justify-between">
@@ -123,35 +125,30 @@ const AgentsPage = () => {
               )}
             </div>
 
-            {/* Ecosystem */}
             <FilterSection title={t("browse.ecosystem")}>
               {ecosystems.map(e => (
                 <FilterCheckbox key={e.slug} label={e.name} checked={selectedEcosystems.includes(e.slug)} onChange={() => toggleItem(selectedEcosystems, e.slug, setSelectedEcosystems)} count={e.agentCount} />
               ))}
             </FilterSection>
 
-            {/* Agent Type */}
             <FilterSection title={t("browse.agentType")}>
               {agentTypes.slice(0, 6).map(at => (
                 <FilterCheckbox key={at.slug} label={at.name} checked={selectedTypes.includes(at.slug)} onChange={() => toggleItem(selectedTypes, at.slug, setSelectedTypes)} />
               ))}
             </FilterSection>
 
-            {/* Architecture */}
             <FilterSection title={t("browse.architecture")}>
               {architectures.slice(0, 6).map(ar => (
                 <FilterCheckbox key={ar.slug} label={ar.name} checked={selectedArchitectures.includes(ar.slug)} onChange={() => toggleItem(selectedArchitectures, ar.slug, setSelectedArchitectures)} />
               ))}
             </FilterSection>
 
-            {/* Language */}
             <FilterSection title={t("browse.language")}>
               {LANGUAGES.map(lang => (
                 <FilterCheckbox key={lang} label={lang} checked={selectedLanguages.includes(lang)} onChange={() => toggleItem(selectedLanguages, lang, setSelectedLanguages)} />
               ))}
             </FilterSection>
 
-            {/* Open Source */}
             <div className="flex items-center gap-2">
               <Checkbox id="os-filter" checked={openSourceOnly} onCheckedChange={(v) => setOpenSourceOnly(!!v)} />
               <Label htmlFor="os-filter" className="text-sm cursor-pointer">{t("browse.openSourceOnly")}</Label>
@@ -159,9 +156,7 @@ const AgentsPage = () => {
           </div>
         </aside>
 
-        {/* Main content */}
         <div className="flex-1 min-w-0">
-          {/* Active filters bar */}
           {activeFilterCount > 0 && (
             <div className="flex flex-wrap items-center gap-2 mb-4">
               <span className="text-xs text-muted-foreground">{t("browse.activeFilters")}:</span>

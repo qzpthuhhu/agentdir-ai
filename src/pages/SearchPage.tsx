@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { agents, tags } from "@/lib/mock-data";
+import { useSearchAgents, tags } from "@/hooks/use-agents";
+import { useAgents } from "@/hooks/use-agents";
 import AgentCard from "@/components/agent/AgentCard";
 import SearchBar from "@/components/search/SearchBar";
 import { Badge } from "@/components/ui/badge";
@@ -10,15 +11,7 @@ const SearchPage = () => {
   const [searchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
   const { t } = useI18n();
-
-  const results = query.length > 0
-    ? agents.filter((a) =>
-        a.name.toLowerCase().includes(query.toLowerCase()) ||
-        a.tagline.toLowerCase().includes(query.toLowerCase()) ||
-        a.description.toLowerCase().includes(query.toLowerCase()) ||
-        a.tags.some((tg) => tg.toLowerCase().includes(query.toLowerCase()))
-      )
-    : [];
+  const { data: results = [] } = useSearchAgents(query);
 
   return (
     <div className="container py-12">

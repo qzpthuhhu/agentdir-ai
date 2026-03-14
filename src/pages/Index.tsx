@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles, TrendingUp, Zap, Globe2, Rocket, Building2, Flag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { agents, categories, ecosystems } from "@/lib/mock-data";
+import { useAgents, useEcosystems, categories } from "@/hooks/use-agents";
 import AgentCard from "@/components/agent/AgentCard";
 import CategoryBadge from "@/components/agent/CategoryBadge";
 import SearchBar from "@/components/search/SearchBar";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useI18n } from "@/i18n/context";
@@ -28,8 +28,11 @@ const Index = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const { t } = useI18n();
-  const featured = agents.slice(0, 4);
-  const trending = agents.sort((a, b) => b.reviewCount - a.reviewCount).slice(0, 3);
+  const { data: agents = [] } = useAgents();
+  const { data: ecosystems = [] } = useEcosystems();
+
+  const featured = useMemo(() => agents.slice(0, 4), [agents]);
+  const trending = useMemo(() => [...agents].sort((a, b) => b.reviewCount - a.reviewCount).slice(0, 3), [agents]);
 
   const handleSearch = (val: string) => {
     setSearch(val);

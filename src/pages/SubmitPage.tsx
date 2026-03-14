@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { categories } from "@/lib/mock-data";
+import { categories } from "@/hooks/use-agents";
 import { toast } from "sonner";
 import { useI18n } from "@/i18n/context";
 

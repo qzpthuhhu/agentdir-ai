@@ -1,14 +1,16 @@
 import { useParams, Link } from "react-router-dom";
-import { agents, categories } from "@/lib/mock-data";
+import { useAgents, categories } from "@/hooks/use-agents";
 import AgentCard from "@/components/agent/AgentCard";
 import { ArrowLeft } from "lucide-react";
 import { useI18n } from "@/i18n/context";
+import { useMemo } from "react";
 
 const CategoryPage = () => {
   const { slug } = useParams();
   const { t } = useI18n();
   const category = categories.find((c) => c.slug === slug);
-  const categoryAgents = agents.filter((a) => a.category === slug);
+  const { data: agents = [] } = useAgents();
+  const categoryAgents = useMemo(() => agents.filter((a) => a.category === slug), [agents, slug]);
 
   return (
     <div className="container py-12">

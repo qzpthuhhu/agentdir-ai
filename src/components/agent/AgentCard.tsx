@@ -71,23 +71,23 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
         {/* Metadata row - different for open source vs commercial */}
         <div className="flex flex-col gap-1.5 mb-4">
           {/* Provider / Author */}
-          <span className="text-sm font-medium text-foreground">{agent.provider}</span>
+          <span className="text-sm font-medium text-foreground">{agent.provider || "—"}</span>
           
           {isOpenSource ? (
-            /* Open Source: GitHub stars + Language */
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              {agent.githubStars !== undefined && (
-                <span className="flex items-center gap-1">
-                  GitHub 
-                  <span className="text-amber-500">★</span> {formatStars(agent.githubStars)}
-                </span>
-              )}
-              {agent.language && (
-                <span className="flex items-center gap-1.5">
-                  <div className={`h-2 w-2 rounded-full ${langColors[agent.language] || "bg-muted-foreground"}`} />
-                  {agent.language}
-                </span>
-              )}
+            <div className="flex flex-col gap-1 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1">
+                GitHub <span className="text-primary">★</span> {agent.githubUrl ? formatStars(agent.githubStars) : "—"}
+              </span>
+              <span className="flex items-center gap-1.5">
+                {agent.language ? (
+                  <>
+                    <div className={`h-2 w-2 rounded-full ${langColors[agent.language] || "bg-muted-foreground"}`} />
+                    {agent.language}
+                  </>
+                ) : (
+                  "—"
+                )}
+              </span>
             </div>
           ) : (
             /* Commercial: Pricing + Ecosystem */

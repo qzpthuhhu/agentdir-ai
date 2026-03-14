@@ -25,6 +25,7 @@ export interface Agent {
   reviewCount: number;
   imageUrl: string;
   website: string;
+  githubUrl?: string;
   features: string[];
   useCases: string[];
   createdAt: string;

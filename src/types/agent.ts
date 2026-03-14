@@ -14,6 +14,8 @@ export interface Agent {
   features: string[];
   useCases: string[];
   createdAt: string;
+  githubStars?: number;
+  language?: string;
 }
 
 export interface Category {

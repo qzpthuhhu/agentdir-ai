@@ -81,6 +81,9 @@ const AgentsPage = () => {
     if (sortBy === "newest") {
       return [...list].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     }
+    if (sortBy === "name") {
+      return [...list].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
+    }
     return list;
   }, [search, selectedTypes, selectedArchitectures, selectedDomains, selectedEcosystems, selectedLanguages, openSourceOnly, agents, sortBy]);
 

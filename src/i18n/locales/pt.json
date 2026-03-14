@@ -19,15 +19,24 @@
   },
   "categories": {
     "title": "Explorar por Categoria",
-    "subtitle": "Encontre o agente certo para seu caso de uso",
-    "coding": "Programação",
-    "writing": "Escrita",
-    "image": "Imagem e Visão",
-    "data": "Dados e Análise",
-    "chatbot": "Chatbots",
-    "automation": "Automação",
-    "language": "Idiomas",
-    "security": "Segurança"
+    "subtitle": "Encontre o agente certo para seu caso de uso"
+  },
+  "ecosystem": {
+    "title": "Ecossistema de Agentes IA",
+    "subtitle": "Explore agentes por origem e ecossistema"
+  },
+  "browse": {
+    "browseBy": "Explorar por",
+    "agentType": "Tipo de Agente",
+    "architecture": "Arquitetura",
+    "domain": "Domínio",
+    "ecosystem": "Ecossistema",
+    "language": "Linguagem",
+    "filters": "Filtros",
+    "clearAll": "Limpar tudo",
+    "activeFilters": "Filtros ativos",
+    "agentsFound": "agentes encontrados",
+    "openSourceOnly": "Apenas Open Source"
   },
   "agents": {
     "title": "Explorar Agentes IA",
@@ -38,14 +47,18 @@
     "stars": "estrelas"
   },
   "detail": {
-    "back": "Voltar para agentes",
+    "back": "Voltar aos agentes",
     "about": "Sobre",
     "features": "Recursos",
     "useCases": "Casos de Uso",
     "visitWebsite": "Visitar Site",
     "tags": "Tags",
     "category": "Categoria",
-    "notFound": "Agente não encontrado."
+    "notFound": "Agente não encontrado.",
+    "ecosystem": "Ecossistema",
+    "provider": "Provedor",
+    "architecture": "Arquitetura",
+    "domains": "Domínios"
   },
   "compare": {
     "title": "Comparar Agentes",

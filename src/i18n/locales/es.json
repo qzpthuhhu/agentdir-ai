@@ -19,15 +19,24 @@
   },
   "categories": {
     "title": "Explorar por Categoría",
-    "subtitle": "Encuentra el agente adecuado para tu caso de uso",
-    "coding": "Programación",
-    "writing": "Escritura",
-    "image": "Imagen y Visión",
-    "data": "Datos y Analítica",
-    "chatbot": "Chatbots",
-    "automation": "Automatización",
-    "language": "Idiomas",
-    "security": "Seguridad"
+    "subtitle": "Encuentra el agente adecuado para tu caso de uso"
+  },
+  "ecosystem": {
+    "title": "Ecosistema de Agentes IA",
+    "subtitle": "Explora agentes por su origen y ecosistema"
+  },
+  "browse": {
+    "browseBy": "Explorar por",
+    "agentType": "Tipo de Agente",
+    "architecture": "Arquitectura",
+    "domain": "Dominio",
+    "ecosystem": "Ecosistema",
+    "language": "Lenguaje",
+    "filters": "Filtros",
+    "clearAll": "Limpiar todo",
+    "activeFilters": "Filtros activos",
+    "agentsFound": "agentes encontrados",
+    "openSourceOnly": "Solo código abierto"
   },
   "agents": {
     "title": "Explorar Agentes IA",
@@ -45,7 +54,11 @@
     "visitWebsite": "Visitar Sitio Web",
     "tags": "Etiquetas",
     "category": "Categoría",
-    "notFound": "Agente no encontrado."
+    "notFound": "Agente no encontrado.",
+    "ecosystem": "Ecosistema",
+    "provider": "Proveedor",
+    "architecture": "Arquitectura",
+    "domains": "Dominios"
   },
   "compare": {
     "title": "Comparar Agentes",

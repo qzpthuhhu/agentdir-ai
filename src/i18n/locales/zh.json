@@ -19,15 +19,24 @@
   },
   "categories": {
     "title": "按类别浏览",
-    "subtitle": "找到适合您用途的 Agent",
-    "coding": "编程",
-    "writing": "写作",
-    "image": "图像与视觉",
-    "data": "数据与分析",
-    "chatbot": "聊天机器人",
-    "automation": "自动化",
-    "language": "语言",
-    "security": "安全"
+    "subtitle": "找到适合您用途的Agent"
+  },
+  "ecosystem": {
+    "title": "AI Agent 生态系统",
+    "subtitle": "按来源和生态系统探索Agent"
+  },
+  "browse": {
+    "browseBy": "浏览方式",
+    "agentType": "Agent类型",
+    "architecture": "架构",
+    "domain": "领域",
+    "ecosystem": "生态系统",
+    "language": "编程语言",
+    "filters": "筛选",
+    "clearAll": "清除全部",
+    "activeFilters": "已选筛选",
+    "agentsFound": "个Agent",
+    "openSourceOnly": "仅开源"
   },
   "agents": {
     "title": "探索 AI Agent",
@@ -38,14 +47,18 @@
     "stars": "星标"
   },
   "detail": {
-    "back": "返回 Agent 列表",
+    "back": "返回Agent列表",
     "about": "关于",
     "features": "功能",
     "useCases": "使用场景",
     "visitWebsite": "访问网站",
     "tags": "标签",
     "category": "类别",
-    "notFound": "未找到该 Agent。"
+    "notFound": "未找到该Agent。",
+    "ecosystem": "生态系统",
+    "provider": "提供商",
+    "architecture": "架构",
+    "domains": "领域"
   },
   "compare": {
     "title": "对比 Agent",

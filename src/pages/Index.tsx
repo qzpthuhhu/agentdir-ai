@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, TrendingUp, Zap } from "lucide-react";
+import { ArrowRight, Sparkles, TrendingUp, Zap, Globe2, Rocket, Building2, Flag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { agents, categories } from "@/lib/mock-data";
+import { agents, categories, ecosystems } from "@/lib/mock-data";
 import AgentCard from "@/components/agent/AgentCard";
 import CategoryBadge from "@/components/agent/CategoryBadge";
 import SearchBar from "@/components/search/SearchBar";
@@ -9,6 +9,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useI18n } from "@/i18n/context";
+
+const ecosystemIcons: Record<string, React.ReactNode> = {
+  "open-source": <Globe2 className="h-6 w-6 text-primary" />,
+  "startup": <Rocket className="h-6 w-6 text-accent" />,
+  "big-tech": <Building2 className="h-6 w-6 text-secondary-foreground" />,
+  "china-ai": <Flag className="h-6 w-6 text-destructive" />,
+};
+
+const ecosystemGradients: Record<string, string> = {
+  "open-source": "from-primary/20 to-primary/5",
+  "startup": "from-accent/20 to-accent/5",
+  "big-tech": "from-secondary to-muted",
+  "china-ai": "from-destructive/20 to-destructive/5",
+};
 
 const Index = () => {
   const [search, setSearch] = useState("");
@@ -60,6 +74,36 @@ const Index = () => {
               ))}
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* AI Agent Ecosystem */}
+      <section className="container py-20">
+        <div className="text-center mb-12">
+          <h2 className="font-display text-3xl md:text-4xl font-bold mb-3">{t("ecosystem.title")}</h2>
+          <p className="text-muted-foreground max-w-lg mx-auto">{t("ecosystem.subtitle")}</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {ecosystems.map((eco, i) => (
+            <motion.div
+              key={eco.slug}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+            >
+              <Link
+                to={`/agents?ecosystem=${eco.slug}`}
+                className="glass rounded-xl p-6 hover:border-primary/40 transition-all group block h-full"
+              >
+                <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${ecosystemGradients[eco.slug]} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  {ecosystemIcons[eco.slug]}
+                </div>
+                <h3 className="font-semibold text-lg mb-1.5 group-hover:text-primary transition-colors">{eco.name}</h3>
+                <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{eco.description}</p>
+                <span className="text-xs font-mono text-primary">{eco.agentCount} agents →</span>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </section>
 

@@ -211,6 +211,7 @@ const AgentsPage = () => {
                   <SelectItem value="relevant">Most Relevant</SelectItem>
                   <SelectItem value="stars" disabled={!hasOpenSourceInView}>GitHub Stars</SelectItem>
                   <SelectItem value="newest">Newest</SelectItem>
+                  <SelectItem value="name">Name (A–Z)</SelectItem>
                 </SelectContent>
               </Select>
             </div>

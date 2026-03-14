@@ -51,10 +51,14 @@
     "about": "परिचय",
     "features": "विशेषताएं",
     "useCases": "उपयोग के मामले",
-    "visitWebsite": "वेबसाइट देखें",
+    "visitWebsite": "वेबसाइट पर जाएं",
     "tags": "टैग",
     "category": "श्रेणी",
-    "notFound": "एजेंट नहीं मिला।"
+    "notFound": "एजेंट नहीं मिला।",
+    "ecosystem": "इकोसिस्टम",
+    "provider": "प्रदाता",
+    "architecture": "आर्किटेक्चर",
+    "domains": "डोमेन"
   },
   "compare": {
     "title": "एजेंट तुलना",

@@ -51,10 +51,14 @@
     "about": "概要",
     "features": "機能",
     "useCases": "ユースケース",
-    "visitWebsite": "ウェブサイトへ",
+    "visitWebsite": "Webサイトを訪問",
     "tags": "タグ",
     "category": "カテゴリ",
-    "notFound": "エージェントが見つかりません。"
+    "notFound": "エージェントが見つかりません。",
+    "ecosystem": "エコシステム",
+    "provider": "プロバイダー",
+    "architecture": "アーキテクチャ",
+    "domains": "ドメイン"
   },
   "compare": {
     "title": "エージェント比較",

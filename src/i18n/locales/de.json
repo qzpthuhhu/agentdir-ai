@@ -54,7 +54,11 @@
     "visitWebsite": "Website besuchen",
     "tags": "Tags",
     "category": "Kategorie",
-    "notFound": "Agent nicht gefunden."
+    "notFound": "Agent nicht gefunden.",
+    "ecosystem": "Ökosystem",
+    "provider": "Anbieter",
+    "architecture": "Architektur",
+    "domains": "Domänen"
   },
   "compare": {
     "title": "Agenten vergleichen",

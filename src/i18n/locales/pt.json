@@ -47,14 +47,18 @@
     "stars": "estrelas"
   },
   "detail": {
-    "back": "Voltar para agentes",
+    "back": "Voltar aos agentes",
     "about": "Sobre",
     "features": "Recursos",
     "useCases": "Casos de Uso",
     "visitWebsite": "Visitar Site",
     "tags": "Tags",
     "category": "Categoria",
-    "notFound": "Agente não encontrado."
+    "notFound": "Agente não encontrado.",
+    "ecosystem": "Ecossistema",
+    "provider": "Provedor",
+    "architecture": "Arquitetura",
+    "domains": "Domínios"
   },
   "compare": {
     "title": "Comparar Agentes",

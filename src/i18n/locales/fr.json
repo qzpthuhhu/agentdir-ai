@@ -50,11 +50,15 @@
     "back": "Retour aux agents",
     "about": "À propos",
     "features": "Fonctionnalités",
-    "useCases": "Cas d'usage",
-    "visitWebsite": "Visiter le site",
+    "useCases": "Cas d'Usage",
+    "visitWebsite": "Visiter le Site",
     "tags": "Tags",
     "category": "Catégorie",
-    "notFound": "Agent non trouvé."
+    "notFound": "Agent non trouvé.",
+    "ecosystem": "Écosystème",
+    "provider": "Fournisseur",
+    "architecture": "Architecture",
+    "domains": "Domaines"
   },
   "compare": {
     "title": "Comparer les Agents",

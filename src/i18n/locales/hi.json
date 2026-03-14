@@ -19,15 +19,24 @@
   },
   "categories": {
     "title": "श्रेणी के अनुसार ब्राउज़ करें",
-    "subtitle": "अपने उपयोग के लिए सही एजेंट खोजें",
-    "coding": "कोडिंग",
-    "writing": "लेखन",
-    "image": "छवि और विज़न",
-    "data": "डेटा और एनालिटिक्स",
-    "chatbot": "चैटबॉट",
-    "automation": "ऑटोमेशन",
-    "language": "भाषा",
-    "security": "सुरक्षा"
+    "subtitle": "अपने उपयोग के लिए सही एजेंट खोजें"
+  },
+  "ecosystem": {
+    "title": "AI एजेंट इकोसिस्टम",
+    "subtitle": "मूल और इकोसिस्टम के अनुसार एजेंट एक्सप्लोर करें"
+  },
+  "browse": {
+    "browseBy": "ब्राउज़ करें",
+    "agentType": "एजेंट प्रकार",
+    "architecture": "आर्किटेक्चर",
+    "domain": "डोमेन",
+    "ecosystem": "इकोसिस्टम",
+    "language": "प्रोग्रामिंग भाषा",
+    "filters": "फ़िल्टर",
+    "clearAll": "सभी साफ़ करें",
+    "activeFilters": "सक्रिय फ़िल्टर",
+    "agentsFound": "एजेंट मिले",
+    "openSourceOnly": "केवल ओपन सोर्स"
   },
   "agents": {
     "title": "AI एजेंट एक्सप्लोर करें",

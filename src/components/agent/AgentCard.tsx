@@ -76,7 +76,7 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
           {isOpenSource ? (
             <div className="flex flex-col gap-1 text-xs text-muted-foreground">
               <span className="flex items-center gap-1">
-                GitHub <span className="text-primary">★</span> {agent.githubUrl ? formatStars(agent.githubStars) : "—"}
+                GitHub <span className="text-primary">★</span> {formatStars(agent.githubStars)}
               </span>
               <span className="flex items-center gap-1.5">
                 {agent.language ? (

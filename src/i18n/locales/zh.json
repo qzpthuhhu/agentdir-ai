@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "explore": "探索",
+    "compare": "对比",
+    "search": "搜索",
+    "submit": "提交 Agent"
+  },
+  "hero": {
+    "badge": "发现 200+ AI Agent",
+    "title1": "开发者的",
+    "title2": "AI Agent 中心",
+    "subtitle": "探索、比较和集成最强大的 AI Agent。由开发者打造，为开发者服务。",
+    "searchPlaceholder": "按名称、类别或功能搜索 Agent..."
+  },
+  "featured": {
+    "title": "热门 Agent",
+    "subtitle": "本周最受欢迎的 AI Agent — 由社区精选",
+    "viewAll": "查看全部"
+  },
+  "categories": {
+    "title": "按类别浏览",
+    "subtitle": "找到适合您用途的 Agent",
+    "coding": "编程",
+    "writing": "写作",
+    "image": "图像与视觉",
+    "data": "数据与分析",
+    "chatbot": "聊天机器人",
+    "automation": "自动化",
+    "language": "语言",
+    "security": "安全"
+  },
+  "agents": {
+    "title": "探索 AI Agent",
+    "subtitle": "浏览我们精心策划的 AI Agent 合集",
+    "all": "全部",
+    "noResults": "没有找到匹配的 Agent。",
+    "reviews": "评价",
+    "stars": "星标"
+  },
+  "detail": {
+    "back": "返回 Agent 列表",
+    "about": "关于",
+    "features": "功能",
+    "useCases": "使用场景",
+    "visitWebsite": "访问网站",
+    "tags": "标签",
+    "category": "类别",
+    "notFound": "未找到该 Agent。"
+  },
+  "compare": {
+    "title": "对比 Agent",
+    "subtitle": "选择最多 4 个 Agent 进行并排对比",
+    "addAgent": "添加 Agent：",
+    "feature": "特性",
+    "rating": "评分",
+    "pricing": "定价",
+    "category": "类别",
+    "features": "功能",
+    "reviewsLabel": "评价数",
+    "empty": "请在上方选择 Agent 开始对比。"
+  },
+  "search": {
+    "title": "搜索",
+    "subtitle": "找到最适合您需求的 AI Agent",
+    "popularTags": "热门标签：",
+    "results": "为 \"{query}\" 找到 {count} 个结果"
+  },
+  "submit": {
+    "title": "提交 Agent",
+    "subtitle": "知道一个优秀的 AI Agent？提交到我们的目录中。",
+    "name": "Agent 名称",
+    "namePlaceholder": "例如 ChatGPT",
+    "tagline": "简介",
+    "taglinePlaceholder": "简短描述",
+    "description": "详细描述",
+    "descriptionPlaceholder": "告诉我们更多关于这个 Agent 的信息...",
+    "category": "类别",
+    "categoryPlaceholder": "选择类别",
+    "pricing": "定价",
+    "pricingPlaceholder": "选择定价",
+    "website": "网站 URL",
+    "websitePlaceholder": "https://example.com",
+    "submitButton": "提交 Agent",
+    "successTitle": "Agent 已提交！",
+    "successDesc": "{name} 已提交审核。"
+  },
+  "footer": {
+    "tagline": "发现、比较和选择最佳的 AI Agent。",
+    "explore": "探索",
+    "allAgents": "所有 Agent",
+    "categoriesLink": "类别",
+    "compareLink": "对比",
+    "community": "社区",
+    "submitAgent": "提交 Agent",
+    "blog": "博客（即将推出）",
+    "legal": "法律",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "copyright": "© 2024 AgentDir. 保留所有权利。"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "页面未找到",
+    "back": "返回首页"
+  },
+  "language": {
+    "label": "语言"
+  }
+}

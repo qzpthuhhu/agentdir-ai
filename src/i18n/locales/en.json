@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "explore": "Explore",
+    "compare": "Compare",
+    "search": "Search",
+    "submit": "Submit Agent"
+  },
+  "hero": {
+    "badge": "Discover 200+ AI Agents",
+    "title1": "The Developer's",
+    "title2": "AI Agent Hub",
+    "subtitle": "Explore, compare, and integrate the most powerful AI agents. Built by developers, for developers.",
+    "searchPlaceholder": "Search agents by name, category, or capability..."
+  },
+  "featured": {
+    "title": "Trending Agents",
+    "subtitle": "The most popular AI agents this week — hand-picked by the community",
+    "viewAll": "View all"
+  },
+  "categories": {
+    "title": "Browse by Category",
+    "subtitle": "Find the right agent for your use case",
+    "coding": "Coding",
+    "writing": "Writing",
+    "image": "Image & Vision",
+    "data": "Data & Analytics",
+    "chatbot": "Chatbots",
+    "automation": "Automation",
+    "language": "Language",
+    "security": "Security"
+  },
+  "agents": {
+    "title": "Explore AI Agents",
+    "subtitle": "Browse our curated collection of AI agents",
+    "all": "All",
+    "noResults": "No agents found matching your criteria.",
+    "reviews": "reviews",
+    "stars": "stars"
+  },
+  "detail": {
+    "back": "Back to agents",
+    "about": "About",
+    "features": "Features",
+    "useCases": "Use Cases",
+    "visitWebsite": "Visit Website",
+    "tags": "Tags",
+    "category": "Category",
+    "notFound": "Agent not found."
+  },
+  "compare": {
+    "title": "Compare Agents",
+    "subtitle": "Select up to 4 agents to compare side by side",
+    "addAgent": "Add an agent:",
+    "feature": "Feature",
+    "rating": "Rating",
+    "pricing": "Pricing",
+    "category": "Category",
+    "features": "Features",
+    "reviewsLabel": "Reviews",
+    "empty": "Select agents above to begin comparing."
+  },
+  "search": {
+    "title": "Search",
+    "subtitle": "Find the perfect AI agent for your needs",
+    "popularTags": "Popular tags:",
+    "results": "{count} result(s) for \"{query}\""
+  },
+  "submit": {
+    "title": "Submit an Agent",
+    "subtitle": "Know a great AI agent? Submit it to our directory.",
+    "name": "Agent Name",
+    "namePlaceholder": "e.g. ChatGPT",
+    "tagline": "Tagline",
+    "taglinePlaceholder": "A short description",
+    "description": "Description",
+    "descriptionPlaceholder": "Tell us more about this agent...",
+    "category": "Category",
+    "categoryPlaceholder": "Select category",
+    "pricing": "Pricing",
+    "pricingPlaceholder": "Select pricing",
+    "website": "Website URL",
+    "websitePlaceholder": "https://example.com",
+    "submitButton": "Submit Agent",
+    "successTitle": "Agent submitted!",
+    "successDesc": "{name} has been submitted for review."
+  },
+  "footer": {
+    "tagline": "Discover, compare, and choose the best AI agents for your needs.",
+    "explore": "Explore",
+    "allAgents": "All Agents",
+    "categoriesLink": "Categories",
+    "compareLink": "Compare",
+    "community": "Community",
+    "submitAgent": "Submit Agent",
+    "blog": "Blog (coming soon)",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "copyright": "© 2024 AgentDir. All rights reserved."
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oops! Page not found",
+    "back": "Return to Home"
+  },
+  "language": {
+    "label": "Language"
+  }
+}

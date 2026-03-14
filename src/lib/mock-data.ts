@@ -7,7 +7,8 @@ export const agents: Agent[] = [
     category: "coding", tags: ["coding", "productivity", "developer-tools"],
     pricing: "freemium", rating: 4.8, reviewCount: 2340, imageUrl: "",
     website: "https://example.com", features: ["Code generation", "Bug detection", "Refactoring suggestions", "Multi-language support"],
-    useCases: ["Web development", "API design", "Code review"], createdAt: "2024-01-15"
+    useCases: ["Web development", "API design", "Code review"], createdAt: "2024-01-15",
+    githubStars: 12400, language: "Python"
   },
   {
     id: "2", slug: "content-forge", name: "Content Forge", tagline: "AI-powered content creation engine",
@@ -15,7 +16,8 @@ export const agents: Agent[] = [
     category: "writing", tags: ["writing", "marketing", "content"],
     pricing: "paid", rating: 4.5, reviewCount: 1820, imageUrl: "",
     website: "https://example.com", features: ["Blog writing", "Social media posts", "SEO optimization", "Brand voice matching"],
-    useCases: ["Content marketing", "Social media management", "SEO"], createdAt: "2024-02-20"
+    useCases: ["Content marketing", "Social media management", "SEO"], createdAt: "2024-02-20",
+    githubStars: 3200, language: "TypeScript"
   },
   {
     id: "3", slug: "vision-lens", name: "Vision Lens", tagline: "See the world through AI eyes",
@@ -23,7 +25,8 @@ export const agents: Agent[] = [
     category: "image", tags: ["image", "computer-vision", "analytics"],
     pricing: "enterprise", rating: 4.7, reviewCount: 980, imageUrl: "",
     website: "https://example.com", features: ["Object detection", "Scene analysis", "OCR", "Image generation"],
-    useCases: ["Quality control", "Medical imaging", "Security"], createdAt: "2024-03-10"
+    useCases: ["Quality control", "Medical imaging", "Security"], createdAt: "2024-03-10",
+    githubStars: 8900, language: "Python"
   },
   {
     id: "4", slug: "data-whisperer", name: "Data Whisperer", tagline: "Turn raw data into insights",
@@ -31,7 +34,8 @@ export const agents: Agent[] = [
     category: "data", tags: ["data", "analytics", "business-intelligence"],
     pricing: "freemium", rating: 4.6, reviewCount: 1560, imageUrl: "",
     website: "https://example.com", features: ["Natural language queries", "Auto-visualization", "Anomaly detection", "Report generation"],
-    useCases: ["Business analytics", "Financial reporting", "Market research"], createdAt: "2024-01-28"
+    useCases: ["Business analytics", "Financial reporting", "Market research"], createdAt: "2024-01-28",
+    githubStars: 5600, language: "Go"
   },
   {
     id: "5", slug: "chat-symphony", name: "Chat Symphony", tagline: "Orchestrate perfect conversations",
@@ -39,7 +43,8 @@ export const agents: Agent[] = [
     category: "chatbot", tags: ["chatbot", "customer-support", "automation"],
     pricing: "paid", rating: 4.4, reviewCount: 2100, imageUrl: "",
     website: "https://example.com", features: ["Multi-turn dialogue", "Sentiment analysis", "Platform integration", "Custom training"],
-    useCases: ["Customer support", "Sales automation", "Internal helpdesk"], createdAt: "2024-02-05"
+    useCases: ["Customer support", "Sales automation", "Internal helpdesk"], createdAt: "2024-02-05",
+    githubStars: 4100, language: "JavaScript"
   },
   {
     id: "6", slug: "auto-flow", name: "AutoFlow", tagline: "Automate any workflow with AI",
@@ -47,7 +52,8 @@ export const agents: Agent[] = [
     category: "automation", tags: ["automation", "productivity", "workflow"],
     pricing: "free", rating: 4.3, reviewCount: 3200, imageUrl: "",
     website: "https://example.com", features: ["Workflow builder", "App integrations", "Smart triggers", "Error handling"],
-    useCases: ["Process automation", "Data entry", "Email workflows"], createdAt: "2024-03-01"
+    useCases: ["Process automation", "Data entry", "Email workflows"], createdAt: "2024-03-01",
+    githubStars: 15800, language: "Rust"
   },
   {
     id: "7", slug: "lingua-bridge", name: "Lingua Bridge", tagline: "Break every language barrier",
@@ -55,7 +61,8 @@ export const agents: Agent[] = [
     category: "language", tags: ["translation", "language", "communication"],
     pricing: "freemium", rating: 4.9, reviewCount: 4500, imageUrl: "",
     website: "https://example.com", features: ["100+ languages", "Real-time translation", "Context-aware", "Document translation"],
-    useCases: ["Global business", "Travel", "Content localization"], createdAt: "2024-01-10"
+    useCases: ["Global business", "Travel", "Content localization"], createdAt: "2024-01-10",
+    githubStars: 22100, language: "Python"
   },
   {
     id: "8", slug: "secure-sentinel", name: "Secure Sentinel", tagline: "AI-powered cybersecurity guardian",
@@ -63,7 +70,8 @@ export const agents: Agent[] = [
     category: "security", tags: ["security", "monitoring", "enterprise"],
     pricing: "enterprise", rating: 4.8, reviewCount: 870, imageUrl: "",
     website: "https://example.com", features: ["Threat detection", "Incident response", "Compliance monitoring", "Vulnerability scanning"],
-    useCases: ["Enterprise security", "Compliance", "Threat hunting"], createdAt: "2024-02-14"
+    useCases: ["Enterprise security", "Compliance", "Threat hunting"], createdAt: "2024-02-14",
+    githubStars: 9700, language: "Go"
   },
 ];
 

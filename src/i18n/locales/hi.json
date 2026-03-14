@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "explore": "एक्सप्लोर",
+    "compare": "तुलना",
+    "search": "खोजें",
+    "submit": "एजेंट जमा करें"
+  },
+  "hero": {
+    "badge": "200+ AI एजेंट खोजें",
+    "title1": "डेवलपर का",
+    "title2": "AI एजेंट हब",
+    "subtitle": "सबसे शक्तिशाली AI एजेंट्स को खोजें, तुलना करें और एकीकृत करें। डेवलपर्स द्वारा, डेवलपर्स के लिए।",
+    "searchPlaceholder": "नाम, श्रेणी या क्षमता से एजेंट खोजें..."
+  },
+  "featured": {
+    "title": "ट्रेंडिंग एजेंट",
+    "subtitle": "इस सप्ताह के सबसे लोकप्रिय AI एजेंट",
+    "viewAll": "सभी देखें"
+  },
+  "categories": {
+    "title": "श्रेणी के अनुसार ब्राउज़ करें",
+    "subtitle": "अपने उपयोग के लिए सही एजेंट खोजें",
+    "coding": "कोडिंग",
+    "writing": "लेखन",
+    "image": "छवि और विज़न",
+    "data": "डेटा और एनालिटिक्स",
+    "chatbot": "चैटबॉट",
+    "automation": "ऑटोमेशन",
+    "language": "भाषा",
+    "security": "सुरक्षा"
+  },
+  "agents": {
+    "title": "AI एजेंट एक्सप्लोर करें",
+    "subtitle": "हमारे क्यूरेटेड AI एजेंट संग्रह ब्राउज़ करें",
+    "all": "सभी",
+    "noResults": "कोई एजेंट नहीं मिला।",
+    "reviews": "समीक्षाएं",
+    "stars": "स्टार्स"
+  },
+  "detail": {
+    "back": "एजेंट्स पर वापस",
+    "about": "परिचय",
+    "features": "विशेषताएं",
+    "useCases": "उपयोग के मामले",
+    "visitWebsite": "वेबसाइट देखें",
+    "tags": "टैग",
+    "category": "श्रेणी",
+    "notFound": "एजेंट नहीं मिला।"
+  },
+  "compare": {
+    "title": "एजेंट तुलना",
+    "subtitle": "तुलना के लिए 4 तक एजेंट चुनें",
+    "addAgent": "एजेंट जोड़ें:",
+    "feature": "विशेषता",
+    "rating": "रेटिंग",
+    "pricing": "मूल्य",
+    "category": "श्रेणी",
+    "features": "विशेषताएं",
+    "reviewsLabel": "समीक्षाएं",
+    "empty": "तुलना शुरू करने के लिए ऊपर से एजेंट चुनें।"
+  },
+  "search": {
+    "title": "खोजें",
+    "subtitle": "अपनी ज़रूरतों के लिए सही AI एजेंट खोजें",
+    "popularTags": "लोकप्रिय टैग:",
+    "results": "\"{query}\" के लिए {count} परिणाम"
+  },
+  "submit": {
+    "title": "एजेंट जमा करें",
+    "subtitle": "एक बेहतरीन AI एजेंट जानते हैं? हमारी डायरेक्टरी में जमा करें।",
+    "name": "एजेंट का नाम",
+    "namePlaceholder": "उदा. ChatGPT",
+    "tagline": "टैगलाइन",
+    "taglinePlaceholder": "संक्षिप्त विवरण",
+    "description": "विवरण",
+    "descriptionPlaceholder": "इस एजेंट के बारे में और बताएं...",
+    "category": "श्रेणी",
+    "categoryPlaceholder": "श्रेणी चुनें",
+    "pricing": "मूल्य",
+    "pricingPlaceholder": "मूल्य चुनें",
+    "website": "वेबसाइट URL",
+    "websitePlaceholder": "https://example.com",
+    "submitButton": "एजेंट जमा करें",
+    "successTitle": "एजेंट जमा हो गया!",
+    "successDesc": "{name} समीक्षा के लिए जमा किया गया है।"
+  },
+  "footer": {
+    "tagline": "सर्वश्रेष्ठ AI एजेंट खोजें, तुलना करें और चुनें।",
+    "explore": "एक्सप्लोर",
+    "allAgents": "सभी एजेंट",
+    "categoriesLink": "श्रेणियां",
+    "compareLink": "तुलना",
+    "community": "समुदाय",
+    "submitAgent": "एजेंट जमा करें",
+    "blog": "ब्लॉग (जल्द आ रहा है)",
+    "legal": "कानूनी",
+    "privacy": "गोपनीयता नीति",
+    "terms": "सेवा की शर्तें",
+    "copyright": "© 2024 AgentDir. सर्वाधिकार सुरक्षित।"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "पेज नहीं मिला!",
+    "back": "होम पर वापस जाएं"
+  },
+  "language": {
+    "label": "भाषा"
+  }
+}

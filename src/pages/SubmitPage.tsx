@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { categories } from "@/lib/mock-data";
 import { toast } from "sonner";
+import { useI18n } from "@/i18n/context";
 
 const SubmitPage = () => {
   const [name, setName] = useState("");
@@ -14,36 +15,37 @@ const SubmitPage = () => {
   const [category, setCategory] = useState("");
   const [website, setWebsite] = useState("");
   const [pricing, setPricing] = useState("");
+  const { t } = useI18n();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Agent submitted! We'll review it shortly.", { description: `${name} has been submitted for review.` });
+    toast.success(t("submit.successTitle"), { description: t("submit.successDesc", { name }) });
     setName(""); setTagline(""); setDescription(""); setCategory(""); setWebsite(""); setPricing("");
   };
 
   return (
     <div className="container py-12 max-w-2xl">
-      <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">Submit an Agent</h1>
-      <p className="text-muted-foreground mb-8">Know a great AI agent? Submit it to our directory.</p>
+      <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">{t("submit.title")}</h1>
+      <p className="text-muted-foreground mb-8">{t("submit.subtitle")}</p>
 
       <form onSubmit={handleSubmit} className="glass rounded-2xl p-8 space-y-6">
         <div className="grid gap-2">
-          <Label htmlFor="name">Agent Name</Label>
-          <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. ChatGPT" required />
+          <Label htmlFor="name">{t("submit.name")}</Label>
+          <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder={t("submit.namePlaceholder")} required />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="tagline">Tagline</Label>
-          <Input id="tagline" value={tagline} onChange={(e) => setTagline(e.target.value)} placeholder="A short description" required />
+          <Label htmlFor="tagline">{t("submit.tagline")}</Label>
+          <Input id="tagline" value={tagline} onChange={(e) => setTagline(e.target.value)} placeholder={t("submit.taglinePlaceholder")} required />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="description">Description</Label>
-          <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Tell us more about this agent..." rows={4} required />
+          <Label htmlFor="description">{t("submit.description")}</Label>
+          <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder={t("submit.descriptionPlaceholder")} rows={4} required />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="grid gap-2">
-            <Label>Category</Label>
+            <Label>{t("submit.category")}</Label>
             <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger><SelectValue placeholder="Select category" /></SelectTrigger>
+              <SelectTrigger><SelectValue placeholder={t("submit.categoryPlaceholder")} /></SelectTrigger>
               <SelectContent>
                 {categories.map((c) => (
                   <SelectItem key={c.slug} value={c.slug}>{c.name}</SelectItem>
@@ -52,9 +54,9 @@ const SubmitPage = () => {
             </Select>
           </div>
           <div className="grid gap-2">
-            <Label>Pricing</Label>
+            <Label>{t("submit.pricing")}</Label>
             <Select value={pricing} onValueChange={setPricing}>
-              <SelectTrigger><SelectValue placeholder="Select pricing" /></SelectTrigger>
+              <SelectTrigger><SelectValue placeholder={t("submit.pricingPlaceholder")} /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="free">Free</SelectItem>
                 <SelectItem value="freemium">Freemium</SelectItem>
@@ -65,10 +67,10 @@ const SubmitPage = () => {
           </div>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="website">Website URL</Label>
-          <Input id="website" value={website} onChange={(e) => setWebsite(e.target.value)} placeholder="https://example.com" type="url" required />
+          <Label htmlFor="website">{t("submit.website")}</Label>
+          <Input id="website" value={website} onChange={(e) => setWebsite(e.target.value)} placeholder={t("submit.websitePlaceholder")} type="url" required />
         </div>
-        <Button type="submit" className="w-full">Submit Agent</Button>
+        <Button type="submit" className="w-full glow-primary">{t("submit.submitButton")}</Button>
       </form>
     </div>
   );

@@ -58,11 +58,11 @@ const AgentsPage = () => {
   ];
 
   const browseItems = browseMode === "type" ? agentTypes : browseMode === "architecture" ? architectures : domains;
-  const browseSelected = browseMode === "type" ? selectedTypes : browseMode === "architecture" ? selectedArchitectures : selectedDomains;
+  const browseSelected: string[] = browseMode === "type" ? selectedTypes : browseMode === "architecture" ? selectedArchitectures : selectedDomains;
   const browseToggle = (slug: string) => {
-    if (browseMode === "type") toggleItem(selectedTypes, slug as AgentType, setSelectedTypes);
-    else if (browseMode === "architecture") toggleItem(selectedArchitectures, slug as Architecture, setSelectedArchitectures);
-    else toggleItem(selectedDomains, slug as Domain, setSelectedDomains);
+    if (browseMode === "type") toggleItem(selectedTypes, slug, setSelectedTypes);
+    else if (browseMode === "architecture") toggleItem(selectedArchitectures, slug, setSelectedArchitectures);
+    else toggleItem(selectedDomains, slug, setSelectedDomains);
   };
 
   return (

@@ -14,7 +14,7 @@ function transformAgent(row: any): Agent {
   const types = (row.agent_to_types || []).map((r: any) => r.agent_types);
   const archs = (row.agent_to_architectures || []).map((r: any) => r.agent_architectures);
   const domains = (row.agent_to_domains || []).map((r: any) => r.agent_domains);
-  const github = row.github_repos?.[0];
+  const github = Array.isArray(row.github_repos) ? row.github_repos[0] : row.github_repos;
   const primaryType = types.find((t: any) => t)?.slug || "assistant";
 
   return {
@@ -36,10 +36,11 @@ function transformAgent(row: any): Agent {
     reviewCount: row.review_count || 0,
     imageUrl: row.logo_url || "/placeholder.svg",
     website: row.website_url || "",
+    githubUrl: row.github_url || github?.repo_url || "",
     features: row.features || [],
     useCases: row.use_cases || [],
     createdAt: row.created_at,
-    githubStars: github?.stars || undefined,
+    githubStars: github?.stars ?? undefined,
     language: row.primary_language || github?.language || undefined,
     license: row.license || github?.license || undefined,
     isOpenSource: row.is_open_source || false,

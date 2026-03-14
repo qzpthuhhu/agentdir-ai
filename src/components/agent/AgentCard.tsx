@@ -20,7 +20,7 @@ const ecosystemLabels: Record<string, string> = {
 
 // Format GitHub stars with k/M suffix
 function formatStars(stars: number | undefined): string {
-  if (!stars) return "0";
+  if (stars === undefined || stars === null) return "—";
   if (stars >= 1_000_000) {
     return (stars / 1_000_000).toFixed(1) + "M";
   }

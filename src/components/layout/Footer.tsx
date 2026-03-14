@@ -11,9 +11,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">AI</span>
-              </div>
+              <img src={logoIcon} alt="AgentDir" className="h-8 w-8 rounded-lg" />
               <span className="font-display font-bold text-lg">AgentDir</span>
             </div>
             <p className="text-sm text-muted-foreground">{t("footer.tagline")}</p>

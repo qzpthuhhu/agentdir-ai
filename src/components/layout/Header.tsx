@@ -3,6 +3,7 @@ import { Search, Menu, X, Globe } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useI18n, LOCALE_LABELS, Locale } from "@/i18n/context";
+import logoIcon from "@/assets/logo-icon.png";
 import {
   DropdownMenu,
   DropdownMenuContent,

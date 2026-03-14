@@ -11,7 +11,7 @@ import { X, SlidersHorizontal } from "lucide-react";
 import type { AgentType, Architecture, Domain, Ecosystem } from "@/types/agent";
 
 type BrowseMode = "type" | "architecture" | "domain";
-type SortOption = "relevant" | "stars" | "newest";
+type SortOption = "relevant" | "stars" | "newest" | "name";
 
 const LANGUAGES = ["Python", "TypeScript", "JavaScript", "Go", "Rust"];
 

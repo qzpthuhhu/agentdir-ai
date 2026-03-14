@@ -3,6 +3,7 @@ import { Search, Menu, X, Globe } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useI18n, LOCALE_LABELS, Locale } from "@/i18n/context";
+import logoIcon from "@/assets/logo-icon.png";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,9 +26,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 glass">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2.5">
-          <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center glow-primary">
-            <span className="text-primary-foreground font-bold text-sm">AI</span>
-          </div>
+          <img src={logoIcon} alt="AgentDir" className="h-9 w-9 rounded-lg" />
           <span className="font-display font-bold text-xl tracking-tight">AgentDir</span>
         </Link>
 

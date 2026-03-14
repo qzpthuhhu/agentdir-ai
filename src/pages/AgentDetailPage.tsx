@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { agents } from "@/lib/mock-data";
+import { useAgent } from "@/hooks/use-agents";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, ExternalLink, ArrowLeft, GitFork } from "lucide-react";
@@ -8,7 +8,15 @@ import { useI18n } from "@/i18n/context";
 const AgentDetailPage = () => {
   const { slug } = useParams();
   const { t } = useI18n();
-  const agent = agents.find((a) => a.slug === slug);
+  const { data: agent, isLoading } = useAgent(slug);
+
+  if (isLoading) {
+    return (
+      <div className="container py-20 text-center">
+        <p className="text-muted-foreground text-lg">Loading...</p>
+      </div>
+    );
+  }
 
   if (!agent) {
     return (
@@ -81,8 +89,10 @@ const AgentDetailPage = () => {
           </div>
 
           <div className="space-y-4">
-            <Button className="w-full gap-2 glow-primary">
-              <ExternalLink className="h-4 w-4" /> {t("detail.visitWebsite")}
+            <Button className="w-full gap-2 glow-primary" asChild>
+              <a href={agent.website} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="h-4 w-4" /> {t("detail.visitWebsite")}
+              </a>
             </Button>
             <div className="glass rounded-xl p-5 space-y-3">
               <h3 className="font-semibold text-sm">{t("detail.tags")}</h3>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { agents } from "@/lib/mock-data";
+import { useAgents } from "@/hooks/use-agents";
 import { Agent } from "@/types/agent";
 import { Star, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,8 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/i18n/context";
 
 const ComparePage = () => {
-  const [selected, setSelected] = useState<Agent[]>([agents[0], agents[1]]);
+  const { data: agents = [] } = useAgents();
+  const [selected, setSelected] = useState<Agent[]>([]);
   const { t } = useI18n();
+
+  // Initialize with first two agents once loaded
+  if (selected.length === 0 && agents.length >= 2) {
+    setSelected([agents[0], agents[1]]);
+  }
 
   const addAgent = (agent: Agent) => {
     if (selected.length < 4 && !selected.find((s) => s.id === agent.id)) {

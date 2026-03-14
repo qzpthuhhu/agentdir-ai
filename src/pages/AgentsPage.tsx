@@ -25,8 +25,8 @@ const AgentsPage = () => {
   const [showFilters, setShowFilters] = useState(true);
   const { t } = useI18n();
 
-  const toggleItem = <T,>(arr: T[], item: T, setter: (v: T[]) => void) => {
-    setter(arr.includes(item) ? arr.filter(i => i !== item) : [...arr, item]);
+  const toggleItem = (arr: string[], item: string, setter: (v: any) => void) => {
+    setter(arr.includes(item) ? arr.filter((i: string) => i !== item) : [...arr, item]);
   };
 
   const activeFilterCount = selectedTypes.length + selectedArchitectures.length + selectedDomains.length + selectedEcosystems.length + selectedLanguages.length + (openSourceOnly ? 1 : 0);

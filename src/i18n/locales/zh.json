@@ -47,14 +47,18 @@
     "stars": "星标"
   },
   "detail": {
-    "back": "返回 Agent 列表",
+    "back": "返回Agent列表",
     "about": "关于",
     "features": "功能",
     "useCases": "使用场景",
     "visitWebsite": "访问网站",
     "tags": "标签",
     "category": "类别",
-    "notFound": "未找到该 Agent。"
+    "notFound": "未找到该Agent。",
+    "ecosystem": "生态系统",
+    "provider": "提供商",
+    "architecture": "架构",
+    "domains": "领域"
   },
   "compare": {
     "title": "对比 Agent",

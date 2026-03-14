@@ -19,15 +19,24 @@
   },
   "categories": {
     "title": "Explorer par Catégorie",
-    "subtitle": "Trouvez l'agent adapté à votre cas d'usage",
-    "coding": "Programmation",
-    "writing": "Rédaction",
-    "image": "Image & Vision",
-    "data": "Données & Analytique",
-    "chatbot": "Chatbots",
-    "automation": "Automatisation",
-    "language": "Langues",
-    "security": "Sécurité"
+    "subtitle": "Trouvez l'agent adapté à votre cas d'usage"
+  },
+  "ecosystem": {
+    "title": "Écosystème des Agents IA",
+    "subtitle": "Explorez les agents par origine et écosystème"
+  },
+  "browse": {
+    "browseBy": "Explorer par",
+    "agentType": "Type d'Agent",
+    "architecture": "Architecture",
+    "domain": "Domaine",
+    "ecosystem": "Écosystème",
+    "language": "Langage",
+    "filters": "Filtres",
+    "clearAll": "Tout effacer",
+    "activeFilters": "Filtres actifs",
+    "agentsFound": "agents trouvés",
+    "openSourceOnly": "Open Source uniquement"
   },
   "agents": {
     "title": "Explorer les Agents IA",

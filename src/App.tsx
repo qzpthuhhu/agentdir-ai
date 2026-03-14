@@ -15,6 +15,9 @@ import ComparePage from "./pages/ComparePage";
 import SearchPage from "./pages/SearchPage";
 import SubmitPage from "./pages/SubmitPage";
 import NotFound from "./pages/NotFound";
+import AdminAgentsList from "./pages/admin/AdminAgentsList";
+import AdminCreateAgent from "./pages/admin/AdminCreateAgent";
+import AdminEditAgent from "./pages/admin/AdminEditAgent";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +40,9 @@ const App = () => (
                 <Route path="/compare" element={<ComparePage />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/submit" element={<SubmitPage />} />
+                <Route path="/admin/agents" element={<AdminAgentsList />} />
+                <Route path="/admin/agents/new" element={<AdminCreateAgent />} />
+                <Route path="/admin/agents/:id/edit" element={<AdminEditAgent />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

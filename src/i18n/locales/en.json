@@ -6,10 +6,10 @@
     "submit": "Submit Agent"
   },
   "hero": {
-    "badge": "Discover 200+ AI Agents",
-    "title1": "The Developer's",
-    "title2": "AI Agent Hub",
-    "subtitle": "Explore, compare, and integrate the most powerful AI agents. Built by developers, for developers.",
+    "badge": "Discover AI Agents",
+    "title1": "Discover the",
+    "title2": "Best AI Agents",
+    "subtitle": "Explore, compare, and discover the latest AI agents, tools, and autonomous systems from startups, open-source communities, and leading AI companies.",
     "searchPlaceholder": "Search agents by name, category, or capability..."
   },
   "featured": {

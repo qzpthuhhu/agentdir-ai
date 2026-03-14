@@ -49,16 +49,40 @@ const AgentsPage = () => {
     setOpenSourceOnly(false);
   };
 
-  const filtered = useMemo(() => agents.filter((a) => {
-    const matchesSearch = !search || a.name.toLowerCase().includes(search.toLowerCase()) || a.tagline.toLowerCase().includes(search.toLowerCase());
-    const matchesType = selectedTypes.length === 0 || selectedTypes.includes(a.agentType);
-    const matchesArch = selectedArchitectures.length === 0 || a.architectures.some(ar => selectedArchitectures.includes(ar));
-    const matchesDomain = selectedDomains.length === 0 || a.domains.some(d => selectedDomains.includes(d));
-    const matchesEco = selectedEcosystems.length === 0 || selectedEcosystems.includes(a.ecosystem as any);
-    const matchesLang = selectedLanguages.length === 0 || (a.language && selectedLanguages.includes(a.language));
-    const matchesOS = !openSourceOnly || a.isOpenSource;
-    return matchesSearch && matchesType && matchesArch && matchesDomain && matchesEco && matchesLang && matchesOS;
-  }), [search, selectedTypes, selectedArchitectures, selectedDomains, selectedEcosystems, selectedLanguages, openSourceOnly, agents]);
+  const hasOpenSourceInView = useMemo(() => {
+    return agents.some(a => {
+      const matchesSearch = !search || a.name.toLowerCase().includes(search.toLowerCase()) || a.tagline.toLowerCase().includes(search.toLowerCase());
+      const matchesEco = selectedEcosystems.length === 0 || selectedEcosystems.includes(a.ecosystem as any);
+      const matchesOS = !openSourceOnly || a.isOpenSource;
+      return matchesSearch && matchesEco && matchesOS && a.isOpenSource;
+    });
+  }, [agents, search, selectedEcosystems, openSourceOnly]);
+
+  const filtered = useMemo(() => {
+    const list = agents.filter((a) => {
+      const matchesSearch = !search || a.name.toLowerCase().includes(search.toLowerCase()) || a.tagline.toLowerCase().includes(search.toLowerCase());
+      const matchesType = selectedTypes.length === 0 || selectedTypes.includes(a.agentType);
+      const matchesArch = selectedArchitectures.length === 0 || a.architectures.some(ar => selectedArchitectures.includes(ar));
+      const matchesDomain = selectedDomains.length === 0 || a.domains.some(d => selectedDomains.includes(d));
+      const matchesEco = selectedEcosystems.length === 0 || selectedEcosystems.includes(a.ecosystem as any);
+      const matchesLang = selectedLanguages.length === 0 || (a.language && selectedLanguages.includes(a.language));
+      const matchesOS = !openSourceOnly || a.isOpenSource;
+      return matchesSearch && matchesType && matchesArch && matchesDomain && matchesEco && matchesLang && matchesOS;
+    });
+
+    if (sortBy === "stars") {
+      return [...list].sort((a, b) => {
+        // Open-source with stars first, then the rest
+        const aScore = a.isOpenSource ? (a.githubStars ?? 0) : -1;
+        const bScore = b.isOpenSource ? (b.githubStars ?? 0) : -1;
+        return bScore - aScore;
+      });
+    }
+    if (sortBy === "newest") {
+      return [...list].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
+    return list;
+  }, [search, selectedTypes, selectedArchitectures, selectedDomains, selectedEcosystems, selectedLanguages, openSourceOnly, agents, sortBy]);
 
   const browseModes: { key: BrowseMode; label: string }[] = [
     { key: "type", label: t("browse.agentType") },

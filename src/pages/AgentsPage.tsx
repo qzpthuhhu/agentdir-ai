@@ -196,7 +196,22 @@ const AgentsPage = () => {
             </div>
           )}
 
-          <p className="text-sm text-muted-foreground mb-4">{filtered.length} {t("browse.agentsFound")}</p>
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">{filtered.length} {t("browse.agentsFound")}</p>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">Sort by</span>
+              <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
+                <SelectTrigger className="w-[160px] h-8 text-xs border-border bg-background">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="relevant">Most Relevant</SelectItem>
+                  <SelectItem value="stars" disabled={!hasOpenSourceInView}>GitHub Stars</SelectItem>
+                  <SelectItem value="newest">Newest</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {filtered.map((agent) => (

@@ -2,8 +2,15 @@ import { useParams, Link } from "react-router-dom";
 import { useAgent } from "@/hooks/use-agents";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Star, ExternalLink, ArrowLeft, GitFork } from "lucide-react";
+import { ExternalLink, ArrowLeft, GitFork } from "lucide-react";
 import { useI18n } from "@/i18n/context";
+
+function formatStars(stars: number | undefined): string {
+  if (!stars) return "0";
+  if (stars >= 1_000_000) return (stars / 1_000_000).toFixed(1) + "M";
+  if (stars >= 1_000) return (stars / 1_000).toFixed(1) + "k";
+  return stars.toString();
+}
 
 const AgentDetailPage = () => {
   const { slug } = useParams();
@@ -44,19 +51,22 @@ const AgentDetailPage = () => {
             <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">{agent.name}</h1>
             <p className="text-lg text-muted-foreground">{agent.tagline}</p>
             <div className="flex items-center gap-4 mt-3 flex-wrap">
-              <div className="flex items-center gap-1">
-                <Star className="h-4 w-4 fill-primary text-primary" />
-                <span className="font-medium">{agent.rating}</span>
-                <span className="text-sm text-muted-foreground">({agent.reviewCount.toLocaleString()} {t("agents.reviews")})</span>
-              </div>
-              {agent.githubStars && (
+              {agent.isOpenSource && agent.githubStars && (
                 <div className="flex items-center gap-1 text-muted-foreground">
-                  <GitFork className="h-4 w-4" />
-                  <span className="text-sm font-medium">{(agent.githubStars / 1000).toFixed(1)}k {t("agents.stars")}</span>
+                  <span className="text-sm font-medium">GitHub <span className="text-amber-500">★</span> {formatStars(agent.githubStars)}</span>
                 </div>
               )}
-              <Badge variant="outline">{agent.pricing}</Badge>
-              {agent.language && <Badge variant="secondary">{agent.language}</Badge>}
+              {agent.isOpenSource && agent.license && (
+                <Badge variant="outline">{agent.license}</Badge>
+              )}
+              {agent.isOpenSource && agent.language && (
+                <Badge variant="secondary">{agent.language}</Badge>
+              )}
+              {!agent.isOpenSource && (
+                <>
+                  <Badge variant="outline">{agent.pricing}</Badge>
+                </>
+              )}
             </div>
           </div>
         </div>

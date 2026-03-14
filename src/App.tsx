@@ -15,6 +15,9 @@ import ComparePage from "./pages/ComparePage";
 import SearchPage from "./pages/SearchPage";
 import SubmitPage from "./pages/SubmitPage";
 import NotFound from "./pages/NotFound";
+import AdminAgentsList from "./pages/admin/AdminAgentsList";
+import AdminCreateAgent from "./pages/admin/AdminCreateAgent";
+import AdminEditAgent from "./pages/admin/AdminEditAgent";
 
 const queryClient = new QueryClient();
 

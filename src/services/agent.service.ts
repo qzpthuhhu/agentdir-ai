@@ -89,7 +89,7 @@ export async function getAgentsByEcosystem(ecosystem: string): Promise<Agent[]> 
   const { data, error } = await supabase
     .from("agents")
     .select(AGENT_SELECT)
-    .eq("ecosystem", dbEco)
+    .eq("ecosystem", dbEco as any)
     .order("rating", { ascending: false });
   if (error) throw error;
   return (data || []).map(transformAgent);

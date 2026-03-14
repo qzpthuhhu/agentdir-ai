@@ -14,7 +14,299 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      agent_architectures: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      agent_domains: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      agent_to_architectures: {
+        Row: {
+          agent_id: string
+          architecture_id: string
+        }
+        Insert: {
+          agent_id: string
+          architecture_id: string
+        }
+        Update: {
+          agent_id?: string
+          architecture_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_to_architectures_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_to_architectures_architecture_id_fkey"
+            columns: ["architecture_id"]
+            isOneToOne: false
+            referencedRelation: "agent_architectures"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agent_to_domains: {
+        Row: {
+          agent_id: string
+          domain_id: string
+        }
+        Insert: {
+          agent_id: string
+          domain_id: string
+        }
+        Update: {
+          agent_id?: string
+          domain_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_to_domains_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_to_domains_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "agent_domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agent_to_types: {
+        Row: {
+          agent_id: string
+          is_primary: boolean | null
+          type_id: string
+        }
+        Insert: {
+          agent_id: string
+          is_primary?: boolean | null
+          type_id: string
+        }
+        Update: {
+          agent_id?: string
+          is_primary?: boolean | null
+          type_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_to_types_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_to_types_type_id_fkey"
+            columns: ["type_id"]
+            isOneToOne: false
+            referencedRelation: "agent_types"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agent_types: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      agents: {
+        Row: {
+          country: string | null
+          created_at: string
+          description: string | null
+          docs_url: string | null
+          ecosystem: Database["public"]["Enums"]["ecosystem_type"]
+          features: string[] | null
+          github_url: string | null
+          id: string
+          is_open_source: boolean
+          license: string | null
+          logo_url: string | null
+          name: string
+          pricing: Database["public"]["Enums"]["pricing_model"]
+          primary_language: string | null
+          provider: string | null
+          rating: number | null
+          review_count: number | null
+          slug: string
+          tagline: string | null
+          tags: string[] | null
+          updated_at: string
+          use_cases: string[] | null
+          website_url: string | null
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          description?: string | null
+          docs_url?: string | null
+          ecosystem?: Database["public"]["Enums"]["ecosystem_type"]
+          features?: string[] | null
+          github_url?: string | null
+          id?: string
+          is_open_source?: boolean
+          license?: string | null
+          logo_url?: string | null
+          name: string
+          pricing?: Database["public"]["Enums"]["pricing_model"]
+          primary_language?: string | null
+          provider?: string | null
+          rating?: number | null
+          review_count?: number | null
+          slug: string
+          tagline?: string | null
+          tags?: string[] | null
+          updated_at?: string
+          use_cases?: string[] | null
+          website_url?: string | null
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          description?: string | null
+          docs_url?: string | null
+          ecosystem?: Database["public"]["Enums"]["ecosystem_type"]
+          features?: string[] | null
+          github_url?: string | null
+          id?: string
+          is_open_source?: boolean
+          license?: string | null
+          logo_url?: string | null
+          name?: string
+          pricing?: Database["public"]["Enums"]["pricing_model"]
+          primary_language?: string | null
+          provider?: string | null
+          rating?: number | null
+          review_count?: number | null
+          slug?: string
+          tagline?: string | null
+          tags?: string[] | null
+          updated_at?: string
+          use_cases?: string[] | null
+          website_url?: string | null
+        }
+        Relationships: []
+      }
+      github_repos: {
+        Row: {
+          agent_id: string
+          created_at: string
+          forks: number | null
+          id: string
+          language: string | null
+          last_commit: string | null
+          license: string | null
+          open_issues: number | null
+          repo_url: string
+          stars: number | null
+          updated_at: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          forks?: number | null
+          id?: string
+          language?: string | null
+          last_commit?: string | null
+          license?: string | null
+          open_issues?: number | null
+          repo_url: string
+          stars?: number | null
+          updated_at?: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          forks?: number | null
+          id?: string
+          language?: string | null
+          last_commit?: string | null
+          license?: string | null
+          open_issues?: number | null
+          repo_url?: string
+          stars?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "github_repos_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: true
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +315,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      ecosystem_type: "open_source" | "startups" | "big_tech" | "china_ai"
+      pricing_model: "free" | "freemium" | "paid" | "enterprise"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +443,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      ecosystem_type: ["open_source", "startups", "big_tech", "china_ai"],
+      pricing_model: ["free", "freemium", "paid", "enterprise"],
+    },
   },
 } as const

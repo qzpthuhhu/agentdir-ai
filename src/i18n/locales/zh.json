@@ -6,10 +6,10 @@
     "submit": "提交 Agent"
   },
   "hero": {
-    "badge": "发现 200+ AI Agent",
-    "title1": "开发者的",
-    "title2": "AI Agent 中心",
-    "subtitle": "探索、比较和集成最强大的 AI Agent。由开发者打造，为开发者服务。",
+    "badge": "发现 AI Agent",
+    "title1": "发现",
+    "title2": "最优秀的 AI Agent",
+    "subtitle": "探索、比较并发现来自初创公司、开源社区和领先 AI 企业的最新 AI Agent、工具与智能体系统。",
     "searchPlaceholder": "按名称、类别或功能搜索 Agent..."
   },
   "featured": {

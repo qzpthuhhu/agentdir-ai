@@ -19,15 +19,24 @@
   },
   "categories": {
     "title": "카테고리별 탐색",
-    "subtitle": "사용 사례에 맞는 에이전트를 찾으세요",
-    "coding": "코딩",
-    "writing": "글쓰기",
-    "image": "이미지 & 비전",
-    "data": "데이터 & 분석",
-    "chatbot": "챗봇",
-    "automation": "자동화",
-    "language": "언어",
-    "security": "보안"
+    "subtitle": "사용 사례에 맞는 에이전트를 찾으세요"
+  },
+  "ecosystem": {
+    "title": "AI 에이전트 에코시스템",
+    "subtitle": "출처와 에코시스템별로 에이전트를 탐색하세요"
+  },
+  "browse": {
+    "browseBy": "탐색 기준",
+    "agentType": "에이전트 유형",
+    "architecture": "아키텍처",
+    "domain": "도메인",
+    "ecosystem": "에코시스템",
+    "language": "프로그래밍 언어",
+    "filters": "필터",
+    "clearAll": "모두 지우기",
+    "activeFilters": "활성 필터",
+    "agentsFound": "개의 에이전트",
+    "openSourceOnly": "오픈소스만"
   },
   "agents": {
     "title": "AI 에이전트 탐색",

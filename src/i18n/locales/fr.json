@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "explore": "Explorer",
+    "compare": "Comparer",
+    "search": "Rechercher",
+    "submit": "Soumettre un Agent"
+  },
+  "hero": {
+    "badge": "Découvrez 200+ Agents IA",
+    "title1": "Le Hub des",
+    "title2": "Agents IA",
+    "subtitle": "Explorez, comparez et intégrez les agents IA les plus puissants. Par les développeurs, pour les développeurs.",
+    "searchPlaceholder": "Rechercher des agents par nom, catégorie ou capacité..."
+  },
+  "featured": {
+    "title": "Agents Tendance",
+    "subtitle": "Les agents IA les plus populaires cette semaine",
+    "viewAll": "Voir tout"
+  },
+  "categories": {
+    "title": "Explorer par Catégorie",
+    "subtitle": "Trouvez l'agent adapté à votre cas d'usage",
+    "coding": "Programmation",
+    "writing": "Rédaction",
+    "image": "Image & Vision",
+    "data": "Données & Analytique",
+    "chatbot": "Chatbots",
+    "automation": "Automatisation",
+    "language": "Langues",
+    "security": "Sécurité"
+  },
+  "agents": {
+    "title": "Explorer les Agents IA",
+    "subtitle": "Parcourez notre collection d'agents IA",
+    "all": "Tous",
+    "noResults": "Aucun agent trouvé.",
+    "reviews": "avis",
+    "stars": "étoiles"
+  },
+  "detail": {
+    "back": "Retour aux agents",
+    "about": "À propos",
+    "features": "Fonctionnalités",
+    "useCases": "Cas d'usage",
+    "visitWebsite": "Visiter le site",
+    "tags": "Tags",
+    "category": "Catégorie",
+    "notFound": "Agent non trouvé."
+  },
+  "compare": {
+    "title": "Comparer les Agents",
+    "subtitle": "Sélectionnez jusqu'à 4 agents à comparer",
+    "addAgent": "Ajouter un agent :",
+    "feature": "Caractéristique",
+    "rating": "Note",
+    "pricing": "Tarif",
+    "category": "Catégorie",
+    "features": "Fonctionnalités",
+    "reviewsLabel": "Avis",
+    "empty": "Sélectionnez des agents ci-dessus pour comparer."
+  },
+  "search": {
+    "title": "Rechercher",
+    "subtitle": "Trouvez l'agent IA parfait",
+    "popularTags": "Tags populaires :",
+    "results": "{count} résultat(s) pour \"{query}\""
+  },
+  "submit": {
+    "title": "Soumettre un Agent",
+    "subtitle": "Vous connaissez un excellent agent IA ? Soumettez-le.",
+    "name": "Nom de l'agent",
+    "namePlaceholder": "ex. ChatGPT",
+    "tagline": "Accroche",
+    "taglinePlaceholder": "Description courte",
+    "description": "Description",
+    "descriptionPlaceholder": "Dites-nous en plus sur cet agent...",
+    "category": "Catégorie",
+    "categoryPlaceholder": "Sélectionner une catégorie",
+    "pricing": "Tarif",
+    "pricingPlaceholder": "Sélectionner un tarif",
+    "website": "URL du site",
+    "websitePlaceholder": "https://exemple.fr",
+    "submitButton": "Soumettre l'agent",
+    "successTitle": "Agent soumis !",
+    "successDesc": "{name} a été soumis pour examen."
+  },
+  "footer": {
+    "tagline": "Découvrez, comparez et choisissez les meilleurs agents IA.",
+    "explore": "Explorer",
+    "allAgents": "Tous les Agents",
+    "categoriesLink": "Catégories",
+    "compareLink": "Comparer",
+    "community": "Communauté",
+    "submitAgent": "Soumettre un Agent",
+    "blog": "Blog (bientôt)",
+    "legal": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "copyright": "© 2024 AgentDir. Tous droits réservés."
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Page non trouvée !",
+    "back": "Retour à l'accueil"
+  },
+  "language": {
+    "label": "Langue"
+  }
+}

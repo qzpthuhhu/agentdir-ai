@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "explore": "탐색",
+    "compare": "비교",
+    "search": "검색",
+    "submit": "에이전트 등록"
+  },
+  "hero": {
+    "badge": "200개 이상의 AI 에이전트 발견",
+    "title1": "개발자를 위한",
+    "title2": "AI 에이전트 허브",
+    "subtitle": "가장 강력한 AI 에이전트를 탐색, 비교, 통합하세요. 개발자가 만들고, 개발자를 위한 플랫폼.",
+    "searchPlaceholder": "이름, 카테고리, 기능으로 에이전트 검색..."
+  },
+  "featured": {
+    "title": "인기 에이전트",
+    "subtitle": "이번 주 가장 인기 있는 AI 에이전트",
+    "viewAll": "모두 보기"
+  },
+  "categories": {
+    "title": "카테고리별 탐색",
+    "subtitle": "사용 사례에 맞는 에이전트를 찾으세요",
+    "coding": "코딩",
+    "writing": "글쓰기",
+    "image": "이미지 & 비전",
+    "data": "데이터 & 분석",
+    "chatbot": "챗봇",
+    "automation": "자동화",
+    "language": "언어",
+    "security": "보안"
+  },
+  "agents": {
+    "title": "AI 에이전트 탐색",
+    "subtitle": "엄선된 AI 에이전트 컬렉션 둘러보기",
+    "all": "전체",
+    "noResults": "조건에 맞는 에이전트가 없습니다.",
+    "reviews": "리뷰",
+    "stars": "스타"
+  },
+  "detail": {
+    "back": "에이전트 목록으로",
+    "about": "소개",
+    "features": "기능",
+    "useCases": "사용 사례",
+    "visitWebsite": "웹사이트 방문",
+    "tags": "태그",
+    "category": "카테고리",
+    "notFound": "에이전트를 찾을 수 없습니다."
+  },
+  "compare": {
+    "title": "에이전트 비교",
+    "subtitle": "최대 4개의 에이전트를 선택하여 비교",
+    "addAgent": "에이전트 추가:",
+    "feature": "기능",
+    "rating": "평점",
+    "pricing": "가격",
+    "category": "카테고리",
+    "features": "기능 목록",
+    "reviewsLabel": "리뷰 수",
+    "empty": "위에서 에이전트를 선택하여 비교를 시작하세요."
+  },
+  "search": {
+    "title": "검색",
+    "subtitle": "완벽한 AI 에이전트를 찾으세요",
+    "popularTags": "인기 태그:",
+    "results": "\"{query}\" 검색 결과 {count}건"
+  },
+  "submit": {
+    "title": "에이전트 등록",
+    "subtitle": "훌륭한 AI 에이전트를 알고 계신가요? 디렉토리에 등록하세요.",
+    "name": "에이전트 이름",
+    "namePlaceholder": "예: ChatGPT",
+    "tagline": "태그라인",
+    "taglinePlaceholder": "간단한 설명",
+    "description": "설명",
+    "descriptionPlaceholder": "이 에이전트에 대해 자세히 알려주세요...",
+    "category": "카테고리",
+    "categoryPlaceholder": "카테고리 선택",
+    "pricing": "가격",
+    "pricingPlaceholder": "가격 선택",
+    "website": "웹사이트 URL",
+    "websitePlaceholder": "https://example.com",
+    "submitButton": "에이전트 등록",
+    "successTitle": "에이전트가 등록되었습니다!",
+    "successDesc": "{name}이(가) 검토를 위해 제출되었습니다."
+  },
+  "footer": {
+    "tagline": "최고의 AI 에이전트를 발견, 비교, 선택하세요.",
+    "explore": "탐색",
+    "allAgents": "모든 에이전트",
+    "categoriesLink": "카테고리",
+    "compareLink": "비교",
+    "community": "커뮤니티",
+    "submitAgent": "에이전트 등록",
+    "blog": "블로그 (출시 예정)",
+    "legal": "법적 고지",
+    "privacy": "개인정보처리방침",
+    "terms": "이용약관",
+    "copyright": "© 2024 AgentDir. All rights reserved."
+  },
+  "notFound": {
+    "title": "404",
+    "message": "페이지를 찾을 수 없습니다",
+    "back": "홈으로 돌아가기"
+  },
+  "language": {
+    "label": "언어"
+  }
+}

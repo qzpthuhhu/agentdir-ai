@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "explore": "Explorar",
+    "compare": "Comparar",
+    "search": "Buscar",
+    "submit": "Enviar Agente"
+  },
+  "hero": {
+    "badge": "Descubre 200+ Agentes IA",
+    "title1": "El Hub de",
+    "title2": "Agentes IA",
+    "subtitle": "Explora, compara e integra los agentes de IA más poderosos. Hecho por desarrolladores, para desarrolladores.",
+    "searchPlaceholder": "Buscar agentes por nombre, categoría o capacidad..."
+  },
+  "featured": {
+    "title": "Agentes en Tendencia",
+    "subtitle": "Los agentes de IA más populares esta semana — seleccionados por la comunidad",
+    "viewAll": "Ver todos"
+  },
+  "categories": {
+    "title": "Explorar por Categoría",
+    "subtitle": "Encuentra el agente adecuado para tu caso de uso",
+    "coding": "Programación",
+    "writing": "Escritura",
+    "image": "Imagen y Visión",
+    "data": "Datos y Analítica",
+    "chatbot": "Chatbots",
+    "automation": "Automatización",
+    "language": "Idiomas",
+    "security": "Seguridad"
+  },
+  "agents": {
+    "title": "Explorar Agentes IA",
+    "subtitle": "Navega por nuestra colección curada de agentes IA",
+    "all": "Todos",
+    "noResults": "No se encontraron agentes.",
+    "reviews": "reseñas",
+    "stars": "estrellas"
+  },
+  "detail": {
+    "back": "Volver a agentes",
+    "about": "Acerca de",
+    "features": "Características",
+    "useCases": "Casos de Uso",
+    "visitWebsite": "Visitar Sitio Web",
+    "tags": "Etiquetas",
+    "category": "Categoría",
+    "notFound": "Agente no encontrado."
+  },
+  "compare": {
+    "title": "Comparar Agentes",
+    "subtitle": "Selecciona hasta 4 agentes para comparar",
+    "addAgent": "Agregar agente:",
+    "feature": "Característica",
+    "rating": "Calificación",
+    "pricing": "Precio",
+    "category": "Categoría",
+    "features": "Características",
+    "reviewsLabel": "Reseñas",
+    "empty": "Selecciona agentes arriba para comparar."
+  },
+  "search": {
+    "title": "Buscar",
+    "subtitle": "Encuentra el agente IA perfecto",
+    "popularTags": "Etiquetas populares:",
+    "results": "{count} resultado(s) para \"{query}\""
+  },
+  "submit": {
+    "title": "Enviar un Agente",
+    "subtitle": "¿Conoces un gran agente IA? Envíalo a nuestro directorio.",
+    "name": "Nombre del Agente",
+    "namePlaceholder": "ej. ChatGPT",
+    "tagline": "Eslogan",
+    "taglinePlaceholder": "Una descripción corta",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Cuéntanos más sobre este agente...",
+    "category": "Categoría",
+    "categoryPlaceholder": "Seleccionar categoría",
+    "pricing": "Precio",
+    "pricingPlaceholder": "Seleccionar precio",
+    "website": "URL del Sitio Web",
+    "websitePlaceholder": "https://ejemplo.com",
+    "submitButton": "Enviar Agente",
+    "successTitle": "¡Agente enviado!",
+    "successDesc": "{name} ha sido enviado para revisión."
+  },
+  "footer": {
+    "tagline": "Descubre, compara y elige los mejores agentes de IA.",
+    "explore": "Explorar",
+    "allAgents": "Todos los Agentes",
+    "categoriesLink": "Categorías",
+    "compareLink": "Comparar",
+    "community": "Comunidad",
+    "submitAgent": "Enviar Agente",
+    "blog": "Blog (próximamente)",
+    "legal": "Legal",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "copyright": "© 2024 AgentDir. Todos los derechos reservados."
+  },
+  "notFound": {
+    "title": "404",
+    "message": "¡Página no encontrada!",
+    "back": "Volver al inicio"
+  },
+  "language": {
+    "label": "Idioma"
+  }
+}

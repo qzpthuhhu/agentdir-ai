@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "explore": "Entdecken",
+    "compare": "Vergleichen",
+    "search": "Suchen",
+    "submit": "Agent einreichen"
+  },
+  "hero": {
+    "badge": "200+ KI-Agenten entdecken",
+    "title1": "Der Entwickler-",
+    "title2": "KI-Agent Hub",
+    "subtitle": "Erkunden, vergleichen und integrieren Sie die leistungsstärksten KI-Agenten. Von Entwicklern, für Entwickler.",
+    "searchPlaceholder": "Agenten nach Name, Kategorie oder Fähigkeit suchen..."
+  },
+  "featured": {
+    "title": "Trend-Agenten",
+    "subtitle": "Die beliebtesten KI-Agenten dieser Woche",
+    "viewAll": "Alle anzeigen"
+  },
+  "categories": {
+    "title": "Nach Kategorie durchsuchen",
+    "subtitle": "Finden Sie den richtigen Agenten für Ihren Anwendungsfall",
+    "coding": "Programmierung",
+    "writing": "Schreiben",
+    "image": "Bild & Vision",
+    "data": "Daten & Analytik",
+    "chatbot": "Chatbots",
+    "automation": "Automatisierung",
+    "language": "Sprache",
+    "security": "Sicherheit"
+  },
+  "agents": {
+    "title": "KI-Agenten erkunden",
+    "subtitle": "Durchsuchen Sie unsere kuratierte Sammlung",
+    "all": "Alle",
+    "noResults": "Keine passenden Agenten gefunden.",
+    "reviews": "Bewertungen",
+    "stars": "Sterne"
+  },
+  "detail": {
+    "back": "Zurück zu Agenten",
+    "about": "Über",
+    "features": "Funktionen",
+    "useCases": "Anwendungsfälle",
+    "visitWebsite": "Website besuchen",
+    "tags": "Tags",
+    "category": "Kategorie",
+    "notFound": "Agent nicht gefunden."
+  },
+  "compare": {
+    "title": "Agenten vergleichen",
+    "subtitle": "Wählen Sie bis zu 4 Agenten zum Vergleich",
+    "addAgent": "Agent hinzufügen:",
+    "feature": "Merkmal",
+    "rating": "Bewertung",
+    "pricing": "Preis",
+    "category": "Kategorie",
+    "features": "Funktionen",
+    "reviewsLabel": "Bewertungen",
+    "empty": "Wählen Sie oben Agenten zum Vergleichen."
+  },
+  "search": {
+    "title": "Suchen",
+    "subtitle": "Finden Sie den perfekten KI-Agenten",
+    "popularTags": "Beliebte Tags:",
+    "results": "{count} Ergebnis(se) für \"{query}\""
+  },
+  "submit": {
+    "title": "Agent einreichen",
+    "subtitle": "Kennen Sie einen großartigen KI-Agenten? Reichen Sie ihn ein.",
+    "name": "Agent-Name",
+    "namePlaceholder": "z.B. ChatGPT",
+    "tagline": "Slogan",
+    "taglinePlaceholder": "Kurze Beschreibung",
+    "description": "Beschreibung",
+    "descriptionPlaceholder": "Erzählen Sie uns mehr über diesen Agenten...",
+    "category": "Kategorie",
+    "categoryPlaceholder": "Kategorie wählen",
+    "pricing": "Preis",
+    "pricingPlaceholder": "Preis wählen",
+    "website": "Website-URL",
+    "websitePlaceholder": "https://beispiel.de",
+    "submitButton": "Agent einreichen",
+    "successTitle": "Agent eingereicht!",
+    "successDesc": "{name} wurde zur Überprüfung eingereicht."
+  },
+  "footer": {
+    "tagline": "Entdecken, vergleichen und wählen Sie die besten KI-Agenten.",
+    "explore": "Entdecken",
+    "allAgents": "Alle Agenten",
+    "categoriesLink": "Kategorien",
+    "compareLink": "Vergleichen",
+    "community": "Community",
+    "submitAgent": "Agent einreichen",
+    "blog": "Blog (demnächst)",
+    "legal": "Rechtliches",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "copyright": "© 2024 AgentDir. Alle Rechte vorbehalten."
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Seite nicht gefunden!",
+    "back": "Zurück zur Startseite"
+  },
+  "language": {
+    "label": "Sprache"
+  }
+}

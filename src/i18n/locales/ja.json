@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "explore": "探索",
+    "compare": "比較",
+    "search": "検索",
+    "submit": "エージェント登録"
+  },
+  "hero": {
+    "badge": "200以上のAIエージェントを発見",
+    "title1": "開発者のための",
+    "title2": "AIエージェントハブ",
+    "subtitle": "最も強力なAIエージェントを探索、比較、統合。開発者による、開発者のためのプラットフォーム。",
+    "searchPlaceholder": "名前、カテゴリ、機能でエージェントを検索..."
+  },
+  "featured": {
+    "title": "トレンドエージェント",
+    "subtitle": "今週最も人気のAIエージェント",
+    "viewAll": "すべて表示"
+  },
+  "categories": {
+    "title": "カテゴリで探す",
+    "subtitle": "ユースケースに合ったエージェントを見つけよう",
+    "coding": "コーディング",
+    "writing": "ライティング",
+    "image": "画像とビジョン",
+    "data": "データと分析",
+    "chatbot": "チャットボット",
+    "automation": "自動化",
+    "language": "言語",
+    "security": "セキュリティ"
+  },
+  "agents": {
+    "title": "AIエージェントを探索",
+    "subtitle": "厳選されたAIエージェントコレクション",
+    "all": "すべて",
+    "noResults": "該当するエージェントが見つかりません。",
+    "reviews": "レビュー",
+    "stars": "スター"
+  },
+  "detail": {
+    "back": "エージェント一覧に戻る",
+    "about": "概要",
+    "features": "機能",
+    "useCases": "ユースケース",
+    "visitWebsite": "ウェブサイトへ",
+    "tags": "タグ",
+    "category": "カテゴリ",
+    "notFound": "エージェントが見つかりません。"
+  },
+  "compare": {
+    "title": "エージェント比較",
+    "subtitle": "最大4つのエージェントを並べて比較",
+    "addAgent": "エージェントを追加：",
+    "feature": "機能",
+    "rating": "評価",
+    "pricing": "料金",
+    "category": "カテゴリ",
+    "features": "機能一覧",
+    "reviewsLabel": "レビュー数",
+    "empty": "上からエージェントを選択して比較を開始してください。"
+  },
+  "search": {
+    "title": "検索",
+    "subtitle": "最適なAIエージェントを見つけよう",
+    "popularTags": "人気のタグ：",
+    "results": "「{query}」の検索結果 {count}件"
+  },
+  "submit": {
+    "title": "エージェントを登録",
+    "subtitle": "素晴らしいAIエージェントをご存知ですか？ディレクトリに登録してください。",
+    "name": "エージェント名",
+    "namePlaceholder": "例：ChatGPT",
+    "tagline": "キャッチコピー",
+    "taglinePlaceholder": "短い説明",
+    "description": "説明",
+    "descriptionPlaceholder": "このエージェントについて詳しく教えてください...",
+    "category": "カテゴリ",
+    "categoryPlaceholder": "カテゴリを選択",
+    "pricing": "料金",
+    "pricingPlaceholder": "料金を選択",
+    "website": "ウェブサイトURL",
+    "websitePlaceholder": "https://example.com",
+    "submitButton": "エージェントを登録",
+    "successTitle": "エージェントが登録されました！",
+    "successDesc": "{name}が審査に提出されました。"
+  },
+  "footer": {
+    "tagline": "最高のAIエージェントを発見、比較、選択。",
+    "explore": "探索",
+    "allAgents": "全エージェント",
+    "categoriesLink": "カテゴリ",
+    "compareLink": "比較",
+    "community": "コミュニティ",
+    "submitAgent": "エージェント登録",
+    "blog": "ブログ（近日公開）",
+    "legal": "法的情報",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "copyright": "© 2024 AgentDir. All rights reserved."
+  },
+  "notFound": {
+    "title": "404",
+    "message": "ページが見つかりません",
+    "back": "ホームに戻る"
+  },
+  "language": {
+    "label": "言語"
+  }
+}

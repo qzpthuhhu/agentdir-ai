@@ -19,15 +19,24 @@
   },
   "categories": {
     "title": "Nach Kategorie durchsuchen",
-    "subtitle": "Finden Sie den richtigen Agenten für Ihren Anwendungsfall",
-    "coding": "Programmierung",
-    "writing": "Schreiben",
-    "image": "Bild & Vision",
-    "data": "Daten & Analytik",
-    "chatbot": "Chatbots",
-    "automation": "Automatisierung",
-    "language": "Sprache",
-    "security": "Sicherheit"
+    "subtitle": "Finde den passenden Agenten für deinen Anwendungsfall"
+  },
+  "ecosystem": {
+    "title": "KI-Agenten Ökosystem",
+    "subtitle": "Erkunde Agenten nach Herkunft und Ökosystem"
+  },
+  "browse": {
+    "browseBy": "Durchsuchen nach",
+    "agentType": "Agententyp",
+    "architecture": "Architektur",
+    "domain": "Domäne",
+    "ecosystem": "Ökosystem",
+    "language": "Programmiersprache",
+    "filters": "Filter",
+    "clearAll": "Alle löschen",
+    "activeFilters": "Aktive Filter",
+    "agentsFound": "Agenten gefunden",
+    "openSourceOnly": "Nur Open Source"
   },
   "agents": {
     "title": "KI-Agenten erkunden",

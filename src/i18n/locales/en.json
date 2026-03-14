@@ -19,15 +19,24 @@
   },
   "categories": {
     "title": "Browse by Category",
-    "subtitle": "Find the right agent for your use case",
-    "coding": "Coding",
-    "writing": "Writing",
-    "image": "Image & Vision",
-    "data": "Data & Analytics",
-    "chatbot": "Chatbots",
-    "automation": "Automation",
+    "subtitle": "Find the right agent for your use case"
+  },
+  "ecosystem": {
+    "title": "AI Agent Ecosystem",
+    "subtitle": "Explore agents by their origin and ecosystem"
+  },
+  "browse": {
+    "browseBy": "Browse by",
+    "agentType": "Agent Type",
+    "architecture": "Architecture",
+    "domain": "Domain",
+    "ecosystem": "Ecosystem",
     "language": "Language",
-    "security": "Security"
+    "filters": "Filters",
+    "clearAll": "Clear all",
+    "activeFilters": "Active filters",
+    "agentsFound": "agents found",
+    "openSourceOnly": "Open Source only"
   },
   "agents": {
     "title": "Explore AI Agents",
@@ -45,7 +54,11 @@
     "visitWebsite": "Visit Website",
     "tags": "Tags",
     "category": "Category",
-    "notFound": "Agent not found."
+    "notFound": "Agent not found.",
+    "ecosystem": "Ecosystem",
+    "provider": "Provider",
+    "architecture": "Architecture",
+    "domains": "Domains"
   },
   "compare": {
     "title": "Compare Agents",

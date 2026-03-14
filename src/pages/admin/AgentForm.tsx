@@ -103,7 +103,7 @@ const AgentForm = ({ agentId }: Props) => {
   }, [existing]);
 
   const mutation = useMutation({
-    mutationFn: () => isEdit ? updateAgent(agentId!, form) : createAgent(form),
+    mutationFn: async () => { isEdit ? await updateAgent(agentId!, form) : await createAgent(form); },
     onSuccess: () => {
       toast({ title: isEdit ? "Agent updated" : "Agent created" });
       navigate("/admin/agents");

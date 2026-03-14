@@ -40,6 +40,9 @@ const App = () => (
                 <Route path="/compare" element={<ComparePage />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/submit" element={<SubmitPage />} />
+                <Route path="/admin/agents" element={<AdminAgentsList />} />
+                <Route path="/admin/agents/new" element={<AdminCreateAgent />} />
+                <Route path="/admin/agents/:id/edit" element={<AdminEditAgent />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

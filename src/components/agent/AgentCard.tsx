@@ -1,29 +1,7 @@
 import { Link } from "react-router-dom";
-import { Star, GitFork } from "lucide-react";
 import { Agent } from "@/types/agent";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
-
-const pricingColors: Record<string, string> = {
-  free: "bg-primary/15 text-primary border-primary/30",
-  freemium: "bg-accent/15 text-accent border-accent/30",
-  paid: "bg-secondary text-secondary-foreground border-border",
-  enterprise: "bg-muted text-muted-foreground border-border",
-};
-
-const ecosystemStyles: Record<string, { bg: string; text: string }> = {
-  "open-source": { bg: "bg-primary/15 border-primary/30", text: "text-primary" },
-  "startup": { bg: "bg-accent/15 border-accent/30", text: "text-accent" },
-  "big-tech": { bg: "bg-secondary border-border", text: "text-secondary-foreground" },
-  "china-ai": { bg: "bg-destructive/15 border-destructive/30", text: "text-destructive" },
-};
-
-const ecosystemLabels: Record<string, string> = {
-  "open-source": "Open Source",
-  "startup": "Startup",
-  "big-tech": "Big Tech",
-  "china-ai": "China AI",
-};
 
 const langColors: Record<string, string> = {
   Python: "bg-[hsl(210,60%,50%)]",
@@ -33,8 +11,27 @@ const langColors: Record<string, string> = {
   Rust: "bg-[hsl(20,70%,50%)]",
 };
 
+const ecosystemLabels: Record<string, string> = {
+  "open-source": "Open Source",
+  "startup": "Startup",
+  "big-tech": "Big Tech",
+  "china-ai": "China AI",
+};
+
+// Format GitHub stars with k/M suffix
+function formatStars(stars: number | undefined): string {
+  if (!stars) return "0";
+  if (stars >= 1_000_000) {
+    return (stars / 1_000_000).toFixed(1) + "M";
+  }
+  if (stars >= 1_000) {
+    return (stars / 1_000).toFixed(1) + "k";
+  }
+  return stars.toString();
+}
+
 const AgentCard = ({ agent }: { agent: Agent }) => {
-  const ecoStyle = ecosystemStyles[agent.ecosystem] || ecosystemStyles["startup"];
+  const isOpenSource = agent.isOpenSource;
 
   return (
     <motion.div
@@ -45,7 +42,7 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
         to={`/agents/${agent.slug}`}
         className="block glass rounded-xl p-6 hover:border-primary/40 transition-all group h-full"
       >
-        {/* Header: Logo + Pricing */}
+        {/* Header: Logo + Badges */}
         <div className="flex items-start justify-between mb-4">
           <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center border border-border/50">
             <span className="font-mono font-bold text-primary text-lg">
@@ -53,12 +50,15 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
             </span>
           </div>
           <div className="flex flex-col items-end gap-1.5">
-            <span className={`text-xs px-2.5 py-1 rounded-full border font-medium ${pricingColors[agent.pricing]}`}>
-              {agent.pricing}
-            </span>
-            <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${ecoStyle.bg} ${ecoStyle.text}`}>
-              {ecosystemLabels[agent.ecosystem]}
-            </span>
+            {isOpenSource ? (
+              <span className="text-xs px-2.5 py-1 rounded-full border font-medium bg-primary/15 text-primary border-primary/30">
+                Open Source
+              </span>
+            ) : (
+              <span className={`text-xs px-2.5 py-1 rounded-full border font-medium bg-accent/15 text-accent border-accent/30`}>
+                {ecosystemLabels[agent.ecosystem]}
+              </span>
+            )}
           </div>
         </div>
 
@@ -68,23 +68,33 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
         </h3>
         <p className="text-sm text-muted-foreground mb-4 line-clamp-2 leading-relaxed">{agent.tagline}</p>
 
-        {/* Stats row */}
-        <div className="flex items-center gap-4 mb-4 flex-wrap">
-          <div className="flex items-center gap-1">
-            <Star className="h-3.5 w-3.5 fill-primary text-primary" />
-            <span className="text-sm font-semibold">{agent.rating}</span>
-            <span className="text-xs text-muted-foreground">({agent.reviewCount.toLocaleString()})</span>
-          </div>
-          {agent.githubStars && (
-            <div className="flex items-center gap-1 text-muted-foreground">
-              <GitFork className="h-3.5 w-3.5" />
-              <span className="text-xs font-medium">{(agent.githubStars / 1000).toFixed(1)}k</span>
+        {/* Metadata row - different for open source vs commercial */}
+        <div className="flex flex-col gap-1.5 mb-4">
+          {/* Provider / Author */}
+          <span className="text-sm font-medium text-foreground">{agent.provider}</span>
+          
+          {isOpenSource ? (
+            /* Open Source: GitHub stars + Language */
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              {agent.githubStars !== undefined && (
+                <span className="flex items-center gap-1">
+                  GitHub 
+                  <span className="text-amber-500">★</span> {formatStars(agent.githubStars)}
+                </span>
+              )}
+              {agent.language && (
+                <span className="flex items-center gap-1.5">
+                  <div className={`h-2 w-2 rounded-full ${langColors[agent.language] || "bg-muted-foreground"}`} />
+                  {agent.language}
+                </span>
+              )}
             </div>
-          )}
-          {agent.language && (
-            <div className="flex items-center gap-1.5">
-              <div className={`h-2.5 w-2.5 rounded-full ${langColors[agent.language] || "bg-muted-foreground"}`} />
-              <span className="text-xs text-muted-foreground">{agent.language}</span>
+          ) : (
+            /* Commercial: Pricing + Ecosystem */
+            <div className="flex items-center gap-3 text-xs">
+              <span className="text-muted-foreground capitalize">{agent.pricing}</span>
+              <span className="text-muted-foreground">·</span>
+              <span className="text-muted-foreground">{ecosystemLabels[agent.ecosystem]}</span>
             </div>
           )}
         </div>

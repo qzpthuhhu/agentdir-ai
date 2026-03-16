@@ -47,6 +47,10 @@ const App = () => (
                 <Route path="/admin/agents" element={<AdminAgentsList />} />
                 <Route path="/admin/agents/new" element={<AdminCreateAgent />} />
                 <Route path="/admin/agents/:id/edit" element={<AdminEditAgent />} />
+                <Route path="/admin/ops" element={<AdminOps />} />
+                <Route path="/admin/sources" element={<AdminSources />} />
+                <Route path="/admin/candidates" element={<AdminCandidates />} />
+                <Route path="/admin/review/:id" element={<AdminReview />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

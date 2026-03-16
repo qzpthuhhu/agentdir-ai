@@ -1,1 +1,7 @@
 project_id = "hxoznhqwesgscacnffcp"
+
+[functions.scrape-url]
+verify_jwt = false
+
+[functions.extract-agent]
+verify_jwt = false

@@ -98,7 +98,7 @@ export async function createCandidate(candidate: Record<string, unknown>) {
 }
 
 export async function updateCandidate(id: string, updates: Record<string, unknown>) {
-  const { error } = await supabase.from("candidate_agents").update(updates).eq("id", id);
+  const { error } = await supabase.from("candidate_agents").update(updates as any).eq("id", id);
   if (error) throw error;
 }
 

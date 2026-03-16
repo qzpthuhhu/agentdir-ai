@@ -78,6 +78,8 @@ Extract the data using the extract_agent_data tool.`;
                   docs_url: { type: "string" },
                   primary_language: { type: "string" },
                   license: { type: "string" },
+                  stars: { type: "number", description: "GitHub stars count if available" },
+                  forks: { type: "number", description: "GitHub forks count if available" },
                   features: { type: "array", items: { type: "string" }, description: "Key features list" },
                   use_cases: { type: "array", items: { type: "string" }, description: "Use case examples" },
                   tags: { type: "array", items: { type: "string" }, description: "Relevant tags" },

@@ -168,6 +168,24 @@ export async function publishCandidate(candidateId: string) {
   // Sync taxonomy relations by slug
   await syncTaxonomyRelations(agentId, candidate.agent_type_slugs || [], candidate.architecture_slugs || [], candidate.domain_slugs || []);
 
+  // Sync github_repos if applicable
+  if (candidate.github_url) {
+    const { data: existingRepo } = await supabase.from("github_repos").select("id").eq("agent_id", agentId).maybeSingle();
+    const repoData = {
+      agent_id: agentId,
+      repo_url: candidate.github_url,
+      stars: candidate.stars || 0,
+      forks: candidate.forks || 0,
+      language: candidate.primary_language || null,
+      license: candidate.license || null,
+    };
+    if (existingRepo) {
+      await supabase.from("github_repos").update(repoData).eq("id", existingRepo.id);
+    } else {
+      await supabase.from("github_repos").insert(repoData);
+    }
+  }
+
   // Log publish
   await supabase.from("publish_logs").insert({ candidate_id: candidateId, agent_id: agentId, action });
 

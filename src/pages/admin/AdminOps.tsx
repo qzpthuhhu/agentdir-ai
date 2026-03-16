@@ -19,7 +19,9 @@ import {
 } from "@/services/ops.service";
 import { Globe, FileText, Zap, Loader2, ArrowRight, CheckCircle, XCircle, Clock, List } from "lucide-react";
 
-const StatusBadge = ({ status }: { status: string }) => {
+import React from "react";
+
+const StatusBadge = React.forwardRef<HTMLSpanElement, { status: string }>(({ status, ...props }, ref) => {
   const colors: Record<string, string> = {
     pending: "bg-muted text-muted-foreground",
     processing: "bg-primary/20 text-primary",
@@ -29,11 +31,11 @@ const StatusBadge = ({ status }: { status: string }) => {
     published: "bg-green-500/20 text-green-400",
   };
   return (
-    <span className={`text-xs px-2 py-0.5 rounded-full ${colors[status] || "bg-muted text-muted-foreground"}`}>
+    <span ref={ref} {...props} className={`text-xs px-2 py-0.5 rounded-full ${colors[status] || "bg-muted text-muted-foreground"}`}>
       {status}
     </span>
   );
-};
+});
 
 const AdminOps = () => {
   const queryClient = useQueryClient();

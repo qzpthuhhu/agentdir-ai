@@ -67,18 +67,13 @@ export default function AgentReviews({ agentId, onAuthRequired }: AgentReviewsPr
   const submitMutation = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("Must be logged in");
-      if (userReview) {
-        const { error } = await supabase
-          .from("agent_reviews")
-          .update({ rating, review_text: reviewText })
-          .eq("id", userReview.id);
-        if (error) throw error;
-      } else {
-        const { error } = await supabase
-          .from("agent_reviews")
-          .insert({ agent_id: agentId, user_id: user.id, rating, review_text: reviewText });
-        if (error) throw error;
-      }
+      const { error } = await supabase
+        .from("agent_reviews")
+        .upsert(
+          { agent_id: agentId, user_id: user.id, rating, review_text: reviewText },
+          { onConflict: "agent_id,user_id" }
+        );
+      if (error) throw error;
     },
     onSuccess: () => {
       toast.success(userReview ? "Review updated" : "Review submitted");

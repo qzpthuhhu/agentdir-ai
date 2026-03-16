@@ -46,12 +46,11 @@ const AdminReview = () => {
 
   const [form, setForm] = useState<Record<string, any> | null>(null);
 
-  // Initialize form from candidate (using useEffect instead of render-time setState)
-  const candidateStr = JSON.stringify(candidate);
-  useState(() => {}); // placeholder
-  if (candidate && !form) {
-    // We use a timeout-free approach: just set on next line after hooks
-  }
+  useEffect(() => {
+    if (candidate && !form) {
+      setForm({ ...candidate });
+    }
+  }, [candidate]);
 
   const set = (key: string, value: any) => setForm((f) => f ? { ...f, [key]: value } : f);
 

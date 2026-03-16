@@ -46,10 +46,16 @@ const AdminCandidates = () => {
   };
 
   const toggleAll = () => {
-    if (selected.size === candidates.length) {
-      setSelected(new Set());
+    const pageIds = pagedCandidates.map((c: any) => c.id);
+    const allSelected = pageIds.every((id: string) => selected.has(id));
+    if (allSelected) {
+      setSelected((prev) => {
+        const next = new Set(prev);
+        pageIds.forEach((id: string) => next.delete(id));
+        return next;
+      });
     } else {
-      setSelected(new Set(candidates.map((c: any) => c.id)));
+      setSelected((prev) => new Set([...prev, ...pageIds]));
     }
   };
 

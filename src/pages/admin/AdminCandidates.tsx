@@ -4,8 +4,15 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, Eye, CheckCircle, XCircle, Upload, Trash2, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeft, Eye, CheckCircle, XCircle, Upload, Trash2, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useMemo } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
 
 const STATUS_FILTERS = ["all", "draft", "approved", "rejected", "published"] as const;

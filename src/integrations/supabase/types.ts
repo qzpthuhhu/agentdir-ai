@@ -257,6 +257,129 @@ export type Database = {
         }
         Relationships: []
       }
+      candidate_agents: {
+        Row: {
+          agent_type_slugs: string[] | null
+          architecture_slugs: string[] | null
+          confidence_score: number | null
+          country: string | null
+          created_at: string
+          deployment_type: string | null
+          description: string | null
+          docs_url: string | null
+          domain_slugs: string[] | null
+          ecosystem: string | null
+          enterprise_focus: string | null
+          extraction_notes: string | null
+          features: string[] | null
+          github_url: string | null
+          id: string
+          is_open_source: boolean | null
+          job_id: string | null
+          license: string | null
+          logo_url: string | null
+          name: string
+          pricing: string | null
+          primary_language: string | null
+          provider: string | null
+          service_model: string | null
+          slug: string
+          source_id: string | null
+          status: string
+          tagline: string | null
+          tags: string[] | null
+          target_customer: string | null
+          updated_at: string
+          use_cases: string[] | null
+          website_url: string | null
+        }
+        Insert: {
+          agent_type_slugs?: string[] | null
+          architecture_slugs?: string[] | null
+          confidence_score?: number | null
+          country?: string | null
+          created_at?: string
+          deployment_type?: string | null
+          description?: string | null
+          docs_url?: string | null
+          domain_slugs?: string[] | null
+          ecosystem?: string | null
+          enterprise_focus?: string | null
+          extraction_notes?: string | null
+          features?: string[] | null
+          github_url?: string | null
+          id?: string
+          is_open_source?: boolean | null
+          job_id?: string | null
+          license?: string | null
+          logo_url?: string | null
+          name: string
+          pricing?: string | null
+          primary_language?: string | null
+          provider?: string | null
+          service_model?: string | null
+          slug: string
+          source_id?: string | null
+          status?: string
+          tagline?: string | null
+          tags?: string[] | null
+          target_customer?: string | null
+          updated_at?: string
+          use_cases?: string[] | null
+          website_url?: string | null
+        }
+        Update: {
+          agent_type_slugs?: string[] | null
+          architecture_slugs?: string[] | null
+          confidence_score?: number | null
+          country?: string | null
+          created_at?: string
+          deployment_type?: string | null
+          description?: string | null
+          docs_url?: string | null
+          domain_slugs?: string[] | null
+          ecosystem?: string | null
+          enterprise_focus?: string | null
+          extraction_notes?: string | null
+          features?: string[] | null
+          github_url?: string | null
+          id?: string
+          is_open_source?: boolean | null
+          job_id?: string | null
+          license?: string | null
+          logo_url?: string | null
+          name?: string
+          pricing?: string | null
+          primary_language?: string | null
+          provider?: string | null
+          service_model?: string | null
+          slug?: string
+          source_id?: string | null
+          status?: string
+          tagline?: string | null
+          tags?: string[] | null
+          target_customer?: string | null
+          updated_at?: string
+          use_cases?: string[] | null
+          website_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_agents_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "ingestion_jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_agents_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "source_records"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       github_repos: {
         Row: {
           agent_id: string
@@ -306,6 +429,154 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      ingestion_jobs: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          input_content: string | null
+          input_type: string
+          source_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          input_content?: string | null
+          input_type?: string
+          source_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          input_content?: string | null
+          input_type?: string
+          source_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ingestion_jobs_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "source_records"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      publish_logs: {
+        Row: {
+          action: string
+          agent_id: string | null
+          candidate_id: string | null
+          created_at: string
+          id: string
+        }
+        Insert: {
+          action?: string
+          agent_id?: string | null
+          candidate_id?: string | null
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          action?: string
+          agent_id?: string | null
+          candidate_id?: string | null
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "publish_logs_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "publish_logs_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "candidate_agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      review_actions: {
+        Row: {
+          action: string
+          candidate_id: string
+          created_at: string
+          id: string
+          notes: string | null
+        }
+        Insert: {
+          action: string
+          candidate_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+        }
+        Update: {
+          action?: string
+          candidate_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_actions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "candidate_agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      source_records: {
+        Row: {
+          created_at: string
+          id: string
+          raw_content: string | null
+          source_type: string
+          status: string
+          summary: string | null
+          title: string | null
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          raw_content?: string | null
+          source_type?: string
+          status?: string
+          summary?: string | null
+          title?: string | null
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          raw_content?: string | null
+          source_type?: string
+          status?: string
+          summary?: string | null
+          title?: string | null
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
       }
     }
     Views: {

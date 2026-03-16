@@ -18,6 +18,10 @@ import NotFound from "./pages/NotFound";
 import AdminAgentsList from "./pages/admin/AdminAgentsList";
 import AdminCreateAgent from "./pages/admin/AdminCreateAgent";
 import AdminEditAgent from "./pages/admin/AdminEditAgent";
+import AdminOps from "./pages/admin/AdminOps";
+import AdminSources from "./pages/admin/AdminSources";
+import AdminCandidates from "./pages/admin/AdminCandidates";
+import AdminReview from "./pages/admin/AdminReview";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +47,10 @@ const App = () => (
                 <Route path="/admin/agents" element={<AdminAgentsList />} />
                 <Route path="/admin/agents/new" element={<AdminCreateAgent />} />
                 <Route path="/admin/agents/:id/edit" element={<AdminEditAgent />} />
+                <Route path="/admin/ops" element={<AdminOps />} />
+                <Route path="/admin/sources" element={<AdminSources />} />
+                <Route path="/admin/candidates" element={<AdminCandidates />} />
+                <Route path="/admin/review/:id" element={<AdminReview />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

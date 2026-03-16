@@ -104,18 +104,33 @@ const AdminCandidates = () => {
         </div>
       </div>
 
-      <div className="flex gap-1.5 mb-4">
-        {STATUS_FILTERS.map((s) => (
-          <Button
-            key={s}
-            variant={filter === s ? "default" : "outline"}
-            size="sm"
-            onClick={() => setFilter(s)}
-            className="capitalize"
-          >
-            {s}
-          </Button>
-        ))}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex gap-1.5">
+          {STATUS_FILTERS.map((s) => (
+            <Button
+              key={s}
+              variant={filter === s ? "default" : "outline"}
+              size="sm"
+              onClick={() => { setFilter(s); setPage(1); }}
+              className="capitalize"
+            >
+              {s}
+            </Button>
+          ))}
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground">Rows per page</span>
+          <Select value={String(pageSize)} onValueChange={(v) => { setPageSize(Number(v)); setPage(1); }}>
+            <SelectTrigger className="w-[70px] h-8 text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="30">30</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Bulk Actions */}

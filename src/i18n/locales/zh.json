@@ -80,7 +80,10 @@
   },
   "submit": {
     "title": "提交 Agent",
-    "subtitle": "知道一个优秀的 AI Agent？提交到我们的目录中。",
+    "subtitle": "发现了优秀的 AI Agent？提交到我们的目录 — 只需粘贴 URL，我们会自动处理。",
+    "urlTab": "快速 URL",
+    "manualTab": "手动填写",
+    "urlHint": "只需粘贴 Agent 的网站 URL。我们的 AI 会自动提取所有信息并创建草稿，等待管理员审核。",
     "name": "Agent 名称",
     "namePlaceholder": "例如 ChatGPT",
     "tagline": "简介",
@@ -94,8 +97,11 @@
     "website": "网站 URL",
     "websitePlaceholder": "https://example.com",
     "submitButton": "提交 Agent",
+    "submitUrl": "提交 URL 等待审核",
+    "processing": "正在分析...",
     "successTitle": "Agent 已提交！",
-    "successDesc": "{name} 已提交审核。"
+    "successDesc": "{name} 已提交审核。",
+    "urlSuccessDesc": "URL 已分析完成，草稿已创建，等待管理员审核。"
   },
   "footer": {
     "tagline": "一个 AI Agent 发现平台。探索、比较并选择最适合你需求的 AI Agent。",

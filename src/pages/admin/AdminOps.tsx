@@ -17,7 +17,7 @@ import {
   getJobs,
   getCandidates,
 } from "@/services/ops.service";
-import { Globe, FileText, Zap, Loader2, ArrowRight, CheckCircle, XCircle, Clock } from "lucide-react";
+import { Globe, FileText, Zap, Loader2, ArrowRight, CheckCircle, XCircle, Clock, List } from "lucide-react";
 
 const StatusBadge = ({ status }: { status: string }) => {
   const colors: Record<string, string> = {
@@ -38,6 +38,7 @@ const StatusBadge = ({ status }: { status: string }) => {
 const AdminOps = () => {
   const queryClient = useQueryClient();
   const [urlInput, setUrlInput] = useState("");
+  const [batchUrls, setBatchUrls] = useState("");
   const [textInput, setTextInput] = useState("");
   const [activeTab, setActiveTab] = useState("url");
 
@@ -46,40 +47,20 @@ const AdminOps = () => {
 
   const recentCandidates = candidates.slice(0, 5);
 
+  // Single URL processing
   const processUrlMutation = useMutation({
     mutationFn: async (url: string) => {
-      // 1. Create source record
       const source = await createSource({ url, source_type: "website" });
-
-      // 2. Create job
       const job = await createJob({ source_id: source.id, input_type: "url", input_content: url });
       await updateJobStatus(job.id, "processing");
-
-      // 3. Scrape
       const scraped = await scrapeUrl(url);
-
-      // Update source with scraped data
       const { supabase } = await import("@/integrations/supabase/client");
       await supabase.from("source_records").update({
-        title: scraped.title,
-        summary: scraped.metaDescription,
-        raw_content: scraped.text,
-        status: "processed",
+        title: scraped.title, summary: scraped.metaDescription, raw_content: scraped.text, status: "processed",
       }).eq("id", source.id);
-
-      // 4. Extract with LLM
       const extraction = await extractAgent(scraped.text, url, "website");
-
-      // 5. Create candidate
-      const candidateData = {
-        ...extraction.data,
-        source_id: source.id,
-        job_id: job.id,
-        status: "draft",
-      };
-      await createCandidate(candidateData);
+      await createCandidate({ ...extraction.data, source_id: source.id, job_id: job.id, status: "draft" });
       await updateJobStatus(job.id, "completed");
-
       return extraction.data;
     },
     onSuccess: (data) => {
@@ -93,23 +74,58 @@ const AdminOps = () => {
     },
   });
 
+  // Batch URL processing
+  const [batchProgress, setBatchProgress] = useState({ total: 0, done: 0, errors: 0, processing: false });
+
+  const processBatchMutation = useMutation({
+    mutationFn: async (urls: string[]) => {
+      setBatchProgress({ total: urls.length, done: 0, errors: 0, processing: true });
+      const results: any[] = [];
+      for (const url of urls) {
+        try {
+          const source = await createSource({ url, source_type: "website" });
+          const job = await createJob({ source_id: source.id, input_type: "url", input_content: url });
+          await updateJobStatus(job.id, "processing");
+          const scraped = await scrapeUrl(url);
+          const { supabase } = await import("@/integrations/supabase/client");
+          await supabase.from("source_records").update({
+            title: scraped.title, summary: scraped.metaDescription, raw_content: scraped.text, status: "processed",
+          }).eq("id", source.id);
+          const extraction = await extractAgent(scraped.text, url, "website");
+          await createCandidate({ ...extraction.data, source_id: source.id, job_id: job.id, status: "draft" });
+          await updateJobStatus(job.id, "completed");
+          results.push({ url, name: extraction.data.name, ok: true });
+          setBatchProgress((p) => ({ ...p, done: p.done + 1 }));
+        } catch (err: any) {
+          results.push({ url, error: err.message, ok: false });
+          setBatchProgress((p) => ({ ...p, done: p.done + 1, errors: p.errors + 1 }));
+        }
+      }
+      return results;
+    },
+    onSuccess: (results) => {
+      const ok = results.filter((r) => r.ok).length;
+      const fail = results.filter((r) => !r.ok).length;
+      toast({ title: "Batch complete", description: `${ok} succeeded, ${fail} failed` });
+      setBatchUrls("");
+      setBatchProgress({ total: 0, done: 0, errors: 0, processing: false });
+      queryClient.invalidateQueries({ queryKey: ["ops-jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["ops-candidates"] });
+    },
+    onError: (e: Error) => {
+      toast({ title: "Batch error", description: e.message, variant: "destructive" });
+      setBatchProgress({ total: 0, done: 0, errors: 0, processing: false });
+    },
+  });
+
   const processTextMutation = useMutation({
     mutationFn: async (text: string) => {
       const source = await createSource({ source_type: "manual", raw_content: text, title: "Manual text input" });
       const job = await createJob({ source_id: source.id, input_type: "text", input_content: text });
       await updateJobStatus(job.id, "processing");
-
       const extraction = await extractAgent(text, undefined, "manual");
-
-      const candidateData = {
-        ...extraction.data,
-        source_id: source.id,
-        job_id: job.id,
-        status: "draft",
-      };
-      await createCandidate(candidateData);
+      await createCandidate({ ...extraction.data, source_id: source.id, job_id: job.id, status: "draft" });
       await updateJobStatus(job.id, "completed");
-
       return extraction.data;
     },
     onSuccess: (data) => {
@@ -123,7 +139,19 @@ const AdminOps = () => {
     },
   });
 
-  const isProcessing = processUrlMutation.isPending || processTextMutation.isPending;
+  const isProcessing = processUrlMutation.isPending || processTextMutation.isPending || batchProgress.processing;
+
+  const handleBatchSubmit = () => {
+    const urls = batchUrls
+      .split(/[\n,]+/)
+      .map((u) => u.trim())
+      .filter((u) => u.length > 0 && (u.startsWith("http://") || u.startsWith("https://")));
+    if (urls.length === 0) {
+      toast({ title: "No valid URLs", description: "Enter URLs separated by newlines or commas", variant: "destructive" });
+      return;
+    }
+    processBatchMutation.mutate(urls);
+  };
 
   return (
     <div className="container py-10 max-w-5xl">
@@ -132,7 +160,7 @@ const AdminOps = () => {
           <h1 className="text-2xl font-bold font-display">AI Ops Center</h1>
           <p className="text-sm text-muted-foreground">Ingest, extract, and review AI agent data</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Button variant="outline" size="sm" asChild>
             <Link to="/admin/sources">Sources</Link>
           </Button>
@@ -141,6 +169,9 @@ const AdminOps = () => {
           </Button>
           <Button variant="outline" size="sm" asChild>
             <Link to="/admin/review">Review</Link>
+          </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/admin/announcements">Announcements</Link>
           </Button>
           <Button variant="outline" size="sm" asChild>
             <Link to="/admin/agents">Agents DB</Link>
@@ -153,7 +184,8 @@ const AdminOps = () => {
         <h2 className="text-lg font-semibold mb-4">New Ingestion</h2>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="mb-4">
-            <TabsTrigger value="url" className="gap-1.5"><Globe className="h-3.5 w-3.5" /> URL</TabsTrigger>
+            <TabsTrigger value="url" className="gap-1.5"><Globe className="h-3.5 w-3.5" /> Single URL</TabsTrigger>
+            <TabsTrigger value="batch" className="gap-1.5"><List className="h-3.5 w-3.5" /> Batch URLs</TabsTrigger>
             <TabsTrigger value="text" className="gap-1.5"><FileText className="h-3.5 w-3.5" /> Raw Text</TabsTrigger>
           </TabsList>
 
@@ -172,10 +204,38 @@ const AdminOps = () => {
                   disabled={!urlInput || isProcessing}
                   className="gap-1.5 min-w-[140px]"
                 >
-                  {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
-                  {isProcessing ? "Processing…" : "Extract"}
+                  {processUrlMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+                  {processUrlMutation.isPending ? "Processing…" : "Extract"}
                 </Button>
               </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="batch">
+            <div className="space-y-3">
+              <Label>Paste multiple URLs (one per line or comma-separated)</Label>
+              <Textarea
+                placeholder={"https://example.com/agent-1\nhttps://example.com/agent-2\nhttps://example.com/agent-3"}
+                value={batchUrls}
+                onChange={(e) => setBatchUrls(e.target.value)}
+                rows={6}
+                disabled={isProcessing}
+              />
+              {batchProgress.processing && (
+                <div className="flex items-center gap-3 text-sm">
+                  <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                  <span>Processing {batchProgress.done}/{batchProgress.total}</span>
+                  {batchProgress.errors > 0 && <span className="text-destructive">({batchProgress.errors} errors)</span>}
+                </div>
+              )}
+              <Button
+                onClick={handleBatchSubmit}
+                disabled={!batchUrls.trim() || isProcessing}
+                className="gap-1.5"
+              >
+                {batchProgress.processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+                {batchProgress.processing ? `Processing ${batchProgress.done}/${batchProgress.total}` : "Extract All"}
+              </Button>
             </div>
           </TabsContent>
 
@@ -194,15 +254,15 @@ const AdminOps = () => {
                 disabled={!textInput || isProcessing}
                 className="gap-1.5"
               >
-                {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
-                {isProcessing ? "Processing…" : "Extract from Text"}
+                {processTextMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+                {processTextMutation.isPending ? "Processing…" : "Extract from Text"}
               </Button>
             </div>
           </TabsContent>
         </Tabs>
       </div>
 
-      {/* Recent Jobs */}
+      {/* Recent Jobs & Candidates */}
       <div className="grid md:grid-cols-2 gap-6">
         <div className="rounded-lg border border-border p-5 bg-card">
           <div className="flex items-center justify-between mb-4">

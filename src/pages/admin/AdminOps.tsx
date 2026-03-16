@@ -168,13 +168,16 @@ const AdminOps = () => {
             <Link to="/admin/candidates">Candidates</Link>
           </Button>
           <Button variant="outline" size="sm" asChild>
-            <Link to="/admin/review">Review</Link>
-          </Button>
-          <Button variant="outline" size="sm" asChild>
             <Link to="/admin/announcements">Announcements</Link>
           </Button>
           <Button variant="outline" size="sm" asChild>
             <Link to="/admin/agents">Agents DB</Link>
+          </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/admin/quality">Data Quality</Link>
+          </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/admin/suggestions">Suggestions</Link>
           </Button>
         </div>
       </div>

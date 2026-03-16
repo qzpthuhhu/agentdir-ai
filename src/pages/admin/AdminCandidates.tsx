@@ -21,12 +21,20 @@ const AdminCandidates = () => {
   const [filter, setFilter] = useState<string>("all");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [bulkLoading, setBulkLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const queryClient = useQueryClient();
 
   const { data: candidates = [], isLoading } = useQuery({
     queryKey: ["ops-candidates", filter],
     queryFn: () => getCandidates(filter === "all" ? undefined : filter),
   });
+
+  const totalPages = Math.max(1, Math.ceil(candidates.length / pageSize));
+  const pagedCandidates = useMemo(
+    () => candidates.slice((page - 1) * pageSize, page * pageSize),
+    [candidates, page, pageSize]
+  );
 
   const toggleSelect = (id: string) => {
     setSelected((prev) => {

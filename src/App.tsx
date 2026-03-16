@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { I18nProvider } from "@/i18n/context";
+import { AuthProvider } from "@/hooks/use-auth";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import AnnouncementBanner from "@/components/AnnouncementBanner";
@@ -32,40 +33,42 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <I18nProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <div className="flex flex-col min-h-screen">
-            <AnnouncementBanner />
-            <Header />
-            <main className="flex-1">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/agents" element={<AgentsPage />} />
-                <Route path="/agents/:slug" element={<AgentDetailPage />} />
-                <Route path="/categories/:slug" element={<CategoryPage />} />
-                <Route path="/tags/:slug" element={<TagPage />} />
-                <Route path="/compare" element={<ComparePage />} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/submit" element={<SubmitPage />} />
-                <Route path="/admin/agents" element={<AdminAgentsList />} />
-                <Route path="/admin/agents/new" element={<AdminCreateAgent />} />
-                <Route path="/admin/agents/:id/edit" element={<AdminEditAgent />} />
-                <Route path="/admin/ops" element={<AdminOps />} />
-                <Route path="/admin/sources" element={<AdminSources />} />
-                <Route path="/admin/candidates" element={<AdminCandidates />} />
-                <Route path="/admin/review/:id" element={<AdminReview />} />
-                <Route path="/admin/announcements" element={<AdminAnnouncements />} />
-                <Route path="/admin/quality" element={<AdminQuality />} />
-                <Route path="/admin/suggestions" element={<AdminSuggestions />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-        </BrowserRouter>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <div className="flex flex-col min-h-screen">
+              <AnnouncementBanner />
+              <Header />
+              <main className="flex-1">
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/agents" element={<AgentsPage />} />
+                  <Route path="/agents/:slug" element={<AgentDetailPage />} />
+                  <Route path="/categories/:slug" element={<CategoryPage />} />
+                  <Route path="/tags/:slug" element={<TagPage />} />
+                  <Route path="/compare" element={<ComparePage />} />
+                  <Route path="/search" element={<SearchPage />} />
+                  <Route path="/submit" element={<SubmitPage />} />
+                  <Route path="/admin/agents" element={<AdminAgentsList />} />
+                  <Route path="/admin/agents/new" element={<AdminCreateAgent />} />
+                  <Route path="/admin/agents/:id/edit" element={<AdminEditAgent />} />
+                  <Route path="/admin/ops" element={<AdminOps />} />
+                  <Route path="/admin/sources" element={<AdminSources />} />
+                  <Route path="/admin/candidates" element={<AdminCandidates />} />
+                  <Route path="/admin/review/:id" element={<AdminReview />} />
+                  <Route path="/admin/announcements" element={<AdminAnnouncements />} />
+                  <Route path="/admin/quality" element={<AdminQuality />} />
+                  <Route path="/admin/suggestions" element={<AdminSuggestions />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
     </I18nProvider>
   </QueryClientProvider>
 );

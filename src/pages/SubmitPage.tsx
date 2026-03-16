@@ -8,7 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { categories } from "@/hooks/use-agents";
 import { toast } from "sonner";
 import { useI18n } from "@/i18n/context";
-import { Globe, FileText, Loader2 } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import AuthModal from "@/components/auth/AuthModal";
+import { Globe, FileText, Loader2, LogIn } from "lucide-react";
 import { scrapeUrl, extractAgent, createSource, createJob, updateJobStatus, createCandidate } from "@/services/ops.service";
 
 const SubmitPage = () => {
@@ -21,11 +23,13 @@ const SubmitPage = () => {
   const [urlOnly, setUrlOnly] = useState("");
   const [submitMode, setSubmitMode] = useState<"url" | "manual">("url");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
   const { t } = useI18n();
+  const { user, profile } = useAuth();
 
   const handleUrlSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!urlOnly) return;
+    if (!urlOnly || !user) return;
     setIsProcessing(true);
     try {
       const source = await createSource({ url: urlOnly, source_type: "user_submit" });
@@ -47,6 +51,10 @@ const SubmitPage = () => {
         source_id: source.id,
         job_id: job.id,
         status: "draft",
+        submitted_by_user_id: user.id,
+        submitter_email: user.email || profile?.email || "",
+        submitter_username: profile?.username || "",
+        submission_source: "user",
       });
       await updateJobStatus(job.id, "completed");
 
@@ -61,9 +69,26 @@ const SubmitPage = () => {
 
   const handleManualSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) return;
     toast.success(t("submit.successTitle"), { description: t("submit.successDesc", { name }) });
     setName(""); setTagline(""); setDescription(""); setCategory(""); setWebsite(""); setPricing("");
   };
+
+  if (!user) {
+    return (
+      <div className="container py-20 max-w-lg text-center">
+        <div className="glass rounded-2xl p-10 space-y-6">
+          <LogIn className="h-12 w-12 mx-auto text-primary" />
+          <h1 className="font-display text-2xl font-bold">Sign in to submit an agent</h1>
+          <p className="text-muted-foreground">You need to be logged in to submit AI agents for review.</p>
+          <Button className="glow-primary" onClick={() => setAuthOpen(true)}>
+            Log in / Sign up
+          </Button>
+        </div>
+        <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
+      </div>
+    );
+  }
 
   return (
     <div className="container py-12 max-w-2xl">
@@ -98,6 +123,9 @@ const SubmitPage = () => {
                 {isProcessing ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />{t("submit.processing")}</> : t("submit.submitUrl")}
               </Button>
             </form>
+            <p className="text-xs text-muted-foreground text-center">
+              Submitting as {profile?.username || user.email}
+            </p>
           </div>
         </TabsContent>
 

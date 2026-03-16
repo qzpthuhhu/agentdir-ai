@@ -1,19 +1,74 @@
-import { useQuery } from "@tanstack/react-query";
-import { getCandidates } from "@/services/ops.service";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getCandidates, updateCandidate, addReviewAction, publishCandidate } from "@/services/ops.service";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, Eye } from "lucide-react";
+import { ArrowLeft, Eye, CheckCircle, XCircle, Upload, Trash2, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const STATUS_FILTERS = ["all", "draft", "approved", "rejected", "published"] as const;
 
 const AdminCandidates = () => {
   const [filter, setFilter] = useState<string>("all");
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkLoading, setBulkLoading] = useState(false);
+  const queryClient = useQueryClient();
+
   const { data: candidates = [], isLoading } = useQuery({
     queryKey: ["ops-candidates", filter],
     queryFn: () => getCandidates(filter === "all" ? undefined : filter),
   });
+
+  const toggleSelect = (id: string) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleAll = () => {
+    if (selected.size === candidates.length) {
+      setSelected(new Set());
+    } else {
+      setSelected(new Set(candidates.map((c: any) => c.id)));
+    }
+  };
+
+  const bulkAction = async (action: "approve" | "reject" | "publish" | "delete") => {
+    if (selected.size === 0) return;
+    setBulkLoading(true);
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const id of selected) {
+      try {
+        if (action === "approve") {
+          await updateCandidate(id, { status: "approved" });
+          await addReviewAction(id, "approve", "Bulk approved");
+        } else if (action === "reject") {
+          await updateCandidate(id, { status: "rejected" });
+          await addReviewAction(id, "reject", "Bulk rejected");
+        } else if (action === "publish") {
+          await publishCandidate(id);
+        } else if (action === "delete") {
+          const { supabase } = await import("@/integrations/supabase/client");
+          await supabase.from("candidate_agents").delete().eq("id", id);
+        }
+        successCount++;
+      } catch {
+        errorCount++;
+      }
+    }
+
+    toast.success(`${action}: ${successCount} succeeded, ${errorCount} failed`);
+    setSelected(new Set());
+    setBulkLoading(false);
+    queryClient.invalidateQueries({ queryKey: ["ops-candidates"] });
+  };
 
   return (
     <div className="container py-10 max-w-7xl">
@@ -28,7 +83,7 @@ const AdminCandidates = () => {
         </div>
       </div>
 
-      <div className="flex gap-1.5 mb-6">
+      <div className="flex gap-1.5 mb-4">
         {STATUS_FILTERS.map((s) => (
           <Button
             key={s}
@@ -42,6 +97,27 @@ const AdminCandidates = () => {
         ))}
       </div>
 
+      {/* Bulk Actions */}
+      {selected.size > 0 && (
+        <div className="flex items-center gap-2 mb-4 p-3 rounded-lg border border-primary/30 bg-primary/5">
+          <span className="text-sm font-medium">{selected.size} selected</span>
+          <div className="flex gap-1.5 ml-auto">
+            <Button size="sm" variant="outline" onClick={() => bulkAction("approve")} disabled={bulkLoading} className="gap-1">
+              <CheckCircle className="h-3.5 w-3.5" /> Approve
+            </Button>
+            <Button size="sm" variant="outline" onClick={() => bulkAction("reject")} disabled={bulkLoading} className="gap-1 text-destructive hover:text-destructive">
+              <XCircle className="h-3.5 w-3.5" /> Reject
+            </Button>
+            <Button size="sm" onClick={() => bulkAction("publish")} disabled={bulkLoading} className="gap-1 bg-green-600 hover:bg-green-700 text-white">
+              {bulkLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />} Publish
+            </Button>
+            <Button size="sm" variant="destructive" onClick={() => bulkAction("delete")} disabled={bulkLoading} className="gap-1">
+              <Trash2 className="h-3.5 w-3.5" /> Delete
+            </Button>
+          </div>
+        </div>
+      )}
+
       {isLoading ? (
         <p className="text-muted-foreground">Loading…</p>
       ) : (
@@ -49,11 +125,16 @@ const AdminCandidates = () => {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-10">
+                  <Checkbox
+                    checked={candidates.length > 0 && selected.size === candidates.length}
+                    onCheckedChange={toggleAll}
+                  />
+                </TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Provider</TableHead>
-                <TableHead>Country</TableHead>
-                <TableHead>Ecosystem</TableHead>
-                <TableHead>Pricing</TableHead>
+                <TableHead>Source</TableHead>
+                <TableHead>Submitter</TableHead>
                 <TableHead>Confidence</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Created</TableHead>
@@ -62,12 +143,27 @@ const AdminCandidates = () => {
             </TableHeader>
             <TableBody>
               {candidates.map((c: any) => (
-                <TableRow key={c.id}>
+                <TableRow key={c.id} className={selected.has(c.id) ? "bg-primary/5" : ""}>
+                  <TableCell>
+                    <Checkbox
+                      checked={selected.has(c.id)}
+                      onCheckedChange={() => toggleSelect(c.id)}
+                    />
+                  </TableCell>
                   <TableCell className="font-medium">{c.name}</TableCell>
                   <TableCell>{c.provider || "—"}</TableCell>
-                  <TableCell>{c.country || "—"}</TableCell>
-                  <TableCell className="capitalize">{c.ecosystem?.replace("_", " ") || "—"}</TableCell>
-                  <TableCell className="capitalize">{c.pricing || "—"}</TableCell>
+                  <TableCell>
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${
+                      c.submission_source === "user" ? "bg-accent/20 text-accent" :
+                      c.submission_source === "auto_ingest" ? "bg-primary/20 text-primary" :
+                      "bg-muted text-muted-foreground"
+                    }`}>
+                      {c.submission_source || "admin"}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground">
+                    {c.submitter_username || c.submitter_email || "—"}
+                  </TableCell>
                   <TableCell>
                     <span className={`text-xs font-mono ${(c.confidence_score || 0) >= 70 ? "text-green-400" : (c.confidence_score || 0) >= 40 ? "text-yellow-400" : "text-destructive"}`}>
                       {c.confidence_score || 0}%

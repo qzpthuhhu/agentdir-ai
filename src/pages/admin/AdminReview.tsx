@@ -150,6 +150,24 @@ const AdminReview = () => {
       )}
 
       {/* Extraction Notes */}
+      {/* Submitter info */}
+      {(form.submitter_email || form.submitter_username) && (
+        <div className="rounded-lg border border-accent/30 bg-accent/5 p-4 mb-6">
+          <p className="text-xs font-medium text-muted-foreground mb-1">Submitted by</p>
+          <p className="text-sm">
+            {form.submitter_username && <span className="font-medium">{form.submitter_username}</span>}
+            {form.submitter_email && <span className="text-muted-foreground"> ({form.submitter_email})</span>}
+            {form.submission_source && (
+              <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${
+                form.submission_source === "user" ? "bg-accent/20 text-accent" :
+                form.submission_source === "auto_ingest" ? "bg-primary/20 text-primary" :
+                "bg-muted text-muted-foreground"
+              }`}>{form.submission_source}</span>
+            )}
+          </p>
+        </div>
+      )}
+
       {form.extraction_notes && (
         <div className="rounded-lg border border-border bg-card p-4 mb-6">
           <p className="text-xs font-medium text-muted-foreground mb-1">Extraction Notes</p>

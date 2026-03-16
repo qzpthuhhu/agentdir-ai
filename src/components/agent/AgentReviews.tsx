@@ -51,11 +51,22 @@ export default function AgentReviews({ agentId, onAuthRequired }: AgentReviewsPr
     queryFn: async () => {
       const { data, error } = await supabase
         .from("agent_reviews")
-        .select("*, profiles(username, email)")
+        .select("*")
         .eq("agent_id", agentId)
         .order("created_at", { ascending: false });
       if (error) throw error;
-      return data;
+      
+      // Fetch profiles for all unique user_ids
+      const userIds = [...new Set(data.map((r: any) => r.user_id))];
+      if (userIds.length === 0) return data;
+      
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("id, username, email")
+        .in("id", userIds);
+      
+      const profileMap = new Map((profiles || []).map((p: any) => [p.id, p]));
+      return data.map((r: any) => ({ ...r, profiles: profileMap.get(r.user_id) || null }));
     },
   });
 

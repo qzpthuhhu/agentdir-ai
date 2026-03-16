@@ -240,7 +240,7 @@ const AdminCandidates = () => {
         {/* Pagination */}
         <div className="flex items-center justify-between mt-4">
           <p className="text-xs text-muted-foreground">
-            Showing {Math.min((page - 1) * pageSize + 1, candidates.length)}–{Math.min(page * pageSize, candidates.length)} of {candidates.length}
+            {`Showing ${Math.min((page - 1) * pageSize + 1, candidates.length)}-${Math.min(page * pageSize, candidates.length)} of ${candidates.length}`}
           </p>
           <div className="flex items-center gap-1">
             <Button variant="outline" size="icon" className="h-8 w-8" disabled={page <= 1} onClick={() => setPage(page - 1)}>

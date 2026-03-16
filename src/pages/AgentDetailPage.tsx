@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAgent } from "@/hooks/use-agents";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, ArrowLeft, GitFork } from "lucide-react";
+import { ExternalLink, ArrowLeft } from "lucide-react";
 import { useI18n } from "@/i18n/context";
+import AgentReviews from "@/components/agent/AgentReviews";
+import AuthModal from "@/components/auth/AuthModal";
 
 function formatStars(stars: number | undefined): string {
   if (!stars) return "0";
@@ -16,6 +19,7 @@ const AgentDetailPage = () => {
   const { slug } = useParams();
   const { t } = useI18n();
   const { data: agent, isLoading } = useAgent(slug);
+  const [authOpen, setAuthOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -63,9 +67,7 @@ const AgentDetailPage = () => {
                 <Badge variant="secondary">{agent.language}</Badge>
               )}
               {!agent.isOpenSource && (
-                <>
-                  <Badge variant="outline">{agent.pricing}</Badge>
-                </>
+                <Badge variant="outline">{agent.pricing}</Badge>
               )}
             </div>
           </div>
@@ -96,6 +98,9 @@ const AgentDetailPage = () => {
                 ))}
               </div>
             </div>
+
+            {/* Reviews Section */}
+            <AgentReviews agentId={agent.id} onAuthRequired={() => setAuthOpen(true)} />
           </div>
 
           <div className="space-y-4">
@@ -123,6 +128,7 @@ const AgentDetailPage = () => {
           </div>
         </div>
       </div>
+      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
     </div>
   );
 };

@@ -92,7 +92,7 @@ export async function getCandidate(id: string) {
 }
 
 export async function createCandidate(candidate: Record<string, unknown>) {
-  const { data, error } = await supabase.from("candidate_agents").insert(candidate).select().single();
+  const { data, error } = await supabase.from("candidate_agents").insert(candidate as any).select().single();
   if (error) throw error;
   return data;
 }

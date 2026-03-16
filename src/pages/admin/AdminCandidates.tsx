@@ -163,7 +163,7 @@ const AdminCandidates = () => {
               <TableRow>
                 <TableHead className="w-10">
                   <Checkbox
-                    checked={candidates.length > 0 && selected.size === candidates.length}
+                    checked={pagedCandidates.length > 0 && pagedCandidates.every((c: any) => selected.has(c.id))}
                     onCheckedChange={toggleAll}
                   />
                 </TableHead>

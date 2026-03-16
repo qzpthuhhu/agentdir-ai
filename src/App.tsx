@@ -18,6 +18,10 @@ import NotFound from "./pages/NotFound";
 import AdminAgentsList from "./pages/admin/AdminAgentsList";
 import AdminCreateAgent from "./pages/admin/AdminCreateAgent";
 import AdminEditAgent from "./pages/admin/AdminEditAgent";
+import AdminOps from "./pages/admin/AdminOps";
+import AdminSources from "./pages/admin/AdminSources";
+import AdminCandidates from "./pages/admin/AdminCandidates";
+import AdminReview from "./pages/admin/AdminReview";
 
 const queryClient = new QueryClient();
 

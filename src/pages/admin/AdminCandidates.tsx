@@ -276,5 +276,8 @@ const AdminCandidates = () => {
           </div>
         </>
       )}
+    </div>
+  );
+};
 
 export default AdminCandidates;

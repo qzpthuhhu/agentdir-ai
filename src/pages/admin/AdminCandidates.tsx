@@ -155,128 +155,126 @@ const AdminCandidates = () => {
       )}
 
       {isLoading ? (
-        <p className="text-muted-foreground">Loading…</p>
+        <p className="text-muted-foreground">Loading...</p>
       ) : (
-        <div className="rounded-lg border border-border overflow-hidden">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-10">
-                  <Checkbox
-                    checked={pagedCandidates.length > 0 && pagedCandidates.every((c: any) => selected.has(c.id))}
-                    onCheckedChange={toggleAll}
-                  />
-                </TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Provider</TableHead>
-                <TableHead>Source</TableHead>
-                <TableHead>Submitter</TableHead>
-                <TableHead>Confidence</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {pagedCandidates.map((c: any) => (
-                <TableRow key={c.id} className={selected.has(c.id) ? "bg-primary/5" : ""}>
-                  <TableCell>
-                    <Checkbox
-                      checked={selected.has(c.id)}
-                      onCheckedChange={() => toggleSelect(c.id)}
-                    />
-                  </TableCell>
-                  <TableCell className="font-medium">{c.name}</TableCell>
-                  <TableCell>{c.provider || "—"}</TableCell>
-                  <TableCell>
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${
-                      c.submission_source === "user" ? "bg-accent/20 text-accent" :
-                      c.submission_source === "auto_ingest" ? "bg-primary/20 text-primary" :
-                      "bg-muted text-muted-foreground"
-                    }`}>
-                      {c.submission_source || "admin"}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {c.submitter_username || c.submitter_email || "—"}
-                  </TableCell>
-                  <TableCell>
-                    <span className={`text-xs font-mono ${(c.confidence_score || 0) >= 70 ? "text-green-400" : (c.confidence_score || 0) >= 40 ? "text-yellow-400" : "text-destructive"}`}>
-                      {c.confidence_score || 0}%
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${
-                      c.status === "draft" ? "bg-accent/20 text-accent" :
-                      c.status === "approved" ? "bg-primary/20 text-primary" :
-                      c.status === "published" ? "bg-green-500/20 text-green-400" :
-                      c.status === "rejected" ? "bg-destructive/20 text-destructive" :
-                      "bg-muted text-muted-foreground"
-                    }`}>
-                      {c.status}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {new Date(c.created_at).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" asChild>
-                      <Link to={`/admin/review/${c.id}`}><Eye className="h-4 w-4" /></Link>
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {pagedCandidates.length === 0 && (
+        <>
+          <div className="rounded-lg border border-border overflow-hidden">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={9} className="text-center text-muted-foreground py-8">
-                    No candidates found
-                  </TableCell>
+                  <TableHead className="w-10">
+                    <Checkbox
+                      checked={pagedCandidates.length > 0 && pagedCandidates.every((c: any) => selected.has(c.id))}
+                      onCheckedChange={toggleAll}
+                    />
+                  </TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Provider</TableHead>
+                  <TableHead>Source</TableHead>
+                  <TableHead>Submitter</TableHead>
+                  <TableHead>Confidence</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Created</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-
-        {/* Pagination */}
-        <div className="flex items-center justify-between mt-4">
-          <p className="text-xs text-muted-foreground">
-            {`Showing ${Math.min((page - 1) * pageSize + 1, candidates.length)}-${Math.min(page * pageSize, candidates.length)} of ${candidates.length}`}
-          </p>
-          <div className="flex items-center gap-1">
-            <Button variant="outline" size="icon" className="h-8 w-8" disabled={page <= 1} onClick={() => setPage(page - 1)}>
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
-              let p: number;
-              if (totalPages <= 7) {
-                p = i + 1;
-              } else if (page <= 4) {
-                p = i + 1;
-              } else if (page >= totalPages - 3) {
-                p = totalPages - 6 + i;
-              } else {
-                p = page - 3 + i;
-              }
-              return (
-                <Button
-                  key={p}
-                  variant={page === p ? "default" : "outline"}
-                  size="icon"
-                  className="h-8 w-8 text-xs"
-                  onClick={() => setPage(p)}
-                >
-                  {p}
-                </Button>
-              );
-            })}
-            <Button variant="outline" size="icon" className="h-8 w-8" disabled={page >= totalPages} onClick={() => setPage(page + 1)}>
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+              </TableHeader>
+              <TableBody>
+                {pagedCandidates.map((c: any) => (
+                  <TableRow key={c.id} className={selected.has(c.id) ? "bg-primary/5" : ""}>
+                    <TableCell>
+                      <Checkbox
+                        checked={selected.has(c.id)}
+                        onCheckedChange={() => toggleSelect(c.id)}
+                      />
+                    </TableCell>
+                    <TableCell className="font-medium">{c.name}</TableCell>
+                    <TableCell>{c.provider || "\u2014"}</TableCell>
+                    <TableCell>
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${
+                        c.submission_source === "user" ? "bg-accent/20 text-accent" :
+                        c.submission_source === "auto_ingest" ? "bg-primary/20 text-primary" :
+                        "bg-muted text-muted-foreground"
+                      }`}>
+                        {c.submission_source || "admin"}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-sm text-muted-foreground">
+                      {c.submitter_username || c.submitter_email || "\u2014"}
+                    </TableCell>
+                    <TableCell>
+                      <span className={`text-xs font-mono ${(c.confidence_score || 0) >= 70 ? "text-green-400" : (c.confidence_score || 0) >= 40 ? "text-yellow-400" : "text-destructive"}`}>
+                        {c.confidence_score || 0}%
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${
+                        c.status === "draft" ? "bg-accent/20 text-accent" :
+                        c.status === "approved" ? "bg-primary/20 text-primary" :
+                        c.status === "published" ? "bg-green-500/20 text-green-400" :
+                        c.status === "rejected" ? "bg-destructive/20 text-destructive" :
+                        "bg-muted text-muted-foreground"
+                      }`}>
+                        {c.status}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-sm text-muted-foreground">
+                      {new Date(c.created_at).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button variant="ghost" size="icon" asChild>
+                        <Link to={`/admin/review/${c.id}`}><Eye className="h-4 w-4" /></Link>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {pagedCandidates.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={9} className="text-center text-muted-foreground py-8">
+                      No candidates found
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
           </div>
-        </div>
+
+          <div className="flex items-center justify-between mt-4">
+            <p className="text-xs text-muted-foreground">
+              {`Showing ${Math.min((page - 1) * pageSize + 1, candidates.length)}-${Math.min(page * pageSize, candidates.length)} of ${candidates.length}`}
+            </p>
+            <div className="flex items-center gap-1">
+              <Button variant="outline" size="icon" className="h-8 w-8" disabled={page <= 1} onClick={() => setPage(page - 1)}>
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
+                let p: number;
+                if (totalPages <= 7) {
+                  p = i + 1;
+                } else if (page <= 4) {
+                  p = i + 1;
+                } else if (page >= totalPages - 3) {
+                  p = totalPages - 6 + i;
+                } else {
+                  p = page - 3 + i;
+                }
+                return (
+                  <Button
+                    key={p}
+                    variant={page === p ? "default" : "outline"}
+                    size="icon"
+                    className="h-8 w-8 text-xs"
+                    onClick={() => setPage(p)}
+                  >
+                    {p}
+                  </Button>
+                );
+              })}
+              <Button variant="outline" size="icon" className="h-8 w-8" disabled={page >= totalPages} onClick={() => setPage(page + 1)}>
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </>
       )}
-    </div>
-  );
-};
 
 export default AdminCandidates;

@@ -229,6 +229,18 @@ const AdminReview = () => {
           <Field label="Website"><Input value={form.website_url || ""} onChange={(e) => set("website_url", e.target.value)} disabled={isPublished} /></Field>
           <Field label="GitHub"><Input value={form.github_url || ""} onChange={(e) => set("github_url", e.target.value)} disabled={isPublished} /></Field>
           <Field label="Docs"><Input value={form.docs_url || ""} onChange={(e) => set("docs_url", e.target.value)} disabled={isPublished} /></Field>
+          <Field label="Logo URL"><Input value={form.logo_url || ""} onChange={(e) => set("logo_url", e.target.value)} disabled={isPublished} /></Field>
+        </Section>
+
+        <Section title="Technical">
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Primary Language"><Input value={form.primary_language || ""} onChange={(e) => set("primary_language", e.target.value)} disabled={isPublished} /></Field>
+            <Field label="License"><Input value={form.license || ""} onChange={(e) => set("license", e.target.value)} disabled={isPublished} /></Field>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="GitHub Stars"><Input type="number" value={form.stars ?? 0} onChange={(e) => set("stars", parseInt(e.target.value) || 0)} disabled={isPublished} /></Field>
+            <Field label="GitHub Forks"><Input type="number" value={form.forks ?? 0} onChange={(e) => set("forks", parseInt(e.target.value) || 0)} disabled={isPublished} /></Field>
+          </div>
         </Section>
 
         <Section title="Classification">

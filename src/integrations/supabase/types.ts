@@ -62,6 +62,44 @@ export type Database = {
         }
         Relationships: []
       }
+      agent_reviews: {
+        Row: {
+          agent_id: string
+          created_at: string
+          id: string
+          rating: number
+          review_text: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          id?: string
+          rating: number
+          review_text?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          id?: string
+          rating?: number
+          review_text?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_reviews_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       agent_to_architectures: {
         Row: {
           agent_id: string
@@ -316,6 +354,10 @@ export type Database = {
           slug: string
           source_id: string | null
           status: string
+          submission_source: string | null
+          submitted_by_user_id: string | null
+          submitter_email: string | null
+          submitter_username: string | null
           tagline: string | null
           tags: string[] | null
           target_customer: string | null
@@ -351,6 +393,10 @@ export type Database = {
           slug: string
           source_id?: string | null
           status?: string
+          submission_source?: string | null
+          submitted_by_user_id?: string | null
+          submitter_email?: string | null
+          submitter_username?: string | null
           tagline?: string | null
           tags?: string[] | null
           target_customer?: string | null
@@ -386,6 +432,10 @@ export type Database = {
           slug?: string
           source_id?: string | null
           status?: string
+          submission_source?: string | null
+          submitted_by_user_id?: string | null
+          submitter_email?: string | null
+          submitter_username?: string | null
           tagline?: string | null
           tags?: string[] | null
           target_customer?: string | null
@@ -500,6 +550,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          username: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id: string
+          username?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          username?: string | null
+        }
+        Relationships: []
       }
       publish_logs: {
         Row: {

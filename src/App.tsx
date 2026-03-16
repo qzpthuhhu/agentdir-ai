@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { I18nProvider } from "@/i18n/context";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import AnnouncementBanner from "@/components/AnnouncementBanner";
 import Index from "./pages/Index";
 import AgentsPage from "./pages/AgentsPage";
 import AgentDetailPage from "./pages/AgentDetailPage";
@@ -22,6 +23,7 @@ import AdminOps from "./pages/admin/AdminOps";
 import AdminSources from "./pages/admin/AdminSources";
 import AdminCandidates from "./pages/admin/AdminCandidates";
 import AdminReview from "./pages/admin/AdminReview";
+import AdminAnnouncements from "./pages/admin/AdminAnnouncements";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +35,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <div className="flex flex-col min-h-screen">
+            <AnnouncementBanner />
             <Header />
             <main className="flex-1">
               <Routes>
@@ -51,6 +54,7 @@ const App = () => (
                 <Route path="/admin/sources" element={<AdminSources />} />
                 <Route path="/admin/candidates" element={<AdminCandidates />} />
                 <Route path="/admin/review/:id" element={<AdminReview />} />
+                <Route path="/admin/announcements" element={<AdminAnnouncements />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

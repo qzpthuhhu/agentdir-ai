@@ -80,7 +80,10 @@
   },
   "submit": {
     "title": "Submit an Agent",
-    "subtitle": "Know a great AI agent? Submit it to our directory.",
+    "subtitle": "Know a great AI agent? Submit it to our directory — just paste a URL and we'll do the rest.",
+    "urlTab": "Quick URL",
+    "manualTab": "Manual Entry",
+    "urlHint": "Just paste the agent's website URL. Our AI will automatically extract all the details and create a draft for admin review.",
     "name": "Agent Name",
     "namePlaceholder": "e.g. ChatGPT",
     "tagline": "Tagline",
@@ -94,8 +97,11 @@
     "website": "Website URL",
     "websitePlaceholder": "https://example.com",
     "submitButton": "Submit Agent",
+    "submitUrl": "Submit URL for Review",
+    "processing": "Analyzing...",
     "successTitle": "Agent submitted!",
-    "successDesc": "{name} has been submitted for review."
+    "successDesc": "{name} has been submitted for review.",
+    "urlSuccessDesc": "The URL has been analyzed and a draft has been created for admin review."
   },
   "footer": {
     "tagline": "An AI Agent discovery platform. Explore, compare, and choose the best AI agents for your needs.",

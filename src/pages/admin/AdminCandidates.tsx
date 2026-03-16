@@ -178,7 +178,7 @@ const AdminCandidates = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {candidates.map((c: any) => (
+              {pagedCandidates.map((c: any) => (
                 <TableRow key={c.id} className={selected.has(c.id) ? "bg-primary/5" : ""}>
                   <TableCell>
                     <Checkbox
@@ -226,7 +226,7 @@ const AdminCandidates = () => {
                   </TableCell>
                 </TableRow>
               ))}
-              {candidates.length === 0 && (
+              {pagedCandidates.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={9} className="text-center text-muted-foreground py-8">
                     No candidates found
@@ -235,6 +235,44 @@ const AdminCandidates = () => {
               )}
             </TableBody>
           </Table>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-xs text-muted-foreground">
+            Showing {Math.min((page - 1) * pageSize + 1, candidates.length)}–{Math.min(page * pageSize, candidates.length)} of {candidates.length}
+          </p>
+          <div className="flex items-center gap-1">
+            <Button variant="outline" size="icon" className="h-8 w-8" disabled={page <= 1} onClick={() => setPage(page - 1)}>
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
+              let p: number;
+              if (totalPages <= 7) {
+                p = i + 1;
+              } else if (page <= 4) {
+                p = i + 1;
+              } else if (page >= totalPages - 3) {
+                p = totalPages - 6 + i;
+              } else {
+                p = page - 3 + i;
+              }
+              return (
+                <Button
+                  key={p}
+                  variant={page === p ? "default" : "outline"}
+                  size="icon"
+                  className="h-8 w-8 text-xs"
+                  onClick={() => setPage(p)}
+                >
+                  {p}
+                </Button>
+              );
+            })}
+            <Button variant="outline" size="icon" className="h-8 w-8" disabled={page >= totalPages} onClick={() => setPage(page + 1)}>
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       )}
     </div>

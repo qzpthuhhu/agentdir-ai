@@ -24,6 +24,8 @@ import AdminSources from "./pages/admin/AdminSources";
 import AdminCandidates from "./pages/admin/AdminCandidates";
 import AdminReview from "./pages/admin/AdminReview";
 import AdminAnnouncements from "./pages/admin/AdminAnnouncements";
+import AdminQuality from "./pages/admin/AdminQuality";
+import AdminSuggestions from "./pages/admin/AdminSuggestions";
 
 const queryClient = new QueryClient();
 

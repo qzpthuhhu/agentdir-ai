@@ -340,6 +340,7 @@ export type Database = {
           enterprise_focus: string | null
           extraction_notes: string | null
           features: string[] | null
+          forks: number | null
           github_url: string | null
           id: string
           is_open_source: boolean | null
@@ -353,6 +354,7 @@ export type Database = {
           service_model: string | null
           slug: string
           source_id: string | null
+          stars: number | null
           status: string
           submission_source: string | null
           submitted_by_user_id: string | null
@@ -379,6 +381,7 @@ export type Database = {
           enterprise_focus?: string | null
           extraction_notes?: string | null
           features?: string[] | null
+          forks?: number | null
           github_url?: string | null
           id?: string
           is_open_source?: boolean | null
@@ -392,6 +395,7 @@ export type Database = {
           service_model?: string | null
           slug: string
           source_id?: string | null
+          stars?: number | null
           status?: string
           submission_source?: string | null
           submitted_by_user_id?: string | null
@@ -418,6 +422,7 @@ export type Database = {
           enterprise_focus?: string | null
           extraction_notes?: string | null
           features?: string[] | null
+          forks?: number | null
           github_url?: string | null
           id?: string
           is_open_source?: boolean | null
@@ -431,6 +436,7 @@ export type Database = {
           service_model?: string | null
           slug?: string
           source_id?: string | null
+          stars?: number | null
           status?: string
           submission_source?: string | null
           submitted_by_user_id?: string | null

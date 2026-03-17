@@ -27,6 +27,7 @@ import AdminReview from "./pages/admin/AdminReview";
 import AdminAnnouncements from "./pages/admin/AdminAnnouncements";
 import AdminQuality from "./pages/admin/AdminQuality";
 import AdminSuggestions from "./pages/admin/AdminSuggestions";
+import AdminGitHubSync from "./pages/admin/AdminGitHubSync";
 
 const queryClient = new QueryClient();
 

@@ -62,6 +62,7 @@ const App = () => (
                   <Route path="/admin/announcements" element={<AdminAnnouncements />} />
                   <Route path="/admin/quality" element={<AdminQuality />} />
                   <Route path="/admin/suggestions" element={<AdminSuggestions />} />
+                  <Route path="/admin/github-sync" element={<AdminGitHubSync />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>

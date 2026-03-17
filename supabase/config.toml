@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.extract-agent]
 verify_jwt = false
+
+[functions.sync-github-stats]
+verify_jwt = false

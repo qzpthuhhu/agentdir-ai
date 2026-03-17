@@ -516,6 +516,45 @@ export type Database = {
           },
         ]
       }
+      github_sync_logs: {
+        Row: {
+          completed_at: string | null
+          details: Json | null
+          error_message: string | null
+          failed_repos: number | null
+          id: string
+          started_at: string
+          status: string
+          total_repos: number | null
+          trigger_type: string
+          updated_repos: number | null
+        }
+        Insert: {
+          completed_at?: string | null
+          details?: Json | null
+          error_message?: string | null
+          failed_repos?: number | null
+          id?: string
+          started_at?: string
+          status?: string
+          total_repos?: number | null
+          trigger_type?: string
+          updated_repos?: number | null
+        }
+        Update: {
+          completed_at?: string | null
+          details?: Json | null
+          error_message?: string | null
+          failed_repos?: number | null
+          id?: string
+          started_at?: string
+          status?: string
+          total_repos?: number | null
+          trigger_type?: string
+          updated_repos?: number | null
+        }
+        Relationships: []
+      }
       ingestion_jobs: {
         Row: {
           created_at: string

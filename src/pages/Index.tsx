@@ -48,9 +48,9 @@ const Index = () => {
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-accent/5 blur-[100px]" />
         <div className="container relative z-10 text-center max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 text-sm">
               <Sparkles className="h-4 w-4 text-primary" />

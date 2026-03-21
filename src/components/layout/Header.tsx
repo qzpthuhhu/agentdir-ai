@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useI18n, LOCALE_LABELS, Locale } from "@/i18n/context";
 import { useAuth } from "@/hooks/use-auth";
 import AuthModal from "@/components/auth/AuthModal";
-import logoIcon from "@/assets/logo-icon.png";
+import logoIcon from "@/assets/logo-icon.webp";
 import {
   DropdownMenu,
   DropdownMenuContent,

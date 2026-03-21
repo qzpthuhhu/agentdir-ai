@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "@/i18n/context";
-import logoIcon from "@/assets/logo-icon.png";
+import logoIcon from "@/assets/logo-icon.webp";
 
 const Footer = () => {
   const { t } = useI18n();

@@ -24,7 +24,7 @@ const AgentDetailPage = () => {
   if (isLoading) {
     return (
       <div className="container py-20 text-center">
-        <p className="text-muted-foreground text-lg">Loading...</p>
+        <p className="text-muted-foreground text-lg">{t("detail.loading")}</p>
       </div>
     );
   }

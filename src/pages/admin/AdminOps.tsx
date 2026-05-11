@@ -49,8 +49,42 @@ const AdminOps = () => {
 
   const { data: jobs = [] } = useQuery({ queryKey: ["ops-jobs"], queryFn: getJobs });
   const { data: candidates = [] } = useQuery({ queryKey: ["ops-candidates"], queryFn: () => getCandidates() });
+  const { data: fixedSources = [] } = useQuery({ queryKey: ["ops-fixed-sources"], queryFn: getFixedSources });
+  const { data: ingestionRuns = [] } = useQuery({ queryKey: ["ops-ingestion-runs"], queryFn: getRecentIngestionRuns });
 
   const recentCandidates = candidates.slice(0, 5);
+
+  const lastRunBySource = new Map<string, any>();
+  for (const r of ingestionRuns as any[]) {
+    if (r.source_slug && !lastRunBySource.has(r.source_slug)) {
+      lastRunBySource.set(r.source_slug, r);
+    }
+  }
+
+  const syncFixedMutation = useMutation({
+    mutationFn: (slug?: string) => syncFixedSources(slug),
+    onSuccess: (data: any) => {
+      const totals = (data?.results || []).reduce(
+        (acc: any, r: any) => {
+          if (r.error) acc.failed++;
+          else {
+            acc.newCount += r.newCount || 0;
+            acc.dupCount += r.dupCount || 0;
+          }
+          return acc;
+        },
+        { newCount: 0, dupCount: 0, failed: 0 },
+      );
+      toast({
+        title: "Sync complete",
+        description: `${totals.newCount} new · ${totals.dupCount} duplicate · ${totals.failed} failed sources`,
+      });
+      queryClient.invalidateQueries({ queryKey: ["ops-ingestion-runs"] });
+      queryClient.invalidateQueries({ queryKey: ["ops-candidates"] });
+    },
+    onError: (e: Error) => toast({ title: "Sync error", description: e.message, variant: "destructive" }),
+  });
+
 
   // Single URL processing
   const processUrlMutation = useMutation({

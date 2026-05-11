@@ -11,7 +11,7 @@ import { X, SlidersHorizontal } from "lucide-react";
 import type { AgentType, Architecture, Domain, Ecosystem } from "@/types/agent";
 
 type BrowseMode = "type" | "architecture" | "domain";
-type SortOption = "relevant" | "stars" | "newest" | "name";
+type SortOption = "released" | "relevant" | "stars" | "newest" | "name";
 
 const LANGUAGES = ["Python", "TypeScript", "JavaScript", "Go", "Rust"];
 
@@ -24,7 +24,9 @@ const AgentsPage = () => {
   const [selectedEcosystems, setSelectedEcosystems] = useState<Ecosystem[]>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [openSourceOnly, setOpenSourceOnly] = useState(false);
-  const [sortBy, setSortBy] = useState<SortOption>("relevant");
+  const [sortBy, setSortBy] = useState<SortOption>("released");
+  const [releaseYear, setReleaseYear] = useState<string>("all");
+  const [releaseMonth, setReleaseMonth] = useState<string>("all");
   const [showFilters] = useState(true);
   const { t } = useI18n();
 
@@ -58,6 +60,12 @@ const AgentsPage = () => {
     });
   }, [agents, search, selectedEcosystems, openSourceOnly]);
 
+  const availableYears = useMemo(() => {
+    const ys = new Set<number>();
+    agents.forEach(a => { if (a.releaseYear) ys.add(a.releaseYear); });
+    return Array.from(ys).sort((a, b) => b - a);
+  }, [agents]);
+
   const filtered = useMemo(() => {
     const list = agents.filter((a) => {
       const matchesSearch = !search || a.name.toLowerCase().includes(search.toLowerCase()) || a.tagline.toLowerCase().includes(search.toLowerCase());
@@ -67,12 +75,20 @@ const AgentsPage = () => {
       const matchesEco = selectedEcosystems.length === 0 || selectedEcosystems.includes(a.ecosystem as any);
       const matchesLang = selectedLanguages.length === 0 || (a.language && selectedLanguages.includes(a.language));
       const matchesOS = !openSourceOnly || a.isOpenSource;
-      return matchesSearch && matchesType && matchesArch && matchesDomain && matchesEco && matchesLang && matchesOS;
+      const matchesYear = releaseYear === "all" || a.releaseYear === Number(releaseYear);
+      const matchesMonth = releaseMonth === "all" || a.releaseMonth === Number(releaseMonth);
+      return matchesSearch && matchesType && matchesArch && matchesDomain && matchesEco && matchesLang && matchesOS && matchesYear && matchesMonth;
     });
 
+    if (sortBy === "released") {
+      return [...list].sort((a, b) => {
+        const at = a.releasedAt ? new Date(a.releasedAt).getTime() : 0;
+        const bt = b.releasedAt ? new Date(b.releasedAt).getTime() : 0;
+        return bt - at;
+      });
+    }
     if (sortBy === "stars") {
       return [...list].sort((a, b) => {
-        // Open-source with stars first, then the rest
         const aScore = a.isOpenSource ? (a.githubStars ?? 0) : -1;
         const bScore = b.isOpenSource ? (b.githubStars ?? 0) : -1;
         return bScore - aScore;
@@ -85,7 +101,7 @@ const AgentsPage = () => {
       return [...list].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
     }
     return list;
-  }, [search, selectedTypes, selectedArchitectures, selectedDomains, selectedEcosystems, selectedLanguages, openSourceOnly, agents, sortBy]);
+  }, [search, selectedTypes, selectedArchitectures, selectedDomains, selectedEcosystems, selectedLanguages, openSourceOnly, agents, sortBy, releaseYear, releaseMonth]);
 
   const browseModes: { key: BrowseMode; label: string }[] = [
     { key: "type", label: t("browse.agentType") },
@@ -179,6 +195,29 @@ const AgentsPage = () => {
               ))}
             </FilterSection>
 
+            <FilterSection title={t("browse.releaseDate")}>
+              <div className="space-y-2">
+                <Select value={releaseYear} onValueChange={setReleaseYear}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder={t("browse.year")} /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t("browse.allYears")}</SelectItem>
+                    {availableYears.map(y => (
+                      <SelectItem key={y} value={String(y)}>{y}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select value={releaseMonth} onValueChange={setReleaseMonth}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder={t("browse.month")} /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t("browse.allMonths")}</SelectItem>
+                    {Array.from({ length: 12 }, (_, i) => i + 1).map(m => (
+                      <SelectItem key={m} value={String(m)}>{t(`months.m${m}`)}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </FilterSection>
+
             <div className="flex items-center gap-2">
               <Checkbox id="os-filter" checked={openSourceOnly} onCheckedChange={(v) => setOpenSourceOnly(!!v)} />
               <Label htmlFor="os-filter" className="text-sm cursor-pointer">{t("browse.openSourceOnly")}</Label>
@@ -202,16 +241,17 @@ const AgentsPage = () => {
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-muted-foreground">{filtered.length} {t("browse.agentsFound")}</p>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">Sort by</span>
+              <span className="text-xs text-muted-foreground">{t("browse.sortBy")}</span>
               <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
-                <SelectTrigger className="w-[160px] h-8 text-xs border-border bg-background">
+                <SelectTrigger className="w-[180px] h-8 text-xs border-border bg-background">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="relevant">Most Relevant</SelectItem>
-                  <SelectItem value="stars" disabled={!hasOpenSourceInView}>GitHub Stars</SelectItem>
-                  <SelectItem value="newest">Newest</SelectItem>
-                  <SelectItem value="name">Name (A–Z)</SelectItem>
+                  <SelectItem value="released">{t("sort.released")}</SelectItem>
+                  <SelectItem value="relevant">{t("sort.relevant")}</SelectItem>
+                  <SelectItem value="stars" disabled={!hasOpenSourceInView}>{t("sort.stars")}</SelectItem>
+                  <SelectItem value="newest">{t("sort.newest")}</SelectItem>
+                  <SelectItem value="name">{t("sort.name")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>

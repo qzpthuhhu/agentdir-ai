@@ -59,6 +59,11 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
                 {ecosystemLabels[agent.ecosystem]}
               </span>
             )}
+            {agent.releaseYear && (
+              <span className="text-[10px] text-muted-foreground font-mono">
+                {agent.releaseYear}{agent.releaseMonth ? `.${String(agent.releaseMonth).padStart(2,'0')}` : ''}
+              </span>
+            )}
           </div>
         </div>
 

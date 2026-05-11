@@ -69,6 +69,11 @@ const AgentDetailPage = () => {
               {!agent.isOpenSource && (
                 <Badge variant="outline">{agent.pricing}</Badge>
               )}
+              {agent.releaseYear && (
+                <Badge variant="secondary">
+                  {t("detail.released")}: {agent.releaseYear}{agent.releaseMonth ? `.${String(agent.releaseMonth).padStart(2,'0')}` : ''}
+                </Badge>
+              )}
             </div>
           </div>
         </div>

@@ -33,6 +33,9 @@ export interface Agent {
   language?: string;
   license?: string;
   isOpenSource?: boolean;
+  releaseYear?: number;
+  releaseMonth?: number;
+  releasedAt?: string;
 }
 
 export interface AgentTypeInfo {

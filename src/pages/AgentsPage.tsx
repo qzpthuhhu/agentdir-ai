@@ -60,6 +60,12 @@ const AgentsPage = () => {
     });
   }, [agents, search, selectedEcosystems, openSourceOnly]);
 
+  const availableYears = useMemo(() => {
+    const ys = new Set<number>();
+    agents.forEach(a => { if (a.releaseYear) ys.add(a.releaseYear); });
+    return Array.from(ys).sort((a, b) => b - a);
+  }, [agents]);
+
   const filtered = useMemo(() => {
     const list = agents.filter((a) => {
       const matchesSearch = !search || a.name.toLowerCase().includes(search.toLowerCase()) || a.tagline.toLowerCase().includes(search.toLowerCase());
@@ -69,12 +75,20 @@ const AgentsPage = () => {
       const matchesEco = selectedEcosystems.length === 0 || selectedEcosystems.includes(a.ecosystem as any);
       const matchesLang = selectedLanguages.length === 0 || (a.language && selectedLanguages.includes(a.language));
       const matchesOS = !openSourceOnly || a.isOpenSource;
-      return matchesSearch && matchesType && matchesArch && matchesDomain && matchesEco && matchesLang && matchesOS;
+      const matchesYear = releaseYear === "all" || a.releaseYear === Number(releaseYear);
+      const matchesMonth = releaseMonth === "all" || a.releaseMonth === Number(releaseMonth);
+      return matchesSearch && matchesType && matchesArch && matchesDomain && matchesEco && matchesLang && matchesOS && matchesYear && matchesMonth;
     });
 
+    if (sortBy === "released") {
+      return [...list].sort((a, b) => {
+        const at = a.releasedAt ? new Date(a.releasedAt).getTime() : 0;
+        const bt = b.releasedAt ? new Date(b.releasedAt).getTime() : 0;
+        return bt - at;
+      });
+    }
     if (sortBy === "stars") {
       return [...list].sort((a, b) => {
-        // Open-source with stars first, then the rest
         const aScore = a.isOpenSource ? (a.githubStars ?? 0) : -1;
         const bScore = b.isOpenSource ? (b.githubStars ?? 0) : -1;
         return bScore - aScore;
@@ -87,7 +101,7 @@ const AgentsPage = () => {
       return [...list].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
     }
     return list;
-  }, [search, selectedTypes, selectedArchitectures, selectedDomains, selectedEcosystems, selectedLanguages, openSourceOnly, agents, sortBy]);
+  }, [search, selectedTypes, selectedArchitectures, selectedDomains, selectedEcosystems, selectedLanguages, openSourceOnly, agents, sortBy, releaseYear, releaseMonth]);
 
   const browseModes: { key: BrowseMode; label: string }[] = [
     { key: "type", label: t("browse.agentType") },

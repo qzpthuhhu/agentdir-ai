@@ -195,6 +195,29 @@ const AgentsPage = () => {
               ))}
             </FilterSection>
 
+            <FilterSection title={t("browse.releaseDate")}>
+              <div className="space-y-2">
+                <Select value={releaseYear} onValueChange={setReleaseYear}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder={t("browse.year")} /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t("browse.allYears")}</SelectItem>
+                    {availableYears.map(y => (
+                      <SelectItem key={y} value={String(y)}>{y}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select value={releaseMonth} onValueChange={setReleaseMonth}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder={t("browse.month")} /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t("browse.allMonths")}</SelectItem>
+                    {Array.from({ length: 12 }, (_, i) => i + 1).map(m => (
+                      <SelectItem key={m} value={String(m)}>{t(`months.m${m}`)}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </FilterSection>
+
             <div className="flex items-center gap-2">
               <Checkbox id="os-filter" checked={openSourceOnly} onCheckedChange={(v) => setOpenSourceOnly(!!v)} />
               <Label htmlFor="os-filter" className="text-sm cursor-pointer">{t("browse.openSourceOnly")}</Label>

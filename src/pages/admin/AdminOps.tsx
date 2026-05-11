@@ -16,8 +16,11 @@ import {
   createCandidate,
   getJobs,
   getCandidates,
+  getFixedSources,
+  getRecentIngestionRuns,
+  syncFixedSources,
 } from "@/services/ops.service";
-import { Globe, FileText, Zap, Loader2, ArrowRight, CheckCircle, XCircle, Clock, List } from "lucide-react";
+import { Globe, FileText, Zap, Loader2, ArrowRight, CheckCircle, XCircle, Clock, List, RefreshCw, Rss } from "lucide-react";
 
 import React from "react";
 

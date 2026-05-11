@@ -1,76 +1,72 @@
 ## 目标
+固定 3 个高质量源，每次更新时统一抓取 → AI 抽取 → 去重 → 经候选表人工 review → 合并到 `agents` 表。
 
-1. 调研并新增 **2026 年最新发布的 AI Agent**（含去重）
-2. 给 `agents` 表增加 **发布时间（年/月）** 字段，支持按发布时间倒序展示与年-月筛选
-3. **删除 2024 年之前发布的 agent**（保留 2024 至今）
-4. 全站**中文化覆盖**补强（切换到 zh 时仍是英文的位置补齐）
+## 三个固定源（已确认）
 
----
+| # | 源 | 覆盖 | 抓取方式 |
+|---|----|------|--------|
+| 1 | **`github.com/e2b-dev/awesome-ai-agents`** | 开源 + 商业 Agent 综合榜 | Firecrawl scrape (markdown) + GitHub API 补 stars/language |
+| 2 | **`producthunt.com/topics/ai-agents`**（newest） | 最新商业/创业 Agent 产品（带准确发布日期） | Firecrawl scrape，过滤近 60 天 |
+| 3 | **`qbitai.com`（量子位 Agent 标签）** | 中国 AI Agent 与大厂新品 | Firecrawl scrape，限定 Agent 关键词 |
 
-## 实施步骤
+## 工作流
 
-### 1. Schema 变更（migration）
-- `agents` 增加：
-  - `release_year` (int, nullable)
-  - `release_month` (int 1–12, nullable)
-  - `released_at` (date, generated/写入用，便于排序索引)
-- 增加 index：`(release_year desc, release_month desc)`
-- `candidate_agents` 同步增加这三个字段（保持入库管线一致）
-
-### 2. 数据回填 + 清洗
-- **回填**：基于现有 177 条 agent，用 Lovable AI（gemini-3-flash-preview）批量推断每个 agent 的首次公开发布年/月（参考 GitHub 首次 release / 公司公告时间），写回数据库
-- **清洗**：删除 `release_year < 2024` 的 agent（先列表给你确认，再 DELETE；同步清理 `agent_to_*` 与 `github_repos`）
-- **去重**：按 (lower(name)) + 主域名归一 + github_url 三路匹配，标出疑似重复，合并保留信息更全的那条
-
-### 3. 新增 2026 年 Agent
-- 数据源：`github.com/trending` 月榜（2026-01 至当月）、Product Hunt AI 月榜、a16z、各大厂 2026 发布会
-- 目标数量：**约 30 个** 2026 年新发布或重大重制 agent
-- 入库：直接发布到 `agents` 表（沿用上次流程）
-
-### 4. 前端：发布时间筛选与排序
-- `AgentsPage`：
-  - 排序下拉新增「最新发布」（按 `released_at` 倒序），设为默认
-  - 新增 **年-月筛选器**：年份 multi-select（2024/2025/2026），月份 multi-select（1-12）
-- `AgentCard`：右上角小标签显示「2026·03」之类发布时间
-- `AgentDetailPage`：在 provider 下方新增「发布于 2026 年 3 月」
-
-### 5. 中文化补强
-扫描以下区域确保中文环境完全本地化（目前已发现的硬编码英文）：
-- `AgentsPage` 的 sort/filter UI 文案、空状态
-- `AgentCard` 上的 stars/license/language 标签
-- `AgentDetailPage` 的标签区、按钮、面包屑
-- `Admin*` 页面（运营内部，可选；建议保留英文）—— **会与你确认**
-- 新增 `zh.json` 键：`filters.releaseDate / filters.year / filters.month / sort.newest / sort.popular / sort.rating` 等
-
----
-
-## 技术细节
-
-```sql
-ALTER TABLE agents
-  ADD COLUMN release_year smallint,
-  ADD COLUMN release_month smallint CHECK (release_month BETWEEN 1 AND 12),
-  ADD COLUMN released_at date;
-
-CREATE INDEX idx_agents_released_at ON agents(released_at DESC NULLS LAST);
+```text
+┌──────────────┐  Firecrawl   ┌──────────────┐  Lovable AI   ┌─────────────────┐
+│ 3 fixed URLs │ ──scrape──▶ │ raw markdown │ ──extract──▶ │ candidate rows  │
+└──────────────┘              └──────────────┘               └────────┬────────┘
+                                                                     │ dedupe
+                                                                     ▼
+                                              ┌──────────────────────────────────┐
+                                              │ candidate_agents                 │
+                                              │ status = new / duplicate         │
+                                              └────────────┬─────────────────────┘
+                                                           │ 人工 Review (已存在)
+                                                           ▼
+                                                       agents 表
 ```
 
-排序示例：
-```ts
-.order('released_at', { ascending: false, nullsFirst: false })
-```
+### 去重规则（按优先级）
+1. `slug` 完全匹配
+2. 标准化 `website_url`（去 protocol / trailing slash / www）
+3. 标准化 `github_url`（owner/repo 小写）
+4. `name` 模糊（小写去空格）+ `provider` 相同
 
-去重匹配键（SQL 伪代码）：
-```sql
-SELECT lower(name), count(*) FROM agents GROUP BY 1 HAVING count(*)>1;
-SELECT regexp_replace(website_url,'https?://(www\.)?([^/]+).*','\2') AS host, count(*) ...
-```
+命中 → 标 `duplicate`，新数据 patch 进 candidate；未命中 → `new`。
 
----
+### AI 抽取字段
+沿用现有 `extract-agent` edge function，必抽：
+`name, tagline, description, provider, country, website_url, github_url, ecosystem, pricing, is_open_source, release_year, release_month, tags[], features[]`
 
-## 需要你确认 2 件事
+## 实现步骤
 
-1. **2024 年之前的 agent 删除范围**：当前库内大量经典开源框架（LangChain 2022、AutoGPT 2023 等）会被删掉。是否：
-   - (A) **硬删除**所有 2024 之前的（按你字面要求）
-   - (B) **保留但隐藏**（加 `is_archived` 标记，不在前端默认列表显示，但详情页仍可访问，保留 SEO 价值）—— 推荐
-2. **Admin 页面是否也要中文化**？（默认仅前台中文化，admin 保留英文）
+1. **DB**
+   - 在 `source_records` 插入 3 行种子（`source_type='fixed_feed'`, `url`, `title`）。
+   - 新增 `ingestion_runs` 表：`source_id, started_at, finished_at, fetched, new_count, duplicate_count, failed_count, error`。
+
+2. **Edge function `sync-fixed-sources`**
+   - 读 enabled 的 fixed feeds → Firecrawl scrape
+   - 对内容切片调用 `extract-agent`
+   - GitHub URL → 调 GitHub API 拿 stars/language/created_at
+   - 走去重规则 → 写入 `candidate_agents`，`submission_source = fixed_feed:<slug>`
+   - 写一行 `ingestion_runs` 总结
+
+3. **前端 `AdminOps`**
+   - 新增 "Sync from Fixed Sources" 按钮
+   - 显示上次运行时间 + 三源各自的统计卡片（fetched / new / duplicate / failed）
+
+4. **`AdminSources` / `AdminCandidates`**
+   - Sources 列表展示这 3 个固定源（启用/停用，不可删除）
+   - Candidates 增加按 `submission_source` 筛选
+
+5. **Review → 合并**
+   - 复用现有 `AdminReview` 流程：人工确认后从 `candidate_agents` 写入 `agents`
+
+## 范围外（这一轮不做）
+- 自动定时调度（先做手动按钮，后续可加 pg_cron 周更）
+- 自动批准（始终人工最终决定，符合 Core memory）
+
+## 技术约束
+- Firecrawl 已有连接器，无需新密钥
+- AI 抽取用 `google/gemini-3-flash-preview`（符合 Core memory）
+- 不直接写 `agents`，全部经 `candidate_agents` + 人工 review

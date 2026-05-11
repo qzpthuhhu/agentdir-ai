@@ -16,8 +16,11 @@ import {
   createCandidate,
   getJobs,
   getCandidates,
+  getFixedSources,
+  getRecentIngestionRuns,
+  syncFixedSources,
 } from "@/services/ops.service";
-import { Globe, FileText, Zap, Loader2, ArrowRight, CheckCircle, XCircle, Clock, List } from "lucide-react";
+import { Globe, FileText, Zap, Loader2, ArrowRight, CheckCircle, XCircle, Clock, List, RefreshCw, Rss } from "lucide-react";
 
 import React from "react";
 
@@ -46,8 +49,42 @@ const AdminOps = () => {
 
   const { data: jobs = [] } = useQuery({ queryKey: ["ops-jobs"], queryFn: getJobs });
   const { data: candidates = [] } = useQuery({ queryKey: ["ops-candidates"], queryFn: () => getCandidates() });
+  const { data: fixedSources = [] } = useQuery({ queryKey: ["ops-fixed-sources"], queryFn: getFixedSources });
+  const { data: ingestionRuns = [] } = useQuery({ queryKey: ["ops-ingestion-runs"], queryFn: getRecentIngestionRuns });
 
   const recentCandidates = candidates.slice(0, 5);
+
+  const lastRunBySource = new Map<string, any>();
+  for (const r of ingestionRuns as any[]) {
+    if (r.source_slug && !lastRunBySource.has(r.source_slug)) {
+      lastRunBySource.set(r.source_slug, r);
+    }
+  }
+
+  const syncFixedMutation = useMutation({
+    mutationFn: (slug?: string) => syncFixedSources(slug),
+    onSuccess: (data: any) => {
+      const totals = (data?.results || []).reduce(
+        (acc: any, r: any) => {
+          if (r.error) acc.failed++;
+          else {
+            acc.newCount += r.newCount || 0;
+            acc.dupCount += r.dupCount || 0;
+          }
+          return acc;
+        },
+        { newCount: 0, dupCount: 0, failed: 0 },
+      );
+      toast({
+        title: "Sync complete",
+        description: `${totals.newCount} new · ${totals.dupCount} duplicate · ${totals.failed} failed sources`,
+      });
+      queryClient.invalidateQueries({ queryKey: ["ops-ingestion-runs"] });
+      queryClient.invalidateQueries({ queryKey: ["ops-candidates"] });
+    },
+    onError: (e: Error) => toast({ title: "Sync error", description: e.message, variant: "destructive" }),
+  });
+
 
   // Single URL processing
   const processUrlMutation = useMutation({
@@ -181,6 +218,69 @@ const AdminOps = () => {
           <Button variant="outline" size="sm" asChild>
             <Link to="/admin/suggestions">Suggestions</Link>
           </Button>
+        </div>
+      </div>
+
+      {/* Fixed Sources Sync */}
+      <div className="rounded-lg border border-border p-6 mb-8 bg-card">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Rss className="h-4 w-4 text-primary" />
+            <h2 className="text-lg font-semibold">Fixed Sources</h2>
+            <span className="text-xs text-muted-foreground">3 curated feeds · auto-dedupe</span>
+          </div>
+          <Button
+            onClick={() => syncFixedMutation.mutate(undefined)}
+            disabled={syncFixedMutation.isPending}
+            className="gap-1.5"
+          >
+            {syncFixedMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
+            {syncFixedMutation.isPending ? "Syncing…" : "Sync All"}
+          </Button>
+        </div>
+        <div className="grid md:grid-cols-3 gap-3">
+          {(fixedSources as any[]).map((s) => {
+            const last = lastRunBySource.get(s.slug);
+            return (
+              <div key={s.id} className="rounded-md border border-border/60 p-3 bg-background/50">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <div className="min-w-0">
+                    <div className="font-medium text-sm truncate">{s.title || s.slug}</div>
+                    <a href={s.url} target="_blank" rel="noreferrer" className="text-xs text-muted-foreground hover:text-primary truncate block">
+                      {s.url}
+                    </a>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-7 px-2 shrink-0"
+                    onClick={() => syncFixedMutation.mutate(s.slug)}
+                    disabled={syncFixedMutation.isPending}
+                  >
+                    <RefreshCw className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
+                {last ? (
+                  <div className="text-xs text-muted-foreground space-y-0.5">
+                    <div className="flex gap-3">
+                      <span className="text-green-400">+{last.new_count} new</span>
+                      <span>{last.duplicate_count} dup</span>
+                      {last.failed_count > 0 && <span className="text-destructive">{last.failed_count} fail</span>}
+                    </div>
+                    <div>
+                      {last.status} · {new Date(last.started_at).toLocaleString()}
+                    </div>
+                    {last.error_message && <div className="text-destructive truncate">{last.error_message}</div>}
+                  </div>
+                ) : (
+                  <div className="text-xs text-muted-foreground">Never synced</div>
+                )}
+              </div>
+            );
+          })}
+          {fixedSources.length === 0 && (
+            <p className="text-sm text-muted-foreground col-span-3">No fixed sources configured.</p>
+          )}
         </div>
       </div>
 

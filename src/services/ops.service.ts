@@ -232,3 +232,34 @@ export async function findDuplicates(name: string, websiteUrl?: string) {
   if (error) throw error;
   return data || [];
 }
+
+// ─── Fixed Sources Sync ───
+
+export async function getFixedSources() {
+  const { data, error } = await supabase
+    .from("source_records")
+    .select("*")
+    .eq("source_type", "fixed_feed")
+    .order("created_at", { ascending: true });
+  if (error) throw error;
+  return data;
+}
+
+export async function getRecentIngestionRuns() {
+  const { data, error } = await supabase
+    .from("ingestion_runs")
+    .select("*")
+    .order("started_at", { ascending: false })
+    .limit(20);
+  if (error) throw error;
+  return data;
+}
+
+export async function syncFixedSources(sourceSlug?: string) {
+  const { data, error } = await supabase.functions.invoke("sync-fixed-sources", {
+    body: sourceSlug ? { source_slug: sourceSlug } : {},
+  });
+  if (error) throw error;
+  return data;
+}
+

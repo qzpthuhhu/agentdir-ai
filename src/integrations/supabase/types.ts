@@ -614,6 +614,62 @@ export type Database = {
           },
         ]
       }
+      ingestion_runs: {
+        Row: {
+          created_at: string
+          details: Json | null
+          duplicate_count: number
+          error_message: string | null
+          failed_count: number
+          fetched_count: number
+          finished_at: string | null
+          id: string
+          new_count: number
+          source_id: string | null
+          source_slug: string | null
+          started_at: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          details?: Json | null
+          duplicate_count?: number
+          error_message?: string | null
+          failed_count?: number
+          fetched_count?: number
+          finished_at?: string | null
+          id?: string
+          new_count?: number
+          source_id?: string | null
+          source_slug?: string | null
+          started_at?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          details?: Json | null
+          duplicate_count?: number
+          error_message?: string | null
+          failed_count?: number
+          fetched_count?: number
+          finished_at?: string | null
+          id?: string
+          new_count?: number
+          source_id?: string | null
+          source_slug?: string | null
+          started_at?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ingestion_runs_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "source_records"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -710,7 +766,9 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          is_enabled: boolean
           raw_content: string | null
+          slug: string | null
           source_type: string
           status: string
           summary: string | null
@@ -721,7 +779,9 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          is_enabled?: boolean
           raw_content?: string | null
+          slug?: string | null
           source_type?: string
           status?: string
           summary?: string | null
@@ -732,7 +792,9 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          is_enabled?: boolean
           raw_content?: string | null
+          slug?: string | null
           source_type?: string
           status?: string
           summary?: string | null

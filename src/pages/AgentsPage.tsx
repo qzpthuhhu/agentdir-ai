@@ -241,16 +241,17 @@ const AgentsPage = () => {
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-muted-foreground">{filtered.length} {t("browse.agentsFound")}</p>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">Sort by</span>
+              <span className="text-xs text-muted-foreground">{t("browse.sortBy")}</span>
               <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
-                <SelectTrigger className="w-[160px] h-8 text-xs border-border bg-background">
+                <SelectTrigger className="w-[180px] h-8 text-xs border-border bg-background">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="relevant">Most Relevant</SelectItem>
-                  <SelectItem value="stars" disabled={!hasOpenSourceInView}>GitHub Stars</SelectItem>
-                  <SelectItem value="newest">Newest</SelectItem>
-                  <SelectItem value="name">Name (A–Z)</SelectItem>
+                  <SelectItem value="released">{t("sort.released")}</SelectItem>
+                  <SelectItem value="relevant">{t("sort.relevant")}</SelectItem>
+                  <SelectItem value="stars" disabled={!hasOpenSourceInView}>{t("sort.stars")}</SelectItem>
+                  <SelectItem value="newest">{t("sort.newest")}</SelectItem>
+                  <SelectItem value="name">{t("sort.name")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>

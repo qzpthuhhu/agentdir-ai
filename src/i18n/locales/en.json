@@ -36,7 +36,13 @@
     "clearAll": "Clear all",
     "activeFilters": "Active filters",
     "agentsFound": "agents found",
-    "openSourceOnly": "Open Source only"
+    "openSourceOnly": "Open Source only",
+    "releaseDate": "Release Date",
+    "year": "Year",
+    "month": "Month",
+    "allYears": "All years",
+    "allMonths": "All months",
+    "sortBy": "Sort by"
   },
   "agents": {
     "title": "Explore AI Agents",
@@ -58,7 +64,8 @@
     "ecosystem": "Ecosystem",
     "provider": "Provider",
     "architecture": "Architecture",
-    "domains": "Domains"
+    "domains": "Domains",
+    "released": "Released"
   },
   "compare": {
     "title": "Compare Agents",
@@ -124,5 +131,26 @@
   },
   "language": {
     "label": "Language"
+  },
+  "sort": {
+    "released": "Latest Release",
+    "relevant": "Most Relevant",
+    "stars": "GitHub Stars",
+    "newest": "Newest Added",
+    "name": "Name (A–Z)"
+  },
+  "months": {
+    "m1": "Jan",
+    "m2": "Feb",
+    "m3": "Mar",
+    "m4": "Apr",
+    "m5": "May",
+    "m6": "Jun",
+    "m7": "Jul",
+    "m8": "Aug",
+    "m9": "Sep",
+    "m10": "Oct",
+    "m11": "Nov",
+    "m12": "Dec"
   }
 }

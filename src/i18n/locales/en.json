@@ -61,6 +61,7 @@
     "tags": "Tags",
     "category": "Category",
     "notFound": "Agent not found.",
+    "loading": "Loading agent info…",
     "ecosystem": "Ecosystem",
     "provider": "Provider",
     "architecture": "Architecture",

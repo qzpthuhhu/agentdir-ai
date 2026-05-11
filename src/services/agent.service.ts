@@ -44,6 +44,9 @@ function transformAgent(row: any): Agent {
     language: row.primary_language || github?.language || undefined,
     license: row.license || github?.license || undefined,
     isOpenSource: row.is_open_source || false,
+    releaseYear: row.release_year ?? undefined,
+    releaseMonth: row.release_month ?? undefined,
+    releasedAt: row.released_at ?? undefined,
   };
 }
 

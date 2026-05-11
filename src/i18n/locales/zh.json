@@ -61,6 +61,7 @@
     "tags": "标签",
     "category": "类别",
     "notFound": "未找到该Agent。",
+    "loading": "Agent信息加载中…",
     "ecosystem": "生态系统",
     "provider": "提供商",
     "architecture": "架构",

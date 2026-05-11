@@ -24,7 +24,9 @@ const AgentsPage = () => {
   const [selectedEcosystems, setSelectedEcosystems] = useState<Ecosystem[]>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [openSourceOnly, setOpenSourceOnly] = useState(false);
-  const [sortBy, setSortBy] = useState<SortOption>("relevant");
+  const [sortBy, setSortBy] = useState<SortOption>("released");
+  const [releaseYear, setReleaseYear] = useState<string>("all");
+  const [releaseMonth, setReleaseMonth] = useState<string>("all");
   const [showFilters] = useState(true);
   const { t } = useI18n();
 

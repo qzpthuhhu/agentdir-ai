@@ -41,7 +41,7 @@ export function useAgent(slug: string | undefined) {
     queryKey: ["agent", slug],
     queryFn: () => getAgentBySlug(slug!),
     enabled: !!slug,
-    placeholderData: () => mockAgents.find((a) => a.slug === slug) || null,
+    placeholderData: () => mockAgents.find((a) => a.slug === slug) ?? undefined,
   });
 }
 

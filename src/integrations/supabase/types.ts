@@ -235,6 +235,9 @@ export type Database = {
           primary_language: string | null
           provider: string | null
           rating: number | null
+          release_month: number | null
+          release_year: number | null
+          released_at: string | null
           review_count: number | null
           slug: string
           tagline: string | null
@@ -260,6 +263,9 @@ export type Database = {
           primary_language?: string | null
           provider?: string | null
           rating?: number | null
+          release_month?: number | null
+          release_year?: number | null
+          released_at?: string | null
           review_count?: number | null
           slug: string
           tagline?: string | null
@@ -285,6 +291,9 @@ export type Database = {
           primary_language?: string | null
           provider?: string | null
           rating?: number | null
+          release_month?: number | null
+          release_year?: number | null
+          released_at?: string | null
           review_count?: number | null
           slug?: string
           tagline?: string | null
@@ -351,6 +360,9 @@ export type Database = {
           pricing: string | null
           primary_language: string | null
           provider: string | null
+          release_month: number | null
+          release_year: number | null
+          released_at: string | null
           service_model: string | null
           slug: string
           source_id: string | null
@@ -392,6 +404,9 @@ export type Database = {
           pricing?: string | null
           primary_language?: string | null
           provider?: string | null
+          release_month?: number | null
+          release_year?: number | null
+          released_at?: string | null
           service_model?: string | null
           slug: string
           source_id?: string | null
@@ -433,6 +448,9 @@ export type Database = {
           pricing?: string | null
           primary_language?: string | null
           provider?: string | null
+          release_month?: number | null
+          release_year?: number | null
+          released_at?: string | null
           service_model?: string | null
           slug?: string
           source_id?: string | null

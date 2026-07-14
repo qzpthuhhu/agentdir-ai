@@ -51,6 +51,23 @@ async function fetchGitHubRepo(owner: string, repo: string): Promise<RepoResult>
   };
 }
 
+const CONCURRENCY = 6;
+const SKIP_IF_UPDATED_WITHIN_HOURS = 20;
+
+async function runPool<T, R>(items: T[], worker: (item: T) => Promise<R>, size: number): Promise<R[]> {
+  const results: R[] = new Array(items.length);
+  let cursor = 0;
+  const runners = Array.from({ length: Math.min(size, items.length) }, async () => {
+    while (true) {
+      const i = cursor++;
+      if (i >= items.length) return;
+      results[i] = await worker(items[i]);
+    }
+  });
+  await Promise.all(runners);
+  return results;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -61,14 +78,15 @@ Deno.serve(async (req) => {
   const supabase = createClient(supabaseUrl, serviceKey);
 
   let triggerType = "manual";
+  let force = false;
   try {
     const body = await req.json().catch(() => ({}));
     triggerType = body.trigger_type || "manual";
+    force = !!body.force;
   } catch {
     // default
   }
 
-  // Create sync log
   const { data: syncLog, error: logErr } = await supabase
     .from("github_sync_logs")
     .insert({ trigger_type: triggerType, status: "running" })
@@ -85,7 +103,6 @@ Deno.serve(async (req) => {
   const logId = syncLog.id;
 
   try {
-    // Collect all unique GitHub URLs from candidates and agents
     const { data: candidates } = await supabase
       .from("candidate_agents")
       .select("id, github_url")
@@ -98,7 +115,6 @@ Deno.serve(async (req) => {
       .not("github_url", "is", null)
       .neq("github_url", "");
 
-    // Deduplicate by URL
     const urlMap = new Map<string, { candidateIds: string[]; agentIds: string[] }>();
     for (const c of candidates || []) {
       const parsed = extractOwnerRepo(c.github_url);
@@ -117,17 +133,40 @@ Deno.serve(async (req) => {
       urlMap.set(key, entry);
     }
 
+    // Load existing github_repos to enable skip-if-fresh
+    const agentIdList = Array.from(urlMap.values()).flatMap((v) => v.agentIds);
+    const freshAgentIds = new Set<string>();
+    if (!force && triggerType === "scheduled" && agentIdList.length > 0) {
+      const cutoff = new Date(Date.now() - SKIP_IF_UPDATED_WITHIN_HOURS * 3600 * 1000).toISOString();
+      const { data: freshRepos } = await supabase
+        .from("github_repos")
+        .select("agent_id, updated_at")
+        .in("agent_id", agentIdList)
+        .gt("updated_at", cutoff);
+      for (const r of freshRepos || []) freshAgentIds.add(r.agent_id);
+    }
+
+    const jobs = Array.from(urlMap.entries()).filter(([, v]) => {
+      if (force || triggerType !== "scheduled") return true;
+      // skip only if ALL linked agents are fresh and there are no candidates
+      if (v.candidateIds.length > 0) return true;
+      if (v.agentIds.length === 0) return true;
+      return !v.agentIds.every((id) => freshAgentIds.has(id));
+    });
+
     const totalRepos = urlMap.size;
+    const skippedRepos = totalRepos - jobs.length;
     let updatedRepos = 0;
     let failedRepos = 0;
     const details: any[] = [];
+    const ghToken = Deno.env.get("GITHUB_TOKEN");
+    const concurrency = ghToken ? CONCURRENCY : 2;
 
-    for (const [key, { candidateIds, agentIds }] of urlMap) {
+    await runPool(jobs, async ([key, { candidateIds, agentIds }]) => {
       const [owner, repo] = key.split("/");
       try {
         const result = await fetchGitHubRepo(owner, repo);
-        
-        // Update candidate_agents
+
         for (const cid of candidateIds) {
           await supabase.from("candidate_agents").update({
             stars: result.stars,
@@ -137,22 +176,12 @@ Deno.serve(async (req) => {
           }).eq("id", cid);
         }
 
-        // Upsert github_repos for published agents
         for (const aid of agentIds) {
           const { data: existing } = await supabase
             .from("github_repos")
             .select("id")
             .eq("agent_id", aid)
             .maybeSingle();
-
-          const repoData = {
-            agent_id: aid,
-            repo_url: result.url,
-            stars: result.stars,
-            forks: result.forks,
-            language: result.language,
-            license: result.license,
-          };
 
           if (existing) {
             await supabase.from("github_repos").update({
@@ -163,7 +192,14 @@ Deno.serve(async (req) => {
               updated_at: new Date().toISOString(),
             }).eq("id", existing.id);
           } else {
-            await supabase.from("github_repos").insert(repoData);
+            await supabase.from("github_repos").insert({
+              agent_id: aid,
+              repo_url: result.url,
+              stars: result.stars,
+              forks: result.forks,
+              language: result.language,
+              license: result.license,
+            });
           }
         }
 
@@ -173,24 +209,21 @@ Deno.serve(async (req) => {
         failedRepos++;
         details.push({ repo: key, status: "error", error: e.message });
       }
+      // small delay to smooth API burst; token gives us 5000/hr
+      if (!ghToken) await new Promise((r) => setTimeout(r, 400));
+    }, concurrency);
 
-      // Rate limit: 1 req/sec without token, faster with token
-      const ghToken = Deno.env.get("GITHUB_TOKEN");
-      await new Promise((r) => setTimeout(r, ghToken ? 200 : 1200));
-    }
-
-    // Update sync log
     await supabase.from("github_sync_logs").update({
       status: "completed",
       completed_at: new Date().toISOString(),
       total_repos: totalRepos,
       updated_repos: updatedRepos,
       failed_repos: failedRepos,
-      details,
+      details: { skipped: skippedRepos, items: details },
     }).eq("id", logId);
 
     return new Response(
-      JSON.stringify({ success: true, total: totalRepos, updated: updatedRepos, failed: failedRepos }),
+      JSON.stringify({ success: true, total: totalRepos, updated: updatedRepos, skipped: skippedRepos, failed: failedRepos }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (e: any) {

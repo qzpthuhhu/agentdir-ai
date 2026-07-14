@@ -31,8 +31,24 @@ const Index = () => {
   const { data: agents = [] } = useAgents();
   const { data: ecosystems = [] } = useEcosystems();
 
-  const featured = useMemo(() => agents.slice(0, 4), [agents]);
-  const trending = useMemo(() => [...agents].sort((a, b) => b.reviewCount - a.reviewCount).slice(0, 3), [agents]);
+  // Trending: approximate current-month search/news heat via a composite score
+  // (GitHub stars momentum + rating + release recency). Top 10 shown on home.
+  const trending = useMemo(() => {
+    const now = new Date();
+    const curYear = now.getFullYear();
+    const curMonth = now.getMonth() + 1;
+    const score = (a: typeof agents[number]) => {
+      const stars = a.githubStars ?? 0;
+      const starScore = Math.log10(stars + 10) * 10; // dampen large repos
+      const ratingScore = (a.rating ?? 0) * 4;
+      const y = a.releaseYear ?? 0;
+      const m = a.releaseMonth ?? 1;
+      const monthsAgo = Math.max(0, (curYear - y) * 12 + (curMonth - m));
+      const recencyScore = Math.max(0, 24 - monthsAgo); // boost within ~2yr
+      return starScore + ratingScore + recencyScore;
+    };
+    return [...agents].sort((a, b) => score(b) - score(a)).slice(0, 10);
+  }, [agents]);
 
   const handleSearch = (val: string) => {
     setSearch(val);
@@ -127,13 +143,13 @@ const Index = () => {
             </Button>
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featured.map((agent, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          {trending.map((agent, i) => (
             <motion.div
               key={agent.id}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
+              transition={{ duration: 0.5, delay: i * 0.05, ease: "easeOut" }}
             >
               <AgentCard agent={agent} />
             </motion.div>

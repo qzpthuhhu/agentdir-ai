@@ -36,6 +36,10 @@ export interface Agent {
   releaseYear?: number;
   releaseMonth?: number;
   releasedAt?: string;
+  trendingScore?: number;
+  newsCount?: number;
+  starDeltaWeekly?: number;
+  trendingUpdatedAt?: string;
 }
 
 export interface AgentTypeInfo {

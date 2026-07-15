@@ -231,6 +231,7 @@ export type Database = {
           license: string | null
           logo_url: string | null
           name: string
+          news_count: number
           pricing: Database["public"]["Enums"]["pricing_model"]
           primary_language: string | null
           provider: string | null
@@ -240,8 +241,12 @@ export type Database = {
           released_at: string | null
           review_count: number | null
           slug: string
+          star_delta_weekly: number
+          stars_snapshot: number
           tagline: string | null
           tags: string[] | null
+          trending_score: number
+          trending_updated_at: string | null
           updated_at: string
           use_cases: string[] | null
           website_url: string | null
@@ -259,6 +264,7 @@ export type Database = {
           license?: string | null
           logo_url?: string | null
           name: string
+          news_count?: number
           pricing?: Database["public"]["Enums"]["pricing_model"]
           primary_language?: string | null
           provider?: string | null
@@ -268,8 +274,12 @@ export type Database = {
           released_at?: string | null
           review_count?: number | null
           slug: string
+          star_delta_weekly?: number
+          stars_snapshot?: number
           tagline?: string | null
           tags?: string[] | null
+          trending_score?: number
+          trending_updated_at?: string | null
           updated_at?: string
           use_cases?: string[] | null
           website_url?: string | null
@@ -287,6 +297,7 @@ export type Database = {
           license?: string | null
           logo_url?: string | null
           name?: string
+          news_count?: number
           pricing?: Database["public"]["Enums"]["pricing_model"]
           primary_language?: string | null
           provider?: string | null
@@ -296,8 +307,12 @@ export type Database = {
           released_at?: string | null
           review_count?: number | null
           slug?: string
+          star_delta_weekly?: number
+          stars_snapshot?: number
           tagline?: string | null
           tags?: string[] | null
+          trending_score?: number
+          trending_updated_at?: string | null
           updated_at?: string
           use_cases?: string[] | null
           website_url?: string | null

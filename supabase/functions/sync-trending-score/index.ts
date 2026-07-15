@@ -103,43 +103,36 @@ Deno.serve(async (req) => {
   }
 
   const rows = (agents ?? []) as AgentRow[];
+  const now = new Date().toISOString();
+  let completed = 0;
 
-  // Phase 1: fetch news counts + star deltas
-  const metrics = await runPool(rows, CONCURRENCY, async (row) => {
+  // Fetch + score + write incrementally so partial completions still persist.
+  const scored = await runPool(rows, CONCURRENCY, async (row) => {
     const query = `${row.name}${row.provider ? " " + row.provider : ""} AI agent`;
     const news = await firecrawlNewsCount(query);
     const stars = currentStars(row);
     const delta = Math.max(0, stars - (row.stars_snapshot ?? 0));
-    return { id: row.id, name: row.name, news, stars, delta };
-  });
 
-  // Phase 2: normalize to 0..100 each, blend
-  const maxNews = Math.max(1, ...metrics.map((m) => m.news));
-  const maxDelta = Math.max(1, ...metrics.map((m) => m.delta));
+    const newsNorm = (Math.log10(news + 1) / NEWS_LOG_CAP) * 100;
+    const deltaNorm = (Math.log10(delta + 1) / STAR_LOG_CAP) * 100;
+    const score = +(((NEWS_WEIGHT * newsNorm + STAR_WEIGHT * deltaNorm) / 100).toFixed(2));
 
-  const scored = metrics.map((m) => {
-    const newsNorm = (m.news / maxNews) * 100;
-    const deltaNorm = (m.delta / maxDelta) * 100;
-    const score = +(NEWS_WEIGHT * newsNorm + STAR_WEIGHT * deltaNorm).toFixed(2);
-    return { ...m, score };
-  });
-
-  if (!dryRun) {
-    // Write back sequentially in small batches
-    for (const s of scored) {
+    if (!dryRun) {
       const { error: upErr } = await supabase
         .from("agents")
         .update({
-          news_count: s.news,
-          star_delta_weekly: s.delta,
-          stars_snapshot: s.stars,
-          trending_score: s.score,
-          trending_updated_at: new Date().toISOString(),
+          news_count: news,
+          star_delta_weekly: delta,
+          stars_snapshot: stars,
+          trending_score: score,
+          trending_updated_at: now,
         })
-        .eq("id", s.id);
-      if (upErr) console.warn(`update ${s.id} failed:`, upErr.message);
+        .eq("id", row.id);
+      if (upErr) console.warn(`update ${row.id} failed:`, upErr.message);
     }
-  }
+    completed++;
+    return { id: row.id, name: row.name, news, stars, delta, score };
+  });
 
   const top = [...scored].sort((a, b) => b.score - a.score).slice(0, 10);
 

@@ -31,20 +31,27 @@ const Index = () => {
   const { data: agents = [] } = useAgents();
   const { data: ecosystems = [] } = useEcosystems();
 
-  // Trending: approximate current-month search/news heat via a composite score
-  // (GitHub stars momentum + rating + release recency). Top 10 shown on home.
+  // Trending: real monthly news heat (Firecrawl) + weekly GitHub star delta,
+  // refreshed weekly by the sync-trending-score edge function.
+  // Falls back to a composite estimate when real data hasn't been synced yet.
   const trending = useMemo(() => {
+    const hasRealData = agents.some((a) => (a.trendingScore ?? 0) > 0);
+    if (hasRealData) {
+      return [...agents]
+        .sort((a, b) => (b.trendingScore ?? 0) - (a.trendingScore ?? 0))
+        .slice(0, 10);
+    }
     const now = new Date();
     const curYear = now.getFullYear();
     const curMonth = now.getMonth() + 1;
     const score = (a: typeof agents[number]) => {
       const stars = a.githubStars ?? 0;
-      const starScore = Math.log10(stars + 10) * 10; // dampen large repos
+      const starScore = Math.log10(stars + 10) * 10;
       const ratingScore = (a.rating ?? 0) * 4;
       const y = a.releaseYear ?? 0;
       const m = a.releaseMonth ?? 1;
       const monthsAgo = Math.max(0, (curYear - y) * 12 + (curMonth - m));
-      const recencyScore = Math.max(0, 24 - monthsAgo); // boost within ~2yr
+      const recencyScore = Math.max(0, 24 - monthsAgo);
       return starScore + ratingScore + recencyScore;
     };
     return [...agents].sort((a, b) => score(b) - score(a)).slice(0, 10);

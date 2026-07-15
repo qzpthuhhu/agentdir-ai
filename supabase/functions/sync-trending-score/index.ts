@@ -11,9 +11,12 @@ const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY")!;
 const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY")!;
 
 const GATEWAY = "https://connector-gateway.lovable.dev/firecrawl";
-const NEWS_WEIGHT = 0.6;
-const STAR_WEIGHT = 0.4;
-const CONCURRENCY = 3; // Firecrawl search is heavy; keep modest
+const NEWS_WEIGHT = 60; // out of 100
+const STAR_WEIGHT = 40;
+const CONCURRENCY = 12; // must finish all agents within the 150s edge function limit
+// Log-scale normalizers so we don't need a global max pass (enables incremental writes).
+const NEWS_LOG_CAP = Math.log10(21);   // ~20 news mentions saturates
+const STAR_LOG_CAP = Math.log10(1001); // ~1000 weekly stars saturates
 
 type AgentRow = {
   id: string;

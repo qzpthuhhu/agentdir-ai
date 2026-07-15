@@ -47,6 +47,10 @@ function transformAgent(row: any): Agent {
     releaseYear: row.release_year ?? undefined,
     releaseMonth: row.release_month ?? undefined,
     releasedAt: row.released_at ?? undefined,
+    trendingScore: row.trending_score != null ? Number(row.trending_score) : 0,
+    newsCount: row.news_count ?? 0,
+    starDeltaWeekly: row.star_delta_weekly ?? 0,
+    trendingUpdatedAt: row.trending_updated_at ?? undefined,
   };
 }
 

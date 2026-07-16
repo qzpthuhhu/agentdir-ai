@@ -31,6 +31,7 @@ const AdminAnnouncements = lazy(() => import("./pages/admin/AdminAnnouncements")
 const AdminQuality = lazy(() => import("./pages/admin/AdminQuality"));
 const AdminSuggestions = lazy(() => import("./pages/admin/AdminSuggestions"));
 const AdminGitHubSync = lazy(() => import("./pages/admin/AdminGitHubSync"));
+const OAuthConsent = lazy(() => import("./pages/OAuthConsent"));
 
 const queryClient = new QueryClient();
 
@@ -67,6 +68,7 @@ const App = () => (
                     <Route path="/admin/quality" element={<AdminQuality />} />
                     <Route path="/admin/suggestions" element={<AdminSuggestions />} />
                     <Route path="/admin/github-sync" element={<AdminGitHubSync />} />
+                    <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Suspense>

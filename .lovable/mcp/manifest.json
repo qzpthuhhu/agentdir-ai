@@ -1,0 +1,170 @@
+{
+  "version": 1,
+  "sdk_version": "0.22.2",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://hxoznhqwesgscacnffcp.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "agentdir-mcp",
+      "version": "0.1.0",
+      "title": "AgentDir MCP"
+    },
+    "tools": [
+      {
+        "name": "search_agents",
+        "title": "Search agents",
+        "description": "Search the AgentDir directory for AI agents by keyword (matches name, tagline, or description). Returns up to 20 agents with slug, name, tagline, provider, ecosystem, rating, GitHub stars, and website.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Search keyword, e.g. 'coding' or 'browser'"
+            },
+            "limit": {
+              "description": "Max results (default 20)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          "required": [
+            "query"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_agent",
+        "title": "Get agent details",
+        "description": "Fetch full details for one AI agent by slug: description, features, use cases, provider, pricing, GitHub stars, language, license, tags, and links.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Agent slug, e.g. 'autogen' or 'devin'"
+            }
+          },
+          "required": [
+            "slug"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_trending_agents",
+        "title": "List trending agents",
+        "description": "Return the most trending AI agents on AgentDir this week, ranked by composite trending score (news mentions + weekly GitHub star growth).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "limit": {
+              "description": "Max results (default 10)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_categories",
+        "title": "List categories",
+        "description": "List all agent type categories (coding, research, browser, automation, etc.) in the AgentDir directory.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_review",
+        "title": "Create or update a review",
+        "description": "Post a rating (1-5) and optional text review for an AI agent, as the signed-in user. Updates the existing review if you already reviewed this agent.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "agent_slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Slug of the agent to review"
+            },
+            "rating": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5,
+              "description": "Rating from 1 to 5"
+            },
+            "review_text": {
+              "description": "Optional review text",
+              "type": "string",
+              "maxLength": 4000
+            }
+          },
+          "required": [
+            "agent_slug",
+            "rating"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_reviews",
+        "title": "List my reviews",
+        "description": "List every AgentDir review authored by the signed-in user, with agent name and rating.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
